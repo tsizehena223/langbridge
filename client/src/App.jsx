@@ -1,14 +1,17 @@
-import { Home, Login, Signup } from "./pages";
+import { Home, Login, Signup, NotFound } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-const App = () => (
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/singup" element={<Signup />} />
-    </Routes>
-  </BrowserRouter>
-);
+const App = () => {
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </BrowserRouter>
+  );
+};
 
 export default App;
