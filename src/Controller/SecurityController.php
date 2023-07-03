@@ -23,19 +23,13 @@ class SecurityController extends AbstractController
         $user = $repo->findOneBy(['email' => $data["email"]]);
 
         if (!$user) {
-            $message = "Email inexist";
-            $status = 201;
-            return new JsonResponse(["Message" => $message], $status);
+            return new JsonResponse(["Message" => "Email inexist"], 204);
         }
 
         $password = ($this->hasher->isPasswordValid($user, $data["password"])) ? true : false;
 
-        if ($password) {
-            $message = "Ok";
-            $status = 200;
-        } else {
-            $message = "Password incorrect";
-            $status = 201;
+        if (!$password) {
+            return new JsonResponse(["Message" => "Incorrect password"], 204);
         }
 
         $userData = [
@@ -46,12 +40,12 @@ class SecurityController extends AbstractController
         // COOKIES
 
         $cookie = Cookie::create(name: "langbridge-cookie", value: json_encode($userData))
-            ->withExpires(time() + 10800)
-            ->withSecure(true) // Uniquement envoyé sur une connexion HTTPS
+            ->withExpires(time() + 180)
+            // ->withSecure(true) // Uniquement envoyé sur une connexion HTTPS
             ->withHttpOnly(true); // Le cookie ne peut être accédé que par HTTP et non par JavaScript
 
         // dd($cookie->getValue());
-        $response = new JsonResponse(["Message" => $message], $status);
+        $response = new JsonResponse(["message" => "Connected successfully"], 200);
         $response->headers->setCookie($cookie);
         return $response;
 

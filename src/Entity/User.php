@@ -60,12 +60,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 180, unique: true)]
     #[Groups(["read:item", "add:User", "update:User", "login:User"])]
     #[Assert\NotNull(message: 'Email should not be null')]
+    #[Assert\NotBlank(message: 'Email should not be blank')]
     #[Assert\Email(message: 'This value is not a valid email address')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
     #[Groups(["read:collection", "read:item", "add:User", "update:User"])]
     #[Assert\NotNull(message: 'Username should not be null')]
+    #[Assert\NotBlank(message: 'Username should not be blank')]
     #[Assert\Length(min: 4, minMessage: "Username should have at least 4 characters")]
     private ?string $username = null;
 
@@ -79,12 +81,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column]
     #[Groups(["add:User", "login:User"])]
     #[Assert\NotNull(message: 'Password should not be null')]
+    #[Assert\NotBlank(message: 'Password should not be blank')]
     #[Assert\Length(min: 4, minMessage: "Password should have at least 4 characters")]
     #[Assert\EqualTo(propertyPath: "confirmPassword", message: 'Password should be equal to confirmPassword')]
     private ?string $password = null;
 
     #[Groups(["add:User"])]
     #[Assert\NotNull(message: 'ConfirmPassword should not be null')]
+    #[Assert\NotBlank(message: 'ConfirmPassword should not be blank')]
     #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
     private ?string $confirmPassword = null;
 
