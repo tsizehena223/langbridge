@@ -1,16 +1,18 @@
 import { useState } from "react";
 import { FaCircleUser } from "react-icons/fa6";
-import { TbHelpCircleFilled } from "react-icons/tb";
 import LoginIllustration from "../assets/login.svg";
-import FormInput from "../components/FormInput";
+import { FormInput, ErrorMessage } from "../components";
 import { Link } from "react-router-dom";
+import { loginRules, validateForm } from "../utils/form";
 
 const Login = () => {
-  const [info, setInfo] = useState({ email: "", password: "" });
+  const base = { email: "", password: "" };
+  const [data, setData] = useState(base);
+  const [errors, setErrors] = useState(base);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setInfo((prev) => {
+    setData((prev) => {
       return {
         ...prev,
         [name]: value,
@@ -18,9 +20,13 @@ const Login = () => {
     });
   };
 
-  const handleLogin = async () => {
-    // TODO
-    console.log(info);
+  const handleLogin = () => {
+    const errors = validateForm(data, loginRules);
+    setErrors(errors);
+
+    if (!Object.keys(errors).length) {
+      // TODO
+    }
   };
 
   return (
@@ -31,29 +37,27 @@ const Login = () => {
       <div className="w-1/2 h-full flex justify-center items-center">
         <div className="py-4 px-6 flex flex-col items-center rounded-md">
           <FaCircleUser size={60} className="mb-2 text-gray-1" />
-          <h1 className="mb-8 font-bold text-gray-1 text-2xl">Login</h1>
+          <h1 className="mb-2 font-bold text-gray-1 text-2xl">Login</h1>
           <FormInput
             name="email"
             type="text"
             placeholder="E-mail"
-            value={info.email}
+            value={data.email}
+            error={errors.email}
             OnChange={handleChange}
           />
-          <div className="relative">
-            <FormInput
-              name="password"
-              type="password"
-              placeholder="Password"
-              value={info.password}
-              OnChange={handleChange}
-            />
-            <TbHelpCircleFilled
-              className="absolute right-3 top-3 text-purple bg-light hover:cursor-pointer hover:text-green"
-              size={20}
-            />
-          </div>
+          <ErrorMessage message={errors.email} />
+          <FormInput
+            name="password"
+            type="password"
+            placeholder="Password"
+            value={data.password}
+            error={errors.password}
+            OnChange={handleChange}
+          />
+          <ErrorMessage message={errors.password} />
           <button
-            className="py-2 px-6 mb-6 rounded-2xl text-light bg-purple hover:bg-green"
+            className="py-2 px-6 m-6 rounded-2xl text-light bg-purple hover:bg-green"
             onClick={handleLogin}
           >
             Next
