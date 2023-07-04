@@ -54,18 +54,18 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["read:collection", "read:item"])]
+    #[Groups(["read:collection", "read:item", "read:item:Info"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(["read:item", "add:User", "update:User", "login:User"])]
+    #[Groups(["read:item", "add:User", "update:User", "login:User", "read:item:Info"])]
     #[Assert\NotNull(message: 'Email should not be null')]
     #[Assert\NotBlank(message: 'Email should not be blank')]
     #[Assert\Email(message: 'This value is not a valid email address')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["read:collection", "read:item", "add:User", "update:User"])]
+    #[Groups(["read:collection", "read:item", "add:User", "update:User", "read:item:Info"])]
     #[Assert\NotNull(message: 'Username should not be null')]
     #[Assert\NotBlank(message: 'Username should not be blank')]
     #[Assert\Length(min: 4, minMessage: "Username should have at least 4 characters")]
@@ -91,6 +91,10 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotBlank(message: 'ConfirmPassword should not be blank')]
     #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
     private ?string $confirmPassword = null;
+
+    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
+    #[Groups(["read:item"])]
+    private ?UserInfos $userInfos = null;
 
     public function getId(): ?int
     {
@@ -182,6 +186,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setUsername(string $username): static
     {
         $this->username = $username;
+
+        return $this;
+    }
+
+    public function getUserInfos(): ?UserInfos
+    {
+        return $this->userInfos;
+    }
+
+    public function setUserInfos(?UserInfos $userInfos): static
+    {
+        // unset the owning side of the relation if necessary
+        if ($userInfos === null && $this->userInfos !== null) {
+            $this->userInfos->setUser(null);
+        }
+
+        // set the owning side of the relation if necessary
+        if ($userInfos !== null && $userInfos->getUser() !== $this) {
+            $userInfos->setUser($this);
+        }
+
+        $this->userInfos = $userInfos;
 
         return $this;
     }
