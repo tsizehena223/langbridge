@@ -6,16 +6,20 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
 use App\Controller\SecurityController;
 use ApiPlatform\Metadata\GetCollection;
+use App\Controller\UserPdpController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
+use Vich\UploaderBundle\Mapping\Annotation as Vich;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
@@ -45,10 +49,19 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Delete(),
         new Patch(
             denormalizationContext: ["groups" => ["update:User"]]
+        ),
+        new Post(
+            deserialize: false,
+            uriTemplate: "/user/{id}/pdp",
+            controller: UserPdpController::class,
+            openapiContext: [
+                "summary" => "Add a profil picture"
+            ]
         )
     ]
 )]
 #[UniqueEntity(fields: ["email"], message: "This email is already used!")]
+#[Vich\Uploadable]
 class User implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
@@ -83,18 +96,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull(message: 'Password should not be null')]
     #[Assert\NotBlank(message: 'Password should not be blank')]
     #[Assert\Length(min: 4, minMessage: "Password should have at least 4 characters")]
-    #[Assert\EqualTo(propertyPath: "confirmPassword", message: 'Password should be equal to confirmPassword')]
+    // #[Assert\EqualTo(propertyPath: "confirmPassword", message: 'Password should be equal to confirmPassword')]
     private ?string $password = null;
 
-    #[Groups(["add:User"])]
-    #[Assert\NotNull(message: 'ConfirmPassword should not be null')]
-    #[Assert\NotBlank(message: 'ConfirmPassword should not be blank')]
-    #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
-    private ?string $confirmPassword = null;
+    // #[Groups(["add:User"])]
+    // #[Assert\NotNull(message: 'ConfirmPassword should not be null')]
+    // #[Assert\NotBlank(message: 'ConfirmPassword should not be blank')]
+    // #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
+    // private ?string $confirmPassword = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     #[Groups(["read:item"])]
     private ?UserInfos $userInfos = null;
+
+    #[Vich\UploadableField(mapping: "user_pdp", fileNameProperty: "pdpName")]
+    private ?File $pdpFile = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["read:item"])]
+    private ?string $pdpName = null;
+
+    #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
+    private ?\DateTimeInterface $updatedAt = null;
 
     public function getId(): ?int
     {
@@ -157,17 +180,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getConfirmPassword(): string
-    {
-        return $this->confirmPassword;
-    }
+    // public function getConfirmPassword(): ?string
+    // {
+    //     return $this->confirmPassword;
+    // }
 
-    public function setConfirmPassword(string $confirmPassword): static
-    {
-        $this->confirmPassword = $confirmPassword;
+    // public function setConfirmPassword(string $confirmPassword): static
+    // {
+    //     $this->confirmPassword = $confirmPassword;
 
-        return $this;
-    }
+    //     return $this;
+    // }
 
     /**
      * @see UserInterface
@@ -210,5 +233,51 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         $this->userInfos = $userInfos;
 
         return $this;
+    }
+
+    public function getPdpName(): ?string
+    {
+        return $this->pdpName;
+    }
+
+    public function setPdpName(?string $pdpName): static
+    {
+        $this->pdpName = $pdpName;
+
+        return $this;
+    }
+
+    public function getUpdatedAt(): ?\DateTimeInterface
+    {
+        return $this->updatedAt;
+    }
+
+    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    {
+        $this->updatedAt = $updatedAt;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of pdpFile
+     */
+    public function getPdpFile()
+    {
+        return $this->pdpFile;
+    }
+
+    /**
+     * Set the value of pdpFile
+     *
+     * @return  self
+     */
+    public function setPdpFile(?File $pdpFile): void
+    {
+        $this->pdpFile = $pdpFile;
+
+        if ($pdpFile !== null) {
+            $this->updatedAt = new \DateTime("now", new \DateTimeZone("Indian/Antananarivo"));
+        }
     }
 }

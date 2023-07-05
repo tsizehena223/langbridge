@@ -23,18 +23,17 @@ class SecurityController extends AbstractController
         $user = $repo->findOneBy(['email' => $data["email"]]);
 
         if (!$user) {
-            return new JsonResponse(["Message" => "Email inexist"], 204);
+            return new JsonResponse(["Message" => "Email inexist"], 201);
         }
 
         $password = ($this->hasher->isPasswordValid($user, $data["password"])) ? true : false;
 
         if (!$password) {
-            return new JsonResponse(["Message" => "Incorrect password"], 204);
+            return new JsonResponse(["Message" => "Incorrect password"], 201);
         }
 
         $userData = [
-            "email" => $user->getEmail(),
-            "ROLES" => $user->getRoles()
+            "email" => $user->getEmail()
         ];
 
         // COOKIES
