@@ -12,6 +12,7 @@ use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
 use App\Controller\SecurityController;
 use ApiPlatform\Metadata\GetCollection;
+use App\Controller\SearchDataController;
 use App\Controller\UserPdpController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
@@ -56,6 +57,13 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             controller: UserPdpController::class,
             openapiContext: [
                 "summary" => "Add a profil picture"
+            ]
+        ),
+        new Get(
+            routeName: "app_search",
+            controller: SearchDataController::class,
+            openapiContext: [
+                "summary" => "Search an user by his name"
             ]
         )
     ]
