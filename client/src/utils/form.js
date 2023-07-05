@@ -16,12 +16,11 @@ const signupRules = {
   },
   username: {
     minLength: 4,
-    pattern: /^[a-zA-Z0-9_]+$/,
     message: "Invalid username",
   },
   password: {
     minLength: 6,
-    message: "Password must be at least 6 character length",
+    message: "Password must contain at least 6 characters",
   },
   passwordConfirm: {
     match: "password",
