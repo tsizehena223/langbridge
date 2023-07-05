@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 
 const HomeNavBar = () => (
-  <div className="z-40 w-screen py-6 px-8 fixed top-0 flex items-center justify-between shadow-md bg-light">
+  <div className="z-40 w-screen py-6 px-4 fixed top-0 flex items-center justify-between shadow-md bg-light">
     <h1 className="font-semibold text-gray-1">LangBridge</h1>
     <div>
       <Link
