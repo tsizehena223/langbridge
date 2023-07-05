@@ -96,14 +96,13 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\NotNull(message: 'Password should not be null')]
     #[Assert\NotBlank(message: 'Password should not be blank')]
     #[Assert\Length(min: 4, minMessage: "Password should have at least 4 characters")]
-    // #[Assert\EqualTo(propertyPath: "confirmPassword", message: 'Password should be equal to confirmPassword')]
+    #[Assert\EqualTo(propertyPath: "confirmPassword", message: 'Password should be equal to confirmPassword', groups: ["add:User"])]
     private ?string $password = null;
 
-    // #[Groups(["add:User"])]
-    // #[Assert\NotNull(message: 'ConfirmPassword should not be null')]
-    // #[Assert\NotBlank(message: 'ConfirmPassword should not be blank')]
-    // #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
-    // private ?string $confirmPassword = null;
+    #[Groups(["add:User"])]
+    #[Assert\NotBlank(message: 'ConfirmPassword should not be blank', groups: ["add:User"])]
+    #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
+    private ?string $confirmPassword = null;
 
     #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
     #[Groups(["read:item"])]
@@ -180,17 +179,17 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    // public function getConfirmPassword(): ?string
-    // {
-    //     return $this->confirmPassword;
-    // }
+    public function getConfirmPassword(): ?string
+    {
+        return $this->confirmPassword;
+    }
 
-    // public function setConfirmPassword(string $confirmPassword): static
-    // {
-    //     $this->confirmPassword = $confirmPassword;
+    public function setConfirmPassword(string $confirmPassword): static
+    {
+        $this->confirmPassword = $confirmPassword;
 
-    //     return $this;
-    // }
+        return $this;
+    }
 
     /**
      * @see UserInterface
