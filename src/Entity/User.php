@@ -103,7 +103,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Groups(["add:User", "login:User"])]
     #[Assert\NotNull(message: 'Password should not be null')]
     #[Assert\NotBlank(message: 'Password should not be blank')]
-    #[Assert\Length(min: 4, minMessage: "Password should have at least 4 characters")]
+    #[Assert\Length(min: 6, minMessage: "Password should have at least 6 characters")]
     #[Assert\EqualTo(propertyPath: "confirmPassword", message: 'Password should be equal to confirmPassword', groups: ["add:User"])]
     private ?string $password = null;
 

@@ -2,13 +2,15 @@
 
 namespace App\Controller;
 
+use Lcobucci\JWT\Configuration;
 use App\Repository\UserRepository;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Cookie;
-use Symfony\Component\HttpFoundation\JsonResponse;
+use Lcobucci\JWT\Signer\Hmac\Sha256;
+use Lcobucci\JWT\Signer\Key\InMemory;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 
 class SecurityController extends AbstractController
 {
@@ -32,30 +34,32 @@ class SecurityController extends AbstractController
             return new JsonResponse(["Message" => "Incorrect password"], 201);
         }
 
-        $userData = [
-            "email" => $user->getEmail()
-        ];
+        function generateToken($userId, $userEmail, $roles)
+        {
+            $key = 'hiG8DlOKvtih6AxlZn5XKImZ06yu8I3mkOzaJrEuW8yAv8Jnkw330uMt8AEqQ5LB';
 
-        // COOKIES
+            $configuration = Configuration::forSymmetricSigner(
+                new Sha256(),
+                InMemory::plainText($key)
+            );
 
-        $cookie = Cookie::create(name: "langbridge-cookie", value: json_encode($userData))
-            ->withExpires(time() + 180)
-            // ->withSecure(true) // Uniquement envoyé sur une connexion HTTPS
-            ->withHttpOnly(true); // Le cookie ne peut être accédé que par HTTP et non par JavaScript
+            $issuedAt = new \DateTimeImmutable();
+            $builder = $configuration->builder()
+                ->issuedBy('http://localhost:8000')
+                ->permittedFor('http://localhost:5173')
+                ->expiresAt($issuedAt->modify('+10 minutes'))
+                ->withClaim('id', $userId)
+                ->withClaim('email', $userEmail)
+                ->withClaim('roles', $roles);
 
-        // dd($cookie->getValue());
-        $response = new JsonResponse(["message" => "Connected successfully"], 200);
-        $response->headers->setCookie($cookie);
+            $token = $builder->getToken($configuration->signer(), $configuration->signingKey());
+
+            return $token->toString();
+        }
+
+        $token = generateToken($user->getId(), $user->getEmail(), $user->getRoles());
+
+        $response = new JsonResponse(["Message" => "Connected successfully", "Token" => $token], 200);
         return $response;
-
-        /* LIRE LE COOKIE (SERVER)
-        $request = Request::createFromGlobals();
-
-        if ($request->cookies->has('mon_cookie_auth')) {
-            $userData = json_decode($request->cookies->get('mon_cookie_auth'), true);
-            // Vérification de l'authenticité de $userData et exécution des actions appropriées
-        } else {
-            // L'utilisateur n'est pas authentifié
-        } */
     }
 }
