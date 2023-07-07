@@ -1,14 +1,16 @@
 import { useState } from "react";
+import axios from "axios";
 import { FaCircleUser } from "react-icons/fa6";
 import LoginIllustration from "../assets/login.svg";
 import { FormInput, ErrorMessage } from "../components";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { loginRules, validateForm } from "../utils/form";
 
 const Login = () => {
-  const base = { email: "", password: "" };
-  const [data, setData] = useState(base);
-  const [errors, setErrors] = useState(base);
+  const [data, setData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
+  const [requestError, setRequestError] = useState();
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -20,12 +22,20 @@ const Login = () => {
     });
   };
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     const errors = validateForm(data, loginRules);
     setErrors(errors);
 
-    if (!Object.keys(errors).length) {
+    if (Object.keys(errors).length) return;
+
+    try {
+      const res = await axios.post("http://localhost:8001/api/login", data);
+      const token = res.data.token;
+      localStorage.setItem("token", token);
+      console.log(token);
       // TODO
+    } catch (error) {
+      setRequestError(error.response.data.message);
     }
   };
 
@@ -56,6 +66,7 @@ const Login = () => {
             OnChange={handleChange}
           />
           <ErrorMessage message={errors.password} />
+          <ErrorMessage message={requestError} />
           <button
             className="py-2 px-6 m-6 rounded-2xl text-light bg-purple hover:bg-green"
             onClick={handleLogin}

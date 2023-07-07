@@ -3,6 +3,8 @@ import { FaUserPen } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import countries from "i18n-iso-countries";
 import languages from "@cospired/i18n-iso-languages";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
 import enLocaleCountry from "i18n-iso-countries/langs/en.json";
 import enLocaleLang from "@cospired/i18n-iso-languages/langs/en.json";
 import SignupIllustration from "../assets/signup.svg";
@@ -22,6 +24,8 @@ const Signup = () => {
     passwordConfirm: "",
   });
   const [errors, setErrors] = useState({});
+  const [requestError, setRequestError] = useState();
+  const navigate = useNavigate();
   const countryList = Object.values(
     countries.getNames("en", { select: "official" })
   );
@@ -37,13 +41,17 @@ const Signup = () => {
     });
   };
 
-  const handleSignup = async () => {
+  const handleSignup = () => {
     const errors = validateForm(data, signupRules);
     setErrors(errors);
-    console.log(data);
 
-    if (!Object.keys(errors).length) {
-      // TODO
+    if (Object.keys(errors).length) return;
+
+    try {
+      axios.post("http://localhost:8001/api/register", data);
+      navigate("/login");
+    } catch (error) {
+      setRequestError(error.response.data.message);
     }
   };
 
@@ -105,6 +113,7 @@ const Signup = () => {
             OnChange={handleChange}
           />
           <ErrorMessage message={errors.passwordConfirm} />
+          <ErrorMessage message={requestError} />
           <button
             className="m-6 py-2 px-6 rounded-2xl text-light bg-purple hover:bg-green"
             onClick={handleSignup}
