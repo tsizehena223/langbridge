@@ -27,6 +27,8 @@ class RegistrationController extends AbstractController
             ->setUsername($data["username"])
             ->setRoles(["ROLE_USER"])
             ->setPassword($data["password"])
+            ->setLanguage($data["language"])
+            ->setNationality($data["country"])
             ->setConfirmPassword($data["confirmPassword"]);
 
         $errors = [];

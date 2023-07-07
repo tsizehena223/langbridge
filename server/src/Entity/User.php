@@ -114,10 +114,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
     private ?string $confirmPassword = null;
 
-    #[ORM\OneToOne(mappedBy: 'user', cascade: ['persist', 'remove'])]
-    #[Groups(["read:item"])]
-    private ?UserInfos $userInfos = null;
-
     #[Vich\UploadableField(mapping: "user_pdp", fileNameProperty: "pdpName")]
     private ?File $pdpFile = null;
 
@@ -130,6 +126,16 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'authorId', targetEntity: Article::class)]
     private Collection $articles;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["read:item", "read:collection", "add:User", "update:User"])]
+    #[Assert\NotBlank(message: 'Country should not be blank')]
+    private ?string $nationality = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    #[Groups(["read:item", "read:collection", "add:User", "update:User"])]
+    #[Assert\NotBlank(message: 'Language should not be blank')]
+    private ?string $language = null;
 
     public function __construct()
     {
@@ -230,28 +236,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this;
     }
 
-    public function getUserInfos(): ?UserInfos
-    {
-        return $this->userInfos;
-    }
-
-    public function setUserInfos(?UserInfos $userInfos): static
-    {
-        // unset the owning side of the relation if necessary
-        if ($userInfos === null && $this->userInfos !== null) {
-            $this->userInfos->setUser(null);
-        }
-
-        // set the owning side of the relation if necessary
-        if ($userInfos !== null && $userInfos->getUser() !== $this) {
-            $userInfos->setUser($this);
-        }
-
-        $this->userInfos = $userInfos;
-
-        return $this;
-    }
-
     public function getPdpName(): ?string
     {
         return $this->pdpName;
@@ -327,4 +311,28 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     //     return $this;
     // }
+
+    public function getNationality(): ?string
+    {
+        return $this->nationality;
+    }
+
+    public function setNationality(?string $nationality): static
+    {
+        $this->nationality = $nationality;
+
+        return $this;
+    }
+
+    public function getLanguage(): ?string
+    {
+        return $this->language;
+    }
+
+    public function setLanguage(?string $language): static
+    {
+        $this->language = $language;
+
+        return $this;
+    }
 }
