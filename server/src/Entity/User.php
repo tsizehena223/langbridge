@@ -6,6 +6,8 @@ use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use ApiPlatform\Metadata\Patch;
 use ApiPlatform\Metadata\Delete;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
@@ -125,6 +127,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
     private ?\DateTimeInterface $updatedAt = null;
+
+    #[ORM\OneToMany(mappedBy: 'authorId', targetEntity: Article::class)]
+    private Collection $articles;
+
+    public function __construct()
+    {
+        $this->articles = new ArrayCollection();
+    }
 
     public function getId(): ?int
     {
@@ -287,4 +297,34 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             $this->updatedAt = new \DateTime("now", new \DateTimeZone("Indian/Antananarivo"));
         }
     }
+
+    /**
+     * @return Collection<int, Article>
+     */
+    public function getArticles(): Collection
+    {
+        return $this->articles;
+    }
+
+    // public function addArticle(Article $article): static
+    // {
+    //     if (!$this->articles->contains($article)) {
+    //         $this->articles->add($article);
+    //         $article->setAuthorId($this);
+    //     }
+
+    //     return $this;
+    // }
+
+    // public function removeArticle(Article $article): static
+    // {
+    //     if ($this->articles->removeElement($article)) {
+    //         // set the owning side to null (unless already changed)
+    //         if ($article->getAuthorId() === $this) {
+    //             $article->setAuthorId(null);
+    //         }
+    //     }
+
+    //     return $this;
+    // }
 }
