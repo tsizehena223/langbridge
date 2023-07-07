@@ -26,10 +26,10 @@ class RegistrationController extends AbstractController
         $user->setEmail($data["email"])
             ->setUsername($data["username"])
             ->setRoles(["ROLE_USER"])
-            ->setPassword($data["password"])
             ->setLanguage($data["language"])
             ->setNationality($data["country"])
-            ->setConfirmPassword($data["confirmPassword"]);
+            ->setPassword($data["password"])
+            ->setConfirmPassword($data["passwordConfirm"]);
 
         $errors = [];
         $errors = $validatorInterface->validate($user);
@@ -38,7 +38,7 @@ class RegistrationController extends AbstractController
             foreach ($errors as $error) {
                 $error_Message[] = $error->getMessage();
             }
-            return new JsonResponse(["Message" => $error_Message], 201);
+            return new JsonResponse(["message" => $error_Message], 400);
         }
 
         $hashedPassword = $this->hasher->hashPassword($user, $data["password"]);
@@ -47,6 +47,6 @@ class RegistrationController extends AbstractController
         $objectManager->persist($user);
         $objectManager->flush();
 
-        return new JsonResponse(["Message" => "Registered successfully"], 200);
+        return new JsonResponse(["message" => "Registered successfully"], 200);
     }
 }

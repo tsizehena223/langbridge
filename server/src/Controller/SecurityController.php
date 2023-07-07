@@ -25,16 +25,16 @@ class SecurityController extends AbstractController
         $user = $repo->findOneBy(['email' => $data["email"]]);
 
         if (!$user) {
-            return new JsonResponse(["Message" => "Email inexist"], 201);
+            return new JsonResponse(["message" => "This email doesn't have an account"], 401);
         }
 
         $password = ($this->hasher->isPasswordValid($user, $data["password"])) ? true : false;
 
         if (!$password) {
-            return new JsonResponse(["Message" => "Incorrect password"], 201);
+            return new JsonResponse(["message" => "Incorrect password"], 401);
         }
 
-        function generateToken($userId, $userEmail, $roles)
+        function generateToken($userId)
         {
             $key = 'hiG8DlOKvtih6AxlZn5XKImZ06yu8I3mkOzaJrEuW8yAv8Jnkw330uMt8AEqQ5LB';
 
@@ -43,23 +43,21 @@ class SecurityController extends AbstractController
                 InMemory::plainText($key)
             );
 
-            $issuedAt = new \DateTimeImmutable();
+            $issuedAt = new \DateTimeImmutable("now", new \DateTimeZone("Indian/Antananarivo"));
             $builder = $configuration->builder()
                 ->issuedBy('http://localhost:8000')
                 ->permittedFor('http://localhost:5173')
-                ->expiresAt($issuedAt->modify('+10 minutes'))
-                ->withClaim('id', $userId)
-                ->withClaim('email', $userEmail)
-                ->withClaim('roles', $roles);
+                ->expiresAt($issuedAt->modify('+1 minutes'))
+                ->withClaim('id', $userId);
 
             $token = $builder->getToken($configuration->signer(), $configuration->signingKey());
 
             return $token->toString();
         }
 
-        $token = generateToken($user->getId(), $user->getEmail(), $user->getRoles());
+        $token = generateToken($user->getId());
 
-        $response = new JsonResponse(["Message" => "Connected successfully", "Token" => $token], 200);
+        $response = new JsonResponse(["token" => $token], 200);
         return $response;
     }
 }
