@@ -1,4 +1,5 @@
 import FormInput from "./FormInput";
+import FormSelect from "./FormSelect";
 import HomeNavBar from "./HomeNavBar";
 import Landing from "./Landing";
 import SectionA from "./SectionA";
@@ -10,6 +11,7 @@ import ErrorMessage from "./ErrorMessage";
 
 export {
   FormInput,
+  FormSelect,
   ErrorMessage,
   HomeNavBar,
   Landing,

@@ -14,6 +14,12 @@ const signupRules = {
     pattern: /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$/,
     message: "Invalid email address",
   },
+  country: {
+    message: "No country selected",
+  },
+  language: {
+    message: "No language selected",
+  },
   username: {
     minLength: 4,
     message: "Invalid username",

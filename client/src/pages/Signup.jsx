@@ -1,19 +1,31 @@
 import { useState } from "react";
 import { FaUserPen } from "react-icons/fa6";
-import SignupIllustration from "../assets/signup.svg";
-import { FormInput, ErrorMessage } from "../components";
 import { Link } from "react-router-dom";
+import countries from "i18n-iso-countries";
+import languages from "@cospired/i18n-iso-languages";
+import enLocaleCountry from "i18n-iso-countries/langs/en.json";
+import enLocaleLang from "@cospired/i18n-iso-languages/langs/en.json";
+import SignupIllustration from "../assets/signup.svg";
+import { FormInput, FormSelect, ErrorMessage } from "../components";
 import { signupRules, validateForm } from "../utils/form";
 
+countries.registerLocale(enLocaleCountry);
+languages.registerLocale(enLocaleLang);
+
 const Signup = () => {
-  const base = {
+  const [data, setData] = useState({
     username: "",
+    country: "",
+    language: "",
     email: "",
     password: "",
     passwordConfirm: "",
-  };
-  const [data, setData] = useState(base);
-  const [errors, setErrors] = useState(base);
+  });
+  const [errors, setErrors] = useState({});
+  const countryList = Object.values(
+    countries.getNames("en", { select: "official" })
+  );
+  const languageList = Object.values(languages.getNames("en"));
 
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -28,6 +40,7 @@ const Signup = () => {
   const handleSignup = async () => {
     const errors = validateForm(data, signupRules);
     setErrors(errors);
+    console.log(data);
 
     if (!Object.keys(errors).length) {
       // TODO
@@ -36,7 +49,7 @@ const Signup = () => {
 
   return (
     <div className="w-screen h-screen flex justify-center sm:justify-between">
-      <div className="w-1/2 h-full flex justify-center items-center">
+      <div className="w-1/2 h-full max-h-screen overflow-scroll flex justify-center items-center">
         <div className="py-4 px-6 flex flex-col items-center rounded-md">
           <FaUserPen size={60} className="mb-2 text-gray-1" />
           <h1 className="font-bold text-gray-1 text-2xl">Sign up</h1>
@@ -58,6 +71,22 @@ const Signup = () => {
             OnChange={handleChange}
           />
           <ErrorMessage message={errors.email} />
+          <FormSelect
+            label="Country"
+            name="country"
+            options={countryList}
+            error={errors.country}
+            onChange={handleChange}
+          />
+          <ErrorMessage message={errors.country} />
+          <FormSelect
+            label="Learning"
+            name="language"
+            options={languageList}
+            error={errors.language}
+            onChange={handleChange}
+          />
+          <ErrorMessage message={errors.language} />
           <FormInput
             name="password"
             type="password"
