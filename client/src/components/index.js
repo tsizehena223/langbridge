@@ -8,6 +8,10 @@ import SectionC from "./SectionC";
 import Footer from "./Footer";
 import MainNavBar from "./MainNavBar";
 import ErrorMessage from "./ErrorMessage";
+import Sidebar from "./Sidebar";
+import Feed from "./Feed";
+import Widgets from "./Widgets";
+import MenuItem from "./MenuItem";
 
 export {
   FormInput,
@@ -20,4 +24,8 @@ export {
   SectionC,
   Footer,
   MainNavBar,
+  Sidebar,
+  Feed,
+  Widgets,
+  MenuItem,
 };

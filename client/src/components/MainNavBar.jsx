@@ -2,6 +2,8 @@ import Popup from "reactjs-popup";
 import SearchBar from "./SearchBar";
 import Avatar from "../assets/avatar.svg";
 import ProfilePopupMenu from "./ProfilePopupMenu";
+import { FaHouse, FaComment, FaBell } from "react-icons/fa6"
+import MenuItem from "./MenuItem";
 
 const MainNavBar = () => {
   const handleSearch = (input) => {
@@ -9,10 +11,11 @@ const MainNavBar = () => {
   };
 
   return (
-    <div className="z-40 w-screen py-4 px-8 fixed top-0 flex items-center justify-between shadow-md bg-light">
-      <h1 className="font-semibold text-gray-1">LangBridge</h1>
+    <div className="z-40 w-full py-4 px-8 top-0 flex items-center justify-between shadow-lg bg-light">
+        <MenuItem icon={FaHouse} label="Home" />
       <div className="flex items-center">
-        <SearchBar onSearch={handleSearch} />
+        <button className="ml-4 rounded-full w-9 h-9 "><FaComment className="w-5 h-5 rounded-full object-cover text-gray-1 hover:text-purple justify-center items-center"/></button>
+        <button className="ml-4 rounded-full w-9 h-9 "><FaBell className="w-5 h-5 rounded-full items-center text-gray-1 hover:text-purple"/></button>
         <Popup
           trigger={
             <button className="ml-4 rounded-full">
