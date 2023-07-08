@@ -6,8 +6,6 @@ use App\Entity\Article;
 use App\Repository\UserRepository;
 use App\Service\DecodeJwt;
 use Doctrine\Persistence\ObjectManager;
-use Lcobucci\JWT\Encoding\JoseEncoder;
-use Lcobucci\JWT\Token\Parser;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;

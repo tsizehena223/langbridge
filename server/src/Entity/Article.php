@@ -14,6 +14,7 @@ use ApiPlatform\Metadata\GetCollection;
 use App\Controller\GetArticleController;
 use App\Controller\GetArticlesController;
 use App\Controller\CreateArticleController;
+use App\Controller\LikePostController;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -38,7 +39,11 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Patch(
             denormalizationContext: ["groups" => ["update:Article"]]
         ),
-        new Delete()
+        new Delete(),
+        new Get(
+            routeName: "like_post",
+            controller: LikePostController::class
+        )
     ]
 )]
 class Article
@@ -63,6 +68,9 @@ class Article
     #[Assert\NotBlank(message: 'Author should not be blank')]
     #[Assert\NotNull(message: 'Author should not be null')]
     private ?User $author = null;
+
+    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    private array $likes = [];
 
     public function getId(): ?int
     {
@@ -101,6 +109,18 @@ class Article
     public function setAuthor(?User $authorId): static
     {
         $this->author = $authorId;
+
+        return $this;
+    }
+
+    public function getLikes(): array
+    {
+        return $this->likes;
+    }
+
+    public function setLikes(?array $likes): static
+    {
+        $this->likes = $likes;
 
         return $this;
     }
