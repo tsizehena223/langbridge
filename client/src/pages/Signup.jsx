@@ -82,6 +82,7 @@ const Signup = () => {
           <FormSelect
             label="Country"
             name="country"
+            value={data.country}
             options={countryList}
             error={errors.country}
             onChange={handleChange}
@@ -90,6 +91,7 @@ const Signup = () => {
           <FormSelect
             label="Learning"
             name="language"
+            value={data.language}
             options={languageList}
             error={errors.language}
             onChange={handleChange}

@@ -16,6 +16,7 @@ export default {
       pink: "#f361fb",
       blue: "#1a1463",
       cyan: "#71e1e1",
+      placeholder: "#a2a8b4",
       "gray-0": "#cccccc",
       "gray-1": "#3f3d56",
       "gray-2": "#2f2e41",
