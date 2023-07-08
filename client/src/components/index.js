@@ -12,6 +12,9 @@ import Sidebar from "./Sidebar";
 import Feed from "./Feed";
 import Widgets from "./Widgets";
 import MenuItem from "./MenuItem";
+import Post from "./Post";
+import PostInput from "./PostInput";
+import PostContainer from "./PostContainer"
 
 export {
   FormInput,
@@ -28,4 +31,7 @@ export {
   Feed,
   Widgets,
   MenuItem,
+  Post,
+  PostInput,
+  PostContainer,
 };

@@ -16,7 +16,7 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-full w-1/4 space-y-4 p-8 bg-light rounded-l-lg z-50 relative">
+    <div className="sticky top-0 h-screen w-1/4 space-y-4 p-8 bg-light rounded-l-lg z-50">
       {/* logo */}
       <h1 className="font-semibold text-gray-1">LangBridge</h1>
       <div className="flex">
@@ -28,9 +28,11 @@ const Sidebar = () => {
           <MenuItem icon={FaCircleUser} label="Profile" />
           <MenuItem icon={FaBell} label="Notification" />
           <MenuItem icon={FaComment} label="Chat" />
-          <MenuItem icon={FaCartShopping} label="Home" />
+          <MenuItem icon={FaCartShopping} label="Shop" />
         </div>
-        <MenuItem icon={FaArrowRightToBracket} label="LogOut" />
+        <div>
+          <MenuItem icon={FaArrowRightToBracket} label="LogOut" />
+        </div>
       </div>
     </div>
   );

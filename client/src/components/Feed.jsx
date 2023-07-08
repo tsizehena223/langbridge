@@ -1,10 +1,10 @@
-import React from "react";
-import PostInput from "./PostInput";
+import { PostInput, PostContainer } from "../components";
 
-const Feed = () => {
+const Feed = ({ postList }) => {
   return (
-    <div className="flex flex-col">
+    <div className="w-full m-10 flex flex-col bg-gray-0">
       <PostInput />
+      <PostContainer postList={postList} />
     </div>
   );
 };
