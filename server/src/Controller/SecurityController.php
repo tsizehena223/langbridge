@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
             return new JsonResponse(["message" => "Incorrect password"], 401);
         }
 
-        function generateToken($userId)
+        function generateToken($userId, $username)
         {
             $key = 'hiG8DlOKvtih6AxlZn5XKImZ06yu8I3mkOzaJrEuW8yAv8Jnkw330uMt8AEqQ5LB';
 
@@ -47,15 +47,16 @@ class SecurityController extends AbstractController
             $builder = $configuration->builder()
                 ->issuedBy('http://localhost:8000')
                 ->permittedFor('http://localhost:5173')
-                ->expiresAt($issuedAt->modify('+1 minutes'))
-                ->withClaim('id', $userId);
+                ->expiresAt($issuedAt->modify('+2 days'))
+                ->withClaim('id', $userId)
+                ->withClaim('username', $username);
 
             $token = $builder->getToken($configuration->signer(), $configuration->signingKey());
 
             return $token->toString();
         }
 
-        $token = generateToken($user->getId());
+        $token = generateToken($user->getId(), $user->getUsername());
 
         $response = new JsonResponse(["token" => $token], 200);
         return $response;
