@@ -3,14 +3,16 @@
 namespace App\Entity;
 
 use ApiPlatform\Metadata\Get;
+use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
+use ApiPlatform\Metadata\Patch;
+use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
-use ApiPlatform\Metadata\Delete;
 use App\Repository\ArticleRepository;
 use ApiPlatform\Metadata\GetCollection;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Post;
+use App\Controller\GetArticleController;
+use App\Controller\GetArticlesController;
 use App\Controller\CreateArticleController;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -19,9 +21,13 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [
         new GetCollection(
+            routeName: "get_collection_article",
+            controller: GetArticlesController::class,
             normalizationContext: ["groups" => ["read:collection:Article"]]
         ),
         new Get(
+            routeName: "get_item_article",
+            controller: GetArticleController::class,
             normalizationContext: ["groups" => ["read:item:Article"]]
         ),
         new Post(

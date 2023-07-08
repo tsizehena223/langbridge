@@ -15,7 +15,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateArticleController extends AbstractController
 {
-    #[Route(path: "/api/article/create", name: "create_article")]
+    #[Route(path: "/api/post/create", name: "create_article")]
     public function index(Request $request, ValidatorInterface $validator, ObjectManager $objectManager, UserRepository $userRepository): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
