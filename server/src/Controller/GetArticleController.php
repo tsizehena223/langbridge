@@ -31,6 +31,6 @@ class GetArticleController extends AbstractController
                 "country" => $article->getAuthor()->getNationality()
             ]
         ];
-        return new JsonResponse(["data" => $data], 200);
+        return new JsonResponse(["post" => $data], 200);
     }
 }

@@ -33,6 +33,6 @@ class GetArticlesController extends AbstractController
                 ]
             ];
         }
-        return new JsonResponse(["data" => $data], 200);
+        return new JsonResponse(["posts" => $data], 200);
     }
 }
