@@ -10,9 +10,20 @@ import {
 } from "react-icons/fa6";
 import { IoSendSharp } from "react-icons/io5";
 import MenuItem from "./MenuItem";
+import api from "../utils/api";
+import config from "../config";
 
 const PostInput = () => {
   const [inputValue, setInputValue] = useState("");
+  const token = localStorage.getItem("token");
+
+  const handlePost = async () => {
+    const res = await api.post(config.baseUrl, "/api/post/create", {
+      headers: {
+        Authorization: `${token}`,
+      }, data: { "content": inputValue }
+    });
+  }
 
   return (
     <div className="w-full mb-6 p-6 rounded-xl bg-light">
@@ -38,7 +49,7 @@ const PostInput = () => {
           </div>
           <div className="flex space-x-4">
             <MenuItem icon={FaPencil} label="Draft" />
-            <MenuItem icon={IoSendSharp} label="Post" />
+            <MenuItem icon={IoSendSharp} label="Post" onSelect={handlePost} />
           </div>
         </div>
       </div>

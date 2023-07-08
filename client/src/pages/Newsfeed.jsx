@@ -1,19 +1,20 @@
-import axios from "axios";
-// import { verify } from "jsonwebtoken";
 import { useEffect, useState } from "react";
 import { Feed, MainNavBar, Sidebar, Widgets } from "../components";
+import api from "../utils/api";
+import config from "../config";
+import decode from "jwt-decode";
 
 const Newsfeed = () => {
-  // const token = localStorage.getItem("token");
-  // const decoded = verify(token);
-  // const username = decoded.username;
-  const username = "me";
+  const token = localStorage.getItem("token");
+  const decoded = decode(token);
+  const username = decoded.username;
   const [postList, setPostList] = useState([]);
 
-  // useEffect(async () => {
-  //   const list = await axios.get("http://localhost:8000/api/posts");
-  //   setPostList(list);
-  // }, []);
+  useEffect(() => {
+    api.get(config.baseUrl, "/api/posts", {}).then(value => {
+      setPostList(value.data.posts);
+    });
+  }, []);
 
   return (
     <div className="w-screen h-full flex bg-gray-0 sm:justify-between">

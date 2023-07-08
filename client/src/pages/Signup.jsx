@@ -3,13 +3,14 @@ import { FaUserPen } from "react-icons/fa6";
 import { Link } from "react-router-dom";
 import countries from "i18n-iso-countries";
 import languages from "@cospired/i18n-iso-languages";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
 import enLocaleCountry from "i18n-iso-countries/langs/en.json";
 import enLocaleLang from "@cospired/i18n-iso-languages/langs/en.json";
 import SignupIllustration from "../assets/signup.svg";
 import { FormInput, FormSelect, ErrorMessage } from "../components";
 import { signupRules, validateForm } from "../utils/form";
+import api from "../utils/api";
+import config from "../config";
 
 countries.registerLocale(enLocaleCountry);
 languages.registerLocale(enLocaleLang);
@@ -48,7 +49,7 @@ const Signup = () => {
     if (Object.keys(errors).length) return;
 
     try {
-      axios.post("http://localhost:8001/api/register", data);
+      api.post(config.baseUrl, "/api/register", data);
       navigate("/login");
     } catch (error) {
       setRequestError(error.response.data.message);
