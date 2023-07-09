@@ -22,10 +22,12 @@ class CreateArticleController extends AbstractController
         UserRepository $userRepository,
         DecodeJwt $decodeJwt
     ): JsonResponse {
-        $data = json_decode($request->getContent(), true)["data"];
+        // $data = json_decode($request->getContent(), true)["data"];
+        $data = json_decode($request->getContent(), true);
         $article = new Article();
 
-        $jwtToken = json_decode($request->getContent(), true)["headers"]["Authorization"];
+        // $jwtToken = json_decode($request->getContent(), true)["headers"]["Authorization"];
+        $jwtToken = $request->headers->get("Authorization");
         if (!$jwtToken) {
             return new JsonResponse(["Message" => "User not authentified (token)"], 401);
         }
