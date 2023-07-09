@@ -17,13 +17,18 @@ const PostInput = () => {
   const [inputValue, setInputValue] = useState("");
   const token = localStorage.getItem("token");
 
-  const handlePost = async () => {
-    const res = await api.post(config.baseUrl, "/api/post/create", {
+  const handlePost = () => {
+    if (!inputValue) return;
+
+    api.post(config.baseUrl, "/api/post/create", {
       headers: {
-        Authorization: `${token}`,
-      }, data: { "content": inputValue }
+        Authorization: token,
+      },
+      data: { content: inputValue },
     });
-  }
+
+    setInputValue("");
+  };
 
   return (
     <div className="w-full mb-6 p-6 rounded-xl bg-light">

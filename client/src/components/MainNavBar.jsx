@@ -4,8 +4,12 @@ import Avatar from "../assets/avatar.svg";
 import ProfilePopupMenu from "./ProfilePopupMenu";
 import { FaHouse, FaComment, FaBell } from "react-icons/fa6";
 import MenuItem from "./MenuItem";
+import { useContext } from "react";
+import { UserContext } from "../contexts/userContext";
 
-const MainNavBar = ({ username }) => {
+const MainNavBar = () => {
+  const { username } = useContext(UserContext).tokenDecoded;
+
   const handleSearch = (input) => {
     // TODO
   };
