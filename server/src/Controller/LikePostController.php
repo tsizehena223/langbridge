@@ -22,6 +22,9 @@ class LikePostController extends AbstractController
         int $postId
     ): JsonResponse {
         $article = $managerRegistry->getRepository(persistentObject: Article::class)->find($postId);
+        if ($article === null) {
+            return new JsonResponse(["message" => "No post found"], 404);
+        }
 
         $jwtToken = $request->headers->get("Authorization");
         if (!$jwtToken) return new JsonResponse(["message" => "User not authentified"], 401);
