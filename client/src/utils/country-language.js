@@ -17,10 +17,16 @@ const getCountryCode = (country) => {
   return searched.code_2;
 };
 
+const getLanguageCode = (language) => {
+  const searched = getLanguages().find(({ name }) => name[0] === language);
+  return searched.iso639_1;
+};
+
 const getCountrySpeaking = (language) => {
   const countries = [];
+  const code = getLanguageCode(language);
 
-  getLanguage(language, (_, lang) => {
+  getLanguage(code, (_, lang) => {
     const countriesSpeakingLang = lang.countries.map(({ name }) => name);
     countries.push(...countriesSpeakingLang);
   });
@@ -28,4 +34,10 @@ const getCountrySpeaking = (language) => {
   return countries;
 };
 
-export { getAllCountries, getAllLanguages, getCountryCode, getCountrySpeaking };
+export {
+  getAllCountries,
+  getAllLanguages,
+  getCountryCode,
+  getLanguageCode,
+  getCountrySpeaking,
+};
