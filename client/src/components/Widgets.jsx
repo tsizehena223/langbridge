@@ -18,7 +18,7 @@ const Widgets = () => {
     api
       .get(
         config.baseUrl,
-        `/api/usersby?number=6&country=${countrySpeaking.join(",")}`,
+        `/api/usersby?number=6&countries=${countrySpeaking.join(",")}`,
         { headers: { Authorization: token } }
       )
       .then((res) => {
@@ -34,7 +34,7 @@ const Widgets = () => {
       </div>
       <div>
         {userList.map((user) => (
-          <div className="mb-4 flex items-center">
+          <div key={user.id} className="mb-4 flex items-center">
             <ProfilePic key={user.id} img={Avatar} country={user.country} />
             <div className="ml-3 font-semibold">{user.name}</div>
           </div>

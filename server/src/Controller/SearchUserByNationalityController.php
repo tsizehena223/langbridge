@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class SearchUserByNationalityController extends AbstractController
 {
-    #[Route(path: "/api/usersby/language", name: "get_user_by_nationality", methods: ["GET"])]
+    #[Route(path: "/api/usersby", name: "get_user_by_nationality", methods: ["GET"])]
     public function searchUserByNationality(
         Request $request,
         DecodeJwt $decodeJwt,

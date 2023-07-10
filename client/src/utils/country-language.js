@@ -27,7 +27,7 @@ const getCountrySpeaking = (language) => {
   const code = getLanguageCode(language);
 
   getLanguage(code, (_, lang) => {
-    const countriesSpeakingLang = lang.countries.map(({ name }) => name);
+    const countriesSpeakingLang = lang.countries.map(({ name }) => name.replace("'", "''"));
     countries.push(...countriesSpeakingLang);
   });
 
