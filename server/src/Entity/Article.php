@@ -46,6 +46,10 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Get(
             routeName: "like_post",
             controller: LikePostController::class
+        ),
+        new Get(
+            routeName: "get_post_by_user",
+            controller: GetPostByUserController::class
         )
     ]
 )]
