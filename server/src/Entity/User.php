@@ -67,6 +67,10 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
             openapiContext: [
                 "summary" => "Search an user by his name"
             ]
+        ),
+        new Get(
+            routeName: "get_user_by_nationality",
+            controller: SearchUserByNationalityController::class
         )
     ]
 )]
