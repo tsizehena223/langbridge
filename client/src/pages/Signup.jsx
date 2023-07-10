@@ -131,7 +131,7 @@ const Signup = () => {
         </div>
       </div>
       <div className="w-1/2 h-full bg-purple hidden sm:flex justify-center items-center">
-        <img src={SignupIllustration} className="w-96" />
+        <img src={SignupIllustration} className="w-96 animate-bounce" />
       </div>
     </div>
   );

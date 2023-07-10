@@ -42,7 +42,7 @@ const Login = () => {
   return (
     <div className="w-screen h-screen flex justify-center sm:justify-between">
       <div className="w-1/2 h-full bg-purple hidden sm:flex justify-center items-center">
-        <img src={LoginIllustration} className="w-96" />
+        <img src={LoginIllustration} className="w-96 animate-bounce" />
       </div>
       <div className="w-1/2 h-full flex justify-center items-center">
         <div className="py-4 px-6 flex flex-col items-center rounded-md">
