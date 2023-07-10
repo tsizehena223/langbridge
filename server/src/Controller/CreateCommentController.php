@@ -27,13 +27,13 @@ class CreateCommentController extends AbstractController
         UserRepository $userRepository,
         ArticleRepository $articleRepository
     ): JsonResponse {
-        $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true)["data"];
 
         if ($data === null) {
             return new JsonResponse(["message" => "No sent content"], 400);
         }
 
-        $commentator = json_decode($request->getContent(), true)["headers"]["Autorization"];
+        $commentator = json_decode($request->getContent(), true)["headers"]["Authorization"];
         // dd($commentator);
         $commentatorId = $decodeJwt->getIdToken($commentator);
 

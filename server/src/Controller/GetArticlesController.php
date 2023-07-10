@@ -16,9 +16,6 @@ class GetArticlesController extends AbstractController
     {
         $repo = $objectRepository->getRepository(persistentObject: Article::class);
         $articles = $repo->findAll();
-        if (count($articles) < 1) {
-            return new JsonResponse(["message" => "There is no Article"], 404);
-        }
 
         $data = [];
 
@@ -35,7 +32,7 @@ class GetArticlesController extends AbstractController
                     "content" => $commentContent,
                     "author" => $commentAuthor = [
                         "id" => $commentAuthor->getId(),
-                        "username" => $commentAuthor->getUsername(),
+                        "name" => $commentAuthor->getUsername(),
                         "country" => $commentAuthor->getNationality()
                     ],
                     "createdAt" => $commentCreatedAt

@@ -72,7 +72,7 @@ class Article
     #[Assert\NotNull(message: 'Author should not be null')]
     private ?User $author = null;
 
-    #[ORM\Column(type: Types::SIMPLE_ARRAY, nullable: true)]
+    #[ORM\Column(type: Types::JSON, nullable: true)]
     private array $likes = [];
 
     #[ORM\OneToMany(mappedBy: 'article', targetEntity: Comment::class)]
