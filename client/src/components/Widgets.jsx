@@ -1,24 +1,29 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect, useMemo, useState } from "react";
 import ProfilePic from "./ProfilePic";
 import { UserContext } from "../contexts/userContext";
 import Avatar from "../assets/avatar.svg";
 import { FaUser } from "react-icons/fa6";
 import api from "../utils/api";
 import config from "../config";
+import { getCountrySpeaking } from "../utils/country-language";
 
 const Widgets = () => {
   const { token, tokenDecoded } = useContext(UserContext);
   const [userList, setUserList] = useState([]);
+  const countrySpeaking = useMemo(() =>
+    getCountrySpeaking(tokenDecoded.language)
+  );
 
   useEffect(() => {
-    (async () => {
-      const res = await api.get(
+    api
+      .get(
         config.baseUrl,
-        `/api/usersby/${tokenDecoded.country}`,
+        `/api/usersby?number=6&country=${countrySpeaking.join(",")}`,
         { headers: { Authorization: token } }
-      );
-      setUserList(res.data);
-    })();
+      )
+      .then((res) => {
+        setUserList(res.data);
+      });
   }, []);
 
   return (
@@ -30,11 +35,7 @@ const Widgets = () => {
       <div>
         {userList.map((user) => (
           <div className="mb-4 flex items-center">
-            <ProfilePic
-              key={user.id}
-              img={Avatar}
-              country={tokenDecoded.country}
-            />
+            <ProfilePic key={user.id} img={Avatar} country={user.country} />
             <div className="ml-3 font-semibold">{user.name}</div>
           </div>
         ))}

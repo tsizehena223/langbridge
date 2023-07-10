@@ -1,14 +1,13 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { FaUserPen } from "react-icons/fa6";
 import { Link } from "react-router-dom";
-import countries from "i18n-iso-countries";
-import languages from "@cospired/i18n-iso-languages";
 import { useNavigate } from "react-router-dom";
 import SignupIllustration from "../assets/signup.svg";
 import { FormInput, FormSelect, ErrorMessage } from "../components";
 import { signupRules, validateForm } from "../utils/form";
 import api from "../utils/api";
 import config from "../config";
+import { getAllCountries, getAllLanguages } from "../utils/country-language";
 
 const Signup = () => {
   const [data, setData] = useState({
@@ -22,10 +21,8 @@ const Signup = () => {
   const [errors, setErrors] = useState({});
   const [requestError, setRequestError] = useState();
   const navigate = useNavigate();
-  const countryList = Object.values(
-    countries.getNames("en", { select: "official" })
-  );
-  const languageList = Object.values(languages.getNames("en"));
+  const countryList = useMemo(getAllCountries);
+  const languageList = useMemo(getAllLanguages);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
