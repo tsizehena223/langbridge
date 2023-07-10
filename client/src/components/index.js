@@ -12,6 +12,9 @@ import Sidebar from "./Sidebar";
 import Feed from "./Feed";
 import Widgets from "./Widgets";
 import MenuItem from "./MenuItem";
+import LeftProfile from "./LeftProfile";
+import RightProfile from "./RightProfile";
+import ProfileNavBar from "./ProfileNavBar";
 
 export {
   FormInput,
@@ -27,5 +30,8 @@ export {
   Sidebar,
   Feed,
   Widgets,
+  LeftProfile,
   MenuItem,
+  RightProfile,
+  ProfileNavBar,
 };

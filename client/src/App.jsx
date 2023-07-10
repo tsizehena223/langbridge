@@ -1,4 +1,4 @@
-import { Home, Login, Signup, Newsfeed, NotFound } from "./pages";
+import { Home, Login, Signup, Newsfeed, EditProfile, NotFound } from "./pages";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -9,6 +9,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/newsfeed" element={<Newsfeed />} />
+        <Route path="/EditProfile" element={<EditProfile />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </BrowserRouter>
