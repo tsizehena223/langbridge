@@ -34,7 +34,7 @@ class SecurityController extends AbstractController
             return new JsonResponse(["message" => "Incorrect password"], 401);
         }
 
-        function generateToken($userId, $username, $userCountry)
+        function generateToken($userId, $username, $userCountry, $language)
         {
             $key = 'hiG8DlOKvtih6AxlZn5XKImZ06yu8I3mkOzaJrEuW8yAv8Jnkw330uMt8AEqQ5LB';
 
@@ -50,6 +50,7 @@ class SecurityController extends AbstractController
                 ->expiresAt($issuedAt->modify('+2 days'))
                 ->withClaim('id', $userId)
                 ->withClaim('username', $username)
+                ->withClaim('language', $language)
                 ->withClaim('country', $userCountry);
 
             $token = $builder->getToken($configuration->signer(), $configuration->signingKey());
@@ -57,7 +58,7 @@ class SecurityController extends AbstractController
             return $token->toString();
         }
 
-        $token = generateToken($user->getId(), $user->getUsername(), $user->getNationality());
+        $token = generateToken($user->getId(), $user->getUsername(), $user->getNationality(), $user->getLanguage());
 
         $response = new JsonResponse(["token" => $token], 200);
         return $response;
