@@ -15,7 +15,8 @@ import Popup from "reactjs-popup";
 import CommentPopup from "./CommentPopup";
 
 const Post = ({ data }) => {
-  const { id: userId } = useContext(UserContext).tokenDecoded;
+  const { token, tokenDecoded } = useContext(UserContext);
+  const { id: userId } = tokenDecoded;
   const [isLiked, setIsLiked] = useState(data.likes.includes(userId));
   const [comments, setComments] = useState(data.comments);
 
@@ -30,7 +31,11 @@ const Post = ({ data }) => {
 
     setIsLiked((prev) => !prev);
 
-    api.post(config.baseUrl, `/api/post/like/${data.id}`);
+    api.get(config.baseUrl, `/api/post/like/${data.id}`, {
+      headers: {
+        Authorization: token
+      }
+    });
   };
 
   const handleShare = () => {

@@ -36,7 +36,7 @@ const CommentPopup = ({ postId, comments, setComments, close }) => {
 
     api.post(config.baseUrl, "/api/comment/create", {
       headers: {
-        Autorization: token,
+        Authorization: token,
       },
       data: {
         postId,
