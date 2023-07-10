@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { UserContext } from "../contexts/userContext";
 import { RiCloseCircleFill } from "react-icons/ri";
 import Avatar from "../assets/avatar.svg";
@@ -11,8 +11,7 @@ import config from "../config";
 
 const CommentPopup = ({ postId, comments, setComments, close }) => {
   const { token, tokenDecoded } = useContext(UserContext);
-  const { id: userId, username, country } = tokenDecoded;
-
+  const { id: userId, username, country } = useMemo(() => tokenDecoded);
   const [inputValue, setInputValue] = useState("");
 
   const handleComment = () => {

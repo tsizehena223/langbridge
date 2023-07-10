@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import countries from "i18n-iso-countries";
 import enLocaleCountry from "i18n-iso-countries/langs/en.json";
 import { Feed, MainNavBar, Sidebar, Widgets } from "../components";
@@ -10,12 +10,8 @@ import { UserContextProvider } from "../contexts/userContext";
 countries.registerLocale(enLocaleCountry);
 
 const Newsfeed = () => {
-  const token = localStorage.getItem("token");
-  const decoded = decode(token);
-  const contextValue = {
-    token,
-    tokenDecoded: decoded,
-  };
+  const token = useMemo(() => localStorage.getItem("token"));
+  const decoded = useMemo(() => decode(token));
   const [postList, setPostList] = useState([]);
 
   useEffect(() => {
@@ -25,18 +21,19 @@ const Newsfeed = () => {
   }, []);
 
   return (
-    <UserContextProvider value={contextValue}>
+    <UserContextProvider
+      value={{
+        token,
+        tokenDecoded: decoded,
+      }}
+    >
       <div className="w-screen h-full flex bg-gray-0 sm:justify-between">
         <Sidebar />
-
         <div className="w-full">
           <MainNavBar />
-
           <div className="flex">
             <Feed postList={postList} />
-            <div className="w-1/3 bg-light h-full">
-              <Widgets />
-            </div>
+            <Widgets />
           </div>
         </div>
       </div>
