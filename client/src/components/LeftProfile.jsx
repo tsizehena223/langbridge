@@ -5,7 +5,7 @@ import MenuItem from './MenuItem'
 
 function LeftProfile() {
   return (
-    <div className='space-y-8'>
+    <div className='space-y-8 h-screen'>
         <div>
             <MenuItem icon={FaUserEdit} label="EditProfile" />
         </div>

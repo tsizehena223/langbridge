@@ -17,9 +17,11 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="h-screen w-1/6&& space-y-4 p-8 bg-light rounded-l-lg z-50">
-      {/* logo */}
-      <h1 className="font-semibold text-gray-1">LangBridge</h1>
+    <div className="sticky top-0 h-screen w-1/6 space-y-4 pl-8 pt-6 bg-light rounded-l-lg z-50">
+      <div className="flex">
+        <img className="w-14 h-14 relative" src={Logo} alt="LangBridge"  />
+        <h1 className="text-blue mt-4 font-bold text-xl">LangBridge</h1>
+      </div>
       <div className="flex">
         <SearchBar onSearch={handleSearch} />
       </div>
