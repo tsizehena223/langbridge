@@ -4,16 +4,11 @@ import { Link } from "react-router-dom";
 import countries from "i18n-iso-countries";
 import languages from "@cospired/i18n-iso-languages";
 import { useNavigate } from "react-router-dom";
-import enLocaleCountry from "i18n-iso-countries/langs/en.json";
-import enLocaleLang from "@cospired/i18n-iso-languages/langs/en.json";
 import SignupIllustration from "../assets/signup.svg";
 import { FormInput, FormSelect, ErrorMessage } from "../components";
 import { signupRules, validateForm } from "../utils/form";
 import api from "../utils/api";
 import config from "../config";
-
-countries.registerLocale(enLocaleCountry);
-languages.registerLocale(enLocaleLang);
 
 const Signup = () => {
   const [data, setData] = useState({

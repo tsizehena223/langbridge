@@ -3,11 +3,10 @@ import { UserContext } from "../contexts/userContext";
 import { RiCloseCircleFill } from "react-icons/ri";
 import Avatar from "../assets/avatar.svg";
 import { IoSendSharp } from "react-icons/io5";
-import ReactCountryFlag from "react-country-flag";
-import countries from "i18n-iso-countries";
 import dateFormat from "dateformat";
 import api from "../utils/api";
 import config from "../config";
+import ProfilePic from "./ProfilePic";
 
 const CommentPopup = ({ postId, comments, setComments, close }) => {
   const { token, tokenDecoded } = useContext(UserContext);
@@ -59,15 +58,7 @@ const CommentPopup = ({ postId, comments, setComments, close }) => {
             >
               <div className="mb-2 flex items-center">
                 <div className="relative mr-3">
-                  <img src={Avatar} alt="" className="w-10 h-10" />
-                  <ReactCountryFlag
-                    countryCode={countries.getAlpha2Code(
-                      comment.author.country,
-                      "en"
-                    )}
-                    svg={true}
-                    className="absolute -bottom-1 right-0"
-                  />
+                  <ProfilePic img={Avatar} country={comment.author.country} />
                 </div>
                 <div>
                   <div className="font-semibold">{comment.author.name}</div>

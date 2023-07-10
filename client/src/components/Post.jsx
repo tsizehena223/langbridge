@@ -4,19 +4,18 @@ import {
   RiShareCircleLine,
   RiMessage2Line,
 } from "react-icons/ri";
-import countries from "i18n-iso-countries";
 import Avatar from "../assets/avatar.svg";
-import ReactCountryFlag from "react-country-flag";
-import { useContext, useState } from "react";
+import { useContext, useMemo, useState } from "react";
 import { UserContext } from "../contexts/userContext";
 import api from "../utils/api";
 import config from "../config";
 import Popup from "reactjs-popup";
 import CommentPopup from "./CommentPopup";
+import ProfilePic from "./ProfilePic";
 
 const Post = ({ data }) => {
   const { token, tokenDecoded } = useContext(UserContext);
-  const { id: userId } = tokenDecoded;
+  const { id: userId } = useMemo(() => tokenDecoded);
   const [isLiked, setIsLiked] = useState(data.likes.includes(userId));
   const [comments, setComments] = useState(data.comments);
 
@@ -33,8 +32,8 @@ const Post = ({ data }) => {
 
     api.get(config.baseUrl, `/api/post/like/${data.id}`, {
       headers: {
-        Authorization: token
-      }
+        Authorization: token,
+      },
     });
   };
 
@@ -46,14 +45,7 @@ const Post = ({ data }) => {
     <div className="w-full mb-4 py-6 px-8 rounded-xl text-gray-1 bg-light">
       <div className="mb-4">
         <div className="flex items-center">
-          <div className="relative">
-            <img src={Avatar} alt="" className="w-10 h-10" />
-            <ReactCountryFlag
-              countryCode={countries.getAlpha2Code(data.author.country, "en")}
-              svg={true}
-              className="absolute -bottom-1 right-0"
-            />
-          </div>
+          <ProfilePic img={Avatar} country={data.author.country} />
           <div className="ml-4 font-semibold">
             <div>{data.author.name}</div>
             <div className="text-sm text-placeholder">{data.createdAt}</div>
