@@ -9,7 +9,7 @@ import { UserContextProvider } from "../contexts/userContext";
 const Newsfeed = () => {
   const token = useMemo(() => localStorage.getItem("token"));
   const decoded = useMemo(() => decode(token));
-  const [postList, setPostList] = useState(post);
+  const [postList, setPostList] = useState([]);
 
   useEffect(() => {
     api.get(config.baseUrl, "/api/posts", {}).then((value) => {

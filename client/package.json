@@ -9,7 +9,6 @@
     "preview": "vite preview --host"
   },
   "dependencies": {
-    "@cospired/i18n-iso-languages": "^4.1.0",
     "aos": "^2.3.4",
     "@ladjs/country-language": "^1.0.3",
     "axios": "^1.4.0",
