@@ -4,18 +4,24 @@ namespace App\Controller;
 
 use App\Entity\Article;
 use App\Repository\CommentRepository;
+use App\Repository\UserRepository;
 use Doctrine\Persistence\ManagerRegistry;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GetArticlesController extends AbstractController
+class GetPostByUserController extends AbstractController
 {
-    #[Route(path: "/api/posts", name: "get_collection_article", methods: ["GET"])]
-    public function getArticle(ManagerRegistry $objectRepository, CommentRepository $commentRepository): JsonResponse
+    #[Route(path: "/api/postsbyuser", name: "get_post_by_user", methods: ["GET"])]
+    public function getArticle(Request $request, UserRepository $userRepository, ManagerRegistry $objectRepository, CommentRepository $commentRepository): JsonResponse
     {
+        $userId = ($request->query->get("user")) ? $request->query->get("user") : 0;
+
+        $user = $userRepository->find($userId);
+
         $repo = $objectRepository->getRepository(persistentObject: Article::class);
-        $articles = $repo->findAll();
+        $articles = $repo->findBy(["author" => $user]);
 
         $data = [];
 
@@ -51,6 +57,6 @@ class GetArticlesController extends AbstractController
                 "comments" => $array_comments
             ];
         }
-        return new JsonResponse(["posts" => $data], 200);
+        return new JsonResponse($data);
     }
 }

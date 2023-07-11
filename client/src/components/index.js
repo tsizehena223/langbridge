@@ -15,6 +15,9 @@ import MenuItem from "./MenuItem";
 import LeftProfile from "./LeftProfile";
 import RightProfile from "./RightProfile";
 import ProfileNavBar from "./ProfileNavBar";
+import Post from "./Post";
+import PostInput from "./PostInput";
+import PostContainer from "./PostContainer"
 
 export {
   FormInput,
@@ -34,4 +37,7 @@ export {
   MenuItem,
   RightProfile,
   ProfileNavBar,
+  Post,
+  PostInput,
+  PostContainer,
 };

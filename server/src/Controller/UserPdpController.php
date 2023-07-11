@@ -3,8 +3,9 @@
 namespace App\Controller;
 
 use App\Entity\User;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class UserPdpController extends AbstractController
 {
@@ -12,11 +13,14 @@ class UserPdpController extends AbstractController
     {
         $user = $request->attributes->get('data');
         if (!($user instanceof User)) {
-            throw new \RuntimeException(message: "User attendu");
+            return new JsonResponse(["message" => "User expected"], 400);
         }
-        $file = $request->files->get('file');
-        $user->setPdpFile($file);
-        $user->setUpdatedAt(new \DateTime("NOW", new \DateTimeZone("Indian/Antananarivo")));
+
+        $file = $request->files->get('pdp');
+        if ($file !== null) {
+            $user->setPdpFile($file);
+            $user->setUpdatedAt(new \DateTime("NOW", new \DateTimeZone("Indian/Antananarivo")));
+        }
 
         return $user;
     }

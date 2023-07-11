@@ -10,21 +10,38 @@ import {
 } from "react-icons/fa6";
 import { IoSendSharp } from "react-icons/io5";
 import MenuItem from "./MenuItem";
+import api from "../utils/api";
+import config from "../config";
 
 const PostInput = () => {
   const [inputValue, setInputValue] = useState("");
+  const token = localStorage.getItem("token");
+
+  const handlePost = () => {
+    if (!inputValue) return;
+
+    api.post(config.baseUrl, "/api/post/create", {
+      headers: {
+        Authorization: token,
+      },
+      data: { content: inputValue },
+    });
+
+    setInputValue("");
+  };
 
   return (
-    <div className="w-full p-6">
+    <div className="w-full mb-6 p-6 rounded-xl bg-light">
       <div className="space-y-4">
         <div className="flex justify-around space-x-2">
-          <img src={Avatar} className="w-9 h-9" />
-          <input
-            type="post"
-            placeholder="What's on your mind...."
-            value={inputValue}
+          <img src={Avatar} className="w-9 h-9 mr-2" />
+          <textarea
+            cols="30"
+            rows="1"
+            placeholder="what's on your mind..."
             onChange={(e) => setInputValue(e.target.value)}
-            className="w-full py-2 px-4 border-2 border-light rounded-xl font-semibold text-gray-1 focus:outline-none focus:border-purple focus:text-purple focus:placeholder:text-purple"
+            value={inputValue}
+            className="w-full py-1 px-4 border-[1px] border-gray-0 rounded-md placeholder:font-semibold focus:outline-none focus:border-purple focus:font-normal"
           />
         </div>
         <div className="flex justify-between">
@@ -37,7 +54,7 @@ const PostInput = () => {
           </div>
           <div className="flex space-x-4">
             <MenuItem icon={FaPencil} label="Draft" />
-            <MenuItem icon={IoSendSharp} label="Post" />
+            <MenuItem icon={IoSendSharp} label="Post" onSelect={handlePost} />
           </div>
         </div>
       </div>

@@ -3,7 +3,7 @@ const MenuItem = ({ icon: Icon, label, onSelect }) => (
     onClick={onSelect}
     className="flex items-center text-gray-1 hover:text-purple"
   >
-    <Icon className="mr-5" />
+    <Icon className="mr-4" />
     <span className="font-semibold hidden text-lg md:block">{label}</span>
   </button>
 );

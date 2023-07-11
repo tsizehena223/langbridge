@@ -1,10 +1,11 @@
 import { useState } from "react";
-import axios from "axios";
 import { FaCircleUser } from "react-icons/fa6";
 import LoginIllustration from "../assets/login.svg";
 import { FormInput, ErrorMessage } from "../components";
 import { Link, useNavigate } from "react-router-dom";
 import { loginRules, validateForm } from "../utils/form";
+import api from "../utils/api";
+import config from "../config";
 
 const Login = () => {
   const [data, setData] = useState({ email: "", password: "" });
@@ -29,11 +30,10 @@ const Login = () => {
     if (Object.keys(errors).length) return;
 
     try {
-      const res = await axios.post("http://localhost:8001/api/login", data);
+      const res = await api.post(config.baseUrl, "/api/login", data);
       const token = res.data.token;
       localStorage.setItem("token", token);
-      console.log(token);
-      // TODO
+      navigate("/newsfeed");
     } catch (error) {
       setRequestError(error.response.data.message);
     }
@@ -42,7 +42,7 @@ const Login = () => {
   return (
     <div className="w-screen h-screen flex justify-center sm:justify-between">
       <div className="w-1/2 h-full bg-purple hidden sm:flex justify-center items-center">
-        <img src={LoginIllustration} className="w-96 animate-bounce duration-2000" />
+        <img src={LoginIllustration} className="w-96" />
       </div>
       <div className="w-1/2 h-full flex justify-center items-center">
         <div className="py-4 px-6 flex flex-col items-center rounded-md">

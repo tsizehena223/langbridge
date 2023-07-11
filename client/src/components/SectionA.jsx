@@ -1,14 +1,7 @@
 import FlagIllustration from "../assets/countries_flags.png";
-import AOS from "aos";
-import "aos/dist/aos.css";
 import { useEffect } from "react";
 
-
 function SectionA() {
-  useEffect(() => {
-    AOS.init({duration:2000});
-    AOS.refresh();
-  }, []);
   return (
     <div id="section-a" className="max-w-3xl flex flex-col items-center">
       <img data-aos="zoom-in-up" src={FlagIllustration} />
@@ -16,7 +9,8 @@ function SectionA() {
       <p className="leading-7 text-center">
         Join our vibrant community of language enthusiasts, where you can easily
         search for language partners based on their country of origin or the
-        language they speak. Make exchanges with people from all around the world.
+        language they speak. Make exchanges with people from all around the
+        world.
       </p>
     </div>
   );
