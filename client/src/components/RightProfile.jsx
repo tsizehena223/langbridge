@@ -36,7 +36,7 @@ function RightProfile() {
 
                 </div>
             </div>
-            <input type="file" ref={inputRef} onChange={handleImageChange} style={{display:'none'}} />
+            <input type="file" ref={inputRef} onChange={handleImageChange} style={{display:'none'}} accept='image/*' />
             <button onClick={handleImageClick} className=''><MenuItem icon={FaPencil} label="Edit"/></button>
         </div>
         <div className='bg-gray-0 p-8 rounded-xl space-y-2'>

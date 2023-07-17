@@ -9,7 +9,7 @@ import MenuItem from "./MenuItem";
 import { MdSunny } from "react-icons/md";
 
 const MainNavBar = () => {
-  const { username } = useContext(UserContext).tokenDecoded;
+  // const { username } = useContext(UserContext).tokenDecoded;
 
   const handleSearch = (input) => {
     // TODO

@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useRef } from "react";
 import Avatar from "../assets/avatar.svg";
 import {
   FaImage,
@@ -8,6 +8,7 @@ import {
   FaFaceSmile,
   FaPencil,
 } from "react-icons/fa6";
+import {FaTimes, FaTimesCircle} from 'react-icons/fa'
 import { IoSendSharp } from "react-icons/io5";
 import MenuItem from "./MenuItem";
 import api from "../utils/api";
@@ -30,6 +31,18 @@ const PostInput = () => {
     setInputValue("");
   };
 
+  const imageRef = useRef();
+  const [image, setImage] = useState(null);
+  
+  const handleImageChange= (event) => {
+    if (event.target.files && event.target.files[0]) {
+      let img = event.target.files[0];
+      setImage({
+        image: URL.createObjectURL(img),
+      })
+    }
+  };
+
   return (
     <div className="w-full mb-6 p-6 rounded-xl bg-light">
       <div className="space-y-4">
@@ -45,20 +58,40 @@ const PostInput = () => {
           />
         </div>
         <div className="flex justify-between">
-          <div className="flex space-x-4">
-            <MenuItem icon={FaCamera} />
-            <MenuItem icon={FaImage} />
-            <MenuItem icon={FaLink} />
-            <MenuItem icon={FaLocationDot} />
-            <MenuItem icon={FaFaceSmile} />
+          <div className="flex space-x-4 items-center">
+            <div>
+              <MenuItem icon={FaCamera} />
+            </div>
+            <div onClick={()=>imageRef.current.click()}>
+              <MenuItem icon={FaImage} />
+            </div>
+            <div>
+              <MenuItem icon={FaLink} />
+            </div>
+            <div>
+              <MenuItem icon={FaLocationDot} />
+            </div>
+            <div>
+              <MenuItem icon={FaFaceSmile} />
+            </div>
           </div>
           <div className="flex space-x-4">
             <MenuItem icon={FaPencil} label="Draft" />
             <MenuItem icon={IoSendSharp} label="Post" onSelect={handlePost} />
           </div>
         </div>
+        <div style={{display:'none'}} >
+          <input type="file" name="myPost" ref={imageRef} onChange={handleImageChange} accept='image/*' />
+        </div>
       </div>
-      <div></div>
+      {image &&
+        <div className="rounded-xl m-3">
+          <button onClick={()=>setImage(null)} className="absolute p-4" >
+            <MenuItem icon={FaTimesCircle}/>
+          </button>
+          <img src={image.image} alt="" className="w-full h-96 rounded-xl" />
+        </div>
+      }
     </div>
   );
 };
