@@ -1,7 +1,4 @@
 import Popup from "reactjs-popup";
-import { useContext } from "react";
-import { UserContext } from "../contexts/userContext";
-import SearchBar from "./SearchBar";
 import Avatar from "../assets/avatar.svg";
 import ProfilePopupMenu from "./ProfilePopupMenu";
 import { FaHouse, FaGear, FaMoon } from "react-icons/fa6";
@@ -9,14 +6,12 @@ import MenuItem from "./MenuItem";
 import { MdSunny } from "react-icons/md";
 
 const MainNavBar = () => {
-  // const { username } = useContext(UserContext).tokenDecoded;
-
   const handleSearch = (input) => {
     // TODO
   };
 
   return (
-    <div className="sticky z-40 w-full py-4 px-8 top-0 flex items-center justify-between shadow-lg bg-light">
+    <div className="sticky z-40 w-full py-4 px-8 top-0 flex items-center justify-between shadow-sm bg-light">
       <MenuItem icon={FaHouse} label="Home" />
       <div className="flex items-center">
         <button className="ml-4 rounded-full w-9 h-9 ">

@@ -27,10 +27,9 @@ const Sidebar = () => {
 
   return (
     <div className="sticky top-0 h-screen w-1/5 space-y-4 py-6 px-8 bg-light rounded-l-lg z-50">
-      {/* Logo */}
       <div className="flex space-x-2 items-center">
-        <img src={Logo} alt="logo" className="w-10 h-10"/>
-        <h1 className="font-semibold text-xl text-blue">LangBridge</h1>
+        <img src={Logo} alt="logo" className="w-10 h-10" />
+        <h1 className="font-semibold text-xl text-purple">LangBridge</h1>
       </div>
       <div className="flex">
         <SearchBar onSearch={handleSearch} />
@@ -66,7 +65,7 @@ const Sidebar = () => {
         <div>
           <MenuItem
             icon={FaArrowRightToBracket}
-            label="LogOut"
+            label="Logout"
             onSelect={handleLogout}
           />
         </div>

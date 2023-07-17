@@ -5,7 +5,7 @@ import {
   RiMessage2Line,
 } from "react-icons/ri";
 import Avatar from "../assets/avatar.svg";
-import { useContext, useMemo, useState } from "react";
+import { useContext, useState } from "react";
 import { UserContext } from "../contexts/userContext";
 import api from "../utils/api";
 import config from "../config";
@@ -14,8 +14,7 @@ import CommentPopup from "./CommentPopup";
 import ProfilePic from "./ProfilePic";
 
 const Post = ({ data }) => {
-  const { token, tokenDecoded } = useContext(UserContext);
-  const { id: userId } = useMemo(() => tokenDecoded);
+  const { token, userId } = useContext(UserContext);
   const [isLiked, setIsLiked] = useState(data.likes.includes(userId));
   const [comments, setComments] = useState(data.comments);
 

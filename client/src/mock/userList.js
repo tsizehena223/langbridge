@@ -2,13 +2,11 @@ export default [
   {
     id: 1,
     name: "Lorem Ipsum",
+    country: "France",
   },
   {
     id: 2,
     name: "Ipsum Lorem",
-  },
-  {
-    id: 3,
-    name: "Blabla Lorem",
+    country: "Madagascar",
   },
 ];

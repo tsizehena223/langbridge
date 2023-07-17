@@ -9,8 +9,7 @@ import config from "../config";
 import ProfilePic from "./ProfilePic";
 
 const CommentPopup = ({ postId, comments, setComments, close }) => {
-  const { token, tokenDecoded } = useContext(UserContext);
-  const { id: userId, username, country } = useMemo(() => tokenDecoded);
+  const { token, userId, username, country } = useContext(UserContext);
   const [inputValue, setInputValue] = useState("");
 
   const handleComment = () => {
@@ -54,7 +53,7 @@ const CommentPopup = ({ postId, comments, setComments, close }) => {
           {comments.map((comment) => (
             <div
               key={comment.id}
-              className="mb-4 py-2 px-4 rounded-md bg-[#e0e2e5]"
+              className="mb-4 py-2 px-4 rounded-md bg-silver"
             >
               <div className="mb-2 flex items-center">
                 <div className="relative mr-3">
