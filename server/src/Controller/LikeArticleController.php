@@ -11,7 +11,7 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
-class LikePostController extends AbstractController
+class LikeArticleController extends AbstractController
 {
     #[Route(path: "/api/post/like/{postId}", name: "like_post", methods: ["GET"])]
     public function likePost(

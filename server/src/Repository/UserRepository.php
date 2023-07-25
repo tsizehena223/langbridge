@@ -56,28 +56,22 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
-//    /**
-//     * @return User[] Returns an array of User objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('u.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getUserByName(?string $name, $number)
+    {
+        return $this->createQueryBuilder("user")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language")
+            ->where($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
+            ->setMaxResults($number)
+            ->getQuery()->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?User
-//    {
-//        return $this->createQueryBuilder('u')
-//            ->andWhere('u.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getUsersByCountry($countries, ?int $currentUserId, $number)
+    {
+        return $this->createQueryBuilder("user")
+            ->select("user.id", "user.username as name", "user.nationality as contry", "user.language")
+            ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
+            ->setMaxResults($number)
+            ->getQuery()->getResult();
+    }
 }

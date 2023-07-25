@@ -39,28 +39,20 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Article[] Returns an array of Article objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('a.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getArticles()
+    {
+        return $this->createQueryBuilder("article")
+            ->select("article.id", "article.content", "article.createdAt", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry")
+            ->leftJoin("article.author", "user")
+            ->getQuery()->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Article
-//    {
-//        return $this->createQueryBuilder('a')
-//            ->andWhere('a.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getArticlesByAuthor(int $author)
+    {
+        return $this->createQueryBuilder("article")
+            ->select("article.id", "article.content", "article.createdAt", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry")
+            ->leftJoin("article.author", "user")
+            ->where($this->createQueryBuilder("article")->expr()->eq("article.author", $author))
+            ->getQuery()->getResult();
+    }
 }

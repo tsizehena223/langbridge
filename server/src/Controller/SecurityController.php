@@ -2,10 +2,8 @@
 
 namespace App\Controller;
 
-use Lcobucci\JWT\Configuration;
 use App\Repository\UserRepository;
-use Lcobucci\JWT\Signer\Hmac\Sha256;
-use Lcobucci\JWT\Signer\Key\InMemory;
+use App\Service\GenerateToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -18,8 +16,8 @@ class SecurityController extends AbstractController
     {
     }
 
-    #[Route('/api/login', name: 'app_login', methods: ["POST"])]
-    public function index(Request $request, UserRepository $repo): JsonResponse
+    #[Route('/api/users/login', name: 'app_login', methods: ["POST"])]
+    public function index(Request $request, UserRepository $repo, GenerateToken $generateToken): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         $user = $repo->findOneBy(['email' => $data["email"]]);
@@ -34,33 +32,14 @@ class SecurityController extends AbstractController
             return new JsonResponse(["message" => "Incorrect password"], 401);
         }
 
-        function generateToken($userId, $username, $userCountry, $language)
-        {
-            $key = 'hiG8DlOKvtih6AxlZn5XKImZ06yu8I3mkOzaJrEuW8yAv8Jnkw330uMt8AEqQ5LB';
+        $token = $generateToken->generateToken($user->getId());
 
-            $configuration = Configuration::forSymmetricSigner(
-                new Sha256(),
-                InMemory::plainText($key)
-            );
-
-            $issuedAt = new \DateTimeImmutable("now", new \DateTimeZone("Indian/Antananarivo"));
-            $builder = $configuration->builder()
-                ->issuedBy('http://localhost:8000')
-                ->permittedFor('http://localhost:5173')
-                ->expiresAt($issuedAt->modify('+2 days'))
-                ->withClaim('id', $userId)
-                ->withClaim('username', $username)
-                ->withClaim('language', $language)
-                ->withClaim('country', $userCountry);
-
-            $token = $builder->getToken($configuration->signer(), $configuration->signingKey());
-
-            return $token->toString();
-        }
-
-        $token = generateToken($user->getId(), $user->getUsername(), $user->getNationality(), $user->getLanguage());
-
-        $response = new JsonResponse(["token" => $token], 200);
-        return $response;
+        return new JsonResponse([
+            "token" => $token, 
+            "id" =>$user->getId(), 
+            "name" => $user->getUsername(), 
+            "country" => $user->getNationality(),
+            "language" => $user->getLanguage()
+        ], 200);
     }
 }

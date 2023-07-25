@@ -13,9 +13,9 @@ use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArticleRepository;
 use ApiPlatform\Metadata\GetCollection;
+use App\Controller\ArticleCreateController;
 use App\Controller\GetArticleController;
 use App\Controller\GetArticlesController;
-use App\Controller\CreateArticleController;
 use App\Controller\LikePostController;
 use App\Repository\CommentRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -25,31 +25,18 @@ use Symfony\Component\Validator\Constraints as Assert;
 #[ApiResource(
     operations: [
         new GetCollection(
-            routeName: "get_collection_article",
+            routeName: "get_articles",
             controller: GetArticlesController::class,
-            normalizationContext: ["groups" => ["read:collection:Article"]]
-        ),
-        new Get(
-            routeName: "get_item_article",
-            controller: GetArticleController::class,
-            normalizationContext: ["groups" => ["read:item:Article"]]
+            normalizationContext: ["groups" => ["get:Article"]]
         ),
         new Post(
             routeName: "create_article",
-            controller: CreateArticleController::class,
+            controller: ArticleCreateController::class,
             denormalizationContext: ["groups" => ["add:Article"]]
         ),
-        new Patch(
-            denormalizationContext: ["groups" => ["update:Article"]]
-        ),
-        new Delete(),
         new Get(
             routeName: "like_post",
             controller: LikePostController::class
-        ),
-        new Get(
-            routeName: "get_post_by_user",
-            controller: GetPostByUserController::class
         )
     ]
 )]
@@ -58,20 +45,20 @@ class Article
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["read:collection:Article", "read:item:Article"])]
+    #[Groups(["get:Article"])]
     private ?int $id = null;
 
     #[ORM\Column(type: Types::TEXT)]
-    #[Groups(["read:collection:Article", "read:item:Article", "add:Article", "update:Article"])]
+    #[Groups(["get:Article", "add:Article"])]
     #[Assert\NotBlank(message: 'Content should not be blank')]
     private ?string $content = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE)]
-    #[Groups(["read:collection:Article", "read:item:Article"])]
+    #[Groups(["get:Article"])]
     private ?\DateTimeInterface $createdAt = null;
 
     #[ORM\ManyToOne(inversedBy: 'articles')]
-    #[Groups(["read:collection:Article", "read:item:Article"])]
+    #[Groups(["get:Article"])]
     #[Assert\NotBlank(message: 'Author should not be blank')]
     #[Assert\NotNull(message: 'Author should not be null')]
     private ?User $author = null;

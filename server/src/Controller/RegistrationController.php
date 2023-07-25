@@ -17,7 +17,7 @@ class RegistrationController extends AbstractController
     {
     }
 
-    #[Route('/api/register', name: 'app_register', methods: ["POST"])]
+    #[Route('/api/users', name: 'app_register', methods: ["POST"])]
     public function index(Request $request, ValidatorInterface $validatorInterface, ObjectManager $objectManager): JsonResponse
     {
         $data = json_decode($request->getContent(), true);

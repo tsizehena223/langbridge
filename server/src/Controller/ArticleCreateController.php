@@ -12,9 +12,9 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Validator\Validator\ValidatorInterface;
 
-class CreateArticleController extends AbstractController
+class ArticleCreateController extends AbstractController
 {
-    #[Route(path: "/api/post/create", name: "create_article")]
+    #[Route(path: "/api/articles", name: "create_article", methods: ["POST"])]
     public function index(
         Request $request,
         ValidatorInterface $validator,
@@ -22,21 +22,23 @@ class CreateArticleController extends AbstractController
         UserRepository $userRepository,
         DecodeJwt $decodeJwt
     ): JsonResponse {
-        $data = json_decode($request->getContent(), true)["data"];
-        // $data = json_decode($request->getContent(), true);
+        $data = json_decode($request->getContent(), true);
         $article = new Article();
 
-        $jwtToken = json_decode($request->getContent(), true)["headers"]["Authorization"];
-        // $jwtToken = $request->headers->get("Authorization");
+        $jwtToken = $request->headers->get("Authorization");
         if (!$jwtToken) {
-            return new JsonResponse(["Message" => "User not authentified (token)"], 401);
+            return new JsonResponse(["message" => "User not authentified (token)"], 401);
         }
 
         $userId = $decodeJwt->getIdToken($jwtToken);
         $author = $userRepository->findOneBy(["id" => $userId]);
 
         if (!$author) {
-            return new JsonResponse(["Message" => "User not authentified (author)"], 401);
+            return new JsonResponse(["message" => "User not authentified (author)"], 401);
+        }
+
+        if (!isset($data["content"])) {
+            return new JsonResponse(["message" => "Content should not be null"], 400);
         }
 
         $article->setContent($data["content"])
@@ -50,12 +52,12 @@ class CreateArticleController extends AbstractController
             foreach ($errors as $error) {
                 $error_Message[] = $error->getMessage();
             }
-            return new JsonResponse(["Message" => $error_Message], 400);
+            return new JsonResponse(["message" => $error_Message], 400);
         }
 
         $objectManager->persist($article);
         $objectManager->flush();
 
-        return new JsonResponse(["Message" => "Created successfully"], 200);
+        return new JsonResponse(["message" => "Created successfully"], 200);
     }
 }

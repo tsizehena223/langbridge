@@ -1,5 +1,5 @@
 <?php
-
+/*
 namespace App\Controller;
 
 use App\Entity\Article;
@@ -18,7 +18,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateCommentController extends AbstractController
 {
-    #[Route(path: "api/comment/create", name: "create_comment", methods: ["POST"])]
+    #[Route(path: "api/comments", name: "create_comment", methods: ["POST"])]
     public function createComment(
         Request $request,
         ObjectManager $manager,
@@ -27,14 +27,13 @@ class CreateCommentController extends AbstractController
         UserRepository $userRepository,
         ArticleRepository $articleRepository
     ): JsonResponse {
-        $data = json_decode($request->getContent(), true)["data"];
+        $data = json_decode($request->getContent(), true);
 
         if ($data === null) {
             return new JsonResponse(["message" => "No sent content"], 400);
         }
 
-        $commentator = json_decode($request->getContent(), true)["headers"]["Authorization"];
-        // dd($commentator);
+        $commentator = $request->headers->get("Authorization");
         $commentatorId = $decodeJwt->getIdToken($commentator);
 
         if ($commentatorId === null) {
@@ -78,3 +77,4 @@ class CreateCommentController extends AbstractController
         return new JsonResponse(["message" => "Comment sent successfully"]);
     }
 }
+*/

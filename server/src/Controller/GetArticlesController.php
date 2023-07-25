@@ -2,55 +2,35 @@
 
 namespace App\Controller;
 
-use App\Entity\Article;
-use App\Repository\CommentRepository;
-use Doctrine\Persistence\ManagerRegistry;
+use App\Repository\ArticleRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
 
 class GetArticlesController extends AbstractController
 {
-    #[Route(path: "/api/posts", name: "get_collection_article", methods: ["GET"])]
-    public function getArticle(ManagerRegistry $objectRepository, CommentRepository $commentRepository): JsonResponse
+    #[Route(path: "/api/articles", name: "get_articles", methods: ["GET"])]
+    public function getArticle(Request $request, ArticleRepository $articleRepository): JsonResponse
     {
-        $repo = $objectRepository->getRepository(persistentObject: Article::class);
-        $articles = $repo->findAll();
+        $author = (int)$request->query->get("author");
 
+        $articles = ($author != null) ? $articleRepository->getArticlesByAuthor($author) : $articleRepository->getArticles();
         $data = [];
 
         foreach ($articles as $article) {
-            $comments = $comments = $commentRepository->findBy(["article" => $article->getId()]);
-            $array_comments = [];
-            foreach ($comments as $comment) {
-                $commentId = $comment->getId();
-                $commentContent = $comment->getContent();
-                $commentAuthor = $comment->getCommentator();
-                $commentCreatedAt = $comment->getCreatedAt()->format("d M Y H:i");
-                $array_comments[] = [
-                    "id" => $commentId,
-                    "content" => $commentContent,
-                    "author" => $commentAuthor = [
-                        "id" => $commentAuthor->getId(),
-                        "name" => $commentAuthor->getUsername(),
-                        "country" => $commentAuthor->getNationality()
-                    ],
-                    "createdAt" => $commentCreatedAt
-                ];
-            }
             $data[] = [
-                "id" => $article->getId(),
-                "content" => $article->getContent(),
-                "createdAt" => $article->getCreatedAt()->format("d M Y H:i"),
-                "author" => [
-                    "id" => $article->getAuthor()->getId(),
-                    "name" => $article->getAuthor()->getUsername(),
-                    "country" => $article->getAuthor()->getNationality()
+                'id' => $article["id"],
+                'content' => $article["content"],
+                'created' => $article["createdAt"]->format("d M Y H:i"),
+                'author' => [
+                    'id' => $article["authorId"],
+                    'name' => $article["authorName"],
+                    'country' => $article["authorCountry"]
                 ],
-                "likes" => $article->getLikes(),
-                "comments" => $array_comments
             ];
         }
-        return new JsonResponse(["posts" => $data], 200);
+
+        return new JsonResponse($data);
     }
 }

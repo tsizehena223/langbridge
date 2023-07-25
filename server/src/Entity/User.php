@@ -4,8 +4,6 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Delete;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
@@ -13,8 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
 use App\Controller\SecurityController;
-use ApiPlatform\Metadata\GetCollection;
-use App\Controller\SearchDataController;
+use App\Controller\GetUsersController;
 use App\Controller\UserPdpController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
@@ -27,51 +24,29 @@ use Vich\UploaderBundle\Mapping\Annotation as Vich;
 #[ORM\Entity(repositoryClass: UserRepository::class)]
 #[ApiResource(
     operations: [
-        new GetCollection(
-            normalizationContext: ["groups" => ["read:collection"]]
-        ),
-        new Get(
-            normalizationContext: ["groups" => ["read:item"]]
-        ),
         new Post(
+            denormalizationContext: ["groups" => ["login:User"]],
             routeName: "app_login",
             controller: SecurityController::class,
-            openapiContext: [
-                "summary" => "Login"
-            ],
-            denormalizationContext: ["groups" => ["login:User"]]
+            openapiContext: ["summary" => "Login"]
         ),
         new Post(
-            denormalizationContext: ["groups" => ["add:User"]],
+            denormalizationContext: ["groups" => ["register:User"]],
             routeName: "app_register",
             controller: RegistrationController::class,
-            openapiContext: [
-                "summary" => "Registration"
-            ]
-        ),
-        new Delete(),
-        new Patch(
-            denormalizationContext: ["groups" => ["update:User"]]
-        ),
-        new Post(
-            deserialize: false,
-            uriTemplate: "/user/{id}/pdp",
-            controller: UserPdpController::class,
-            openapiContext: [
-                "summary" => "Add a profil picture"
-            ]
+            openapiContext: ["summary" => "Registration"]
         ),
         new Get(
-            routeName: "app_search",
-            controller: SearchDataController::class,
-            openapiContext: [
-                "summary" => "Search an user by his name"
-            ]
-        ),
-        new Get(
-            routeName: "get_user_by_nationality",
-            controller: SearchUserByNationalityController::class
+            normalizationContext: ["groups" => ["search:User"]],
+            routeName: "search_users",
+            controller: GetUsersController::class,
+            openapiContext: ["summary" => "Search users"]
         )
+        // new Post(
+        //     deserialize: false,
+        //     uriTemplate: "/user/{id}/pdp",
+        //     controller: UserPdpController::class
+        // )
     ]
 )]
 #[UniqueEntity(fields: ["email"], message: "This email is already used!")]
@@ -81,39 +56,39 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    #[Groups(["read:collection", "read:item", "read:item:Info"])]
+    #[Groups(["search:User"])]
     private ?int $id = null;
 
     #[ORM\Column(length: 180, unique: true)]
-    #[Groups(["read:item", "add:User", "update:User", "login:User", "read:item:Info"])]
+    #[Groups(["login:User", "register:User"])]
     #[Assert\NotNull(message: 'Email should not be null')]
     #[Assert\NotBlank(message: 'Email should not be blank')]
     #[Assert\Email(message: 'This value is not a valid email address')]
     private ?string $email = null;
 
     #[ORM\Column(length: 255)]
-    #[Groups(["read:collection", "read:item", "add:User", "update:User", "read:item:Info"])]
+    #[Groups(["register:User", "search:User"])]
     #[Assert\NotNull(message: 'Username should not be null')]
     #[Assert\NotBlank(message: 'Username should not be blank')]
     #[Assert\Length(min: 4, minMessage: "Username should have at least 4 characters")]
     private ?string $username = null;
 
     #[ORM\Column]
-    #[Groups(["read:item"])]
+    #[Groups(["search:User"])]
     private array $roles = [];
 
     /**
      * @var string The hashed password
      */
     #[ORM\Column]
-    #[Groups(["add:User", "login:User"])]
+    #[Groups(["login:User", "register:User"])]
     #[Assert\NotNull(message: 'Password should not be null')]
     #[Assert\NotBlank(message: 'Password should not be blank')]
     #[Assert\Length(min: 6, minMessage: "Password should have at least 6 characters")]
     #[Assert\EqualTo(propertyPath: "confirmPassword", message: 'Password should be equal to confirmPassword', groups: ["add:User"])]
     private ?string $password = null;
 
-    #[Groups(["add:User"])]
+    #[Groups(["register:User"])]
     #[Assert\NotBlank(message: 'ConfirmPassword should not be blank', groups: ["add:User"])]
     #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
     private ?string $confirmPassword = null;
@@ -122,7 +97,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private ?File $pdpFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["read:item"])]
     private ?string $pdpName = null;
 
     #[ORM\Column(type: Types::DATETIME_MUTABLE, nullable: true)]
@@ -132,12 +106,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     private Collection $articles;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["read:item", "read:collection", "add:User", "update:User"])]
+    #[Groups(["register:User", "search:User"])]
     #[Assert\NotBlank(message: 'Country should not be blank')]
     private ?string $nationality = null;
 
     #[ORM\Column(length: 255, nullable: true)]
-    #[Groups(["read:item", "read:collection", "add:User", "update:User"])]
+    #[Groups(["register:User", "search:User"])]
     #[Assert\NotBlank(message: 'Language should not be blank')]
     private ?string $language = null;
 
