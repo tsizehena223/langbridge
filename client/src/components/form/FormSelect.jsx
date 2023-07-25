@@ -1,0 +1,49 @@
+import { useState } from "react";
+import ErrorMessage from "./ErrorMessage";
+
+const FormSelect = (props) => {
+  const [isFocused, setIsFocused] = useState(false);
+
+  return (
+    <div className="flex flex-col items-center">
+      <div
+        className={`mt-4 w-60 py-2 px-4 
+        flex items-center
+        border-2 ${isFocused && "!border-purple"} ${
+          props.value ? "border-gray-1" : "border-placeholder"
+        } ${props.error && !isFocused && "!border-red"} rounded-md
+        font-semibold text-gray-1`}
+      >
+        <props.icon
+          size={22}
+          className={`${isFocused && "!text-purple"} ${
+            props.value ? "text-gray-1" : "text-placeholder"
+          } ${props.error && !isFocused && "!text-red"}`}
+        />
+        <select
+          name={props.name}
+          defaultValue={props.label}
+          onChange={props.onChange}
+          onFocus={() => setIsFocused(true)}
+          onBlur={() => setIsFocused(false)}
+          className={`ml-2 w-full
+          font-semibold ${
+            props.value ? "text-gray-1" : "text-placeholder"
+          } bg-light 
+          focus:outline-none focus:text-purple 
+          ${props.error && !props.value && "text-red"}`}
+        >
+          <option disabled>{props.label}</option>
+          {props.options.map((value, key) => (
+            <option key={key} value={value}>
+              {value}
+            </option>
+          ))}
+        </select>
+      </div>
+      <ErrorMessage message={props.error} />
+    </div>
+  );
+};
+
+export default FormSelect;
