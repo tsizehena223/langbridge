@@ -20,8 +20,8 @@ const Login = () => {
     }
   }, [formData]);
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (event) => {
+    const { name, value } = event.target;
     setFormData((prev) => {
       return {
         ...prev,
@@ -37,7 +37,7 @@ const Login = () => {
 
     if (!Object.keys(errors).length) {
       try {
-        login(formData);
+        await login(formData);
       } catch (error) {
         setRequestError(error.response.data.message);
       }
@@ -83,7 +83,7 @@ const Login = () => {
             ))}
             <button
               type="submit"
-              className="m-6 py-2 px-6 rounded-md 
+              className="mt-6 mb-3 py-2 px-6 rounded-md 
               text-light bg-purple hover:bg-green"
             >
               continue
@@ -92,7 +92,7 @@ const Login = () => {
 
           <ErrorMessage message={requestError} />
 
-          <div className="w-full font-semibold text-sm text-center">
+          <div className="mt-4 w-full font-semibold text-sm text-center">
             <span className="text-gray-1">
               Don't have have an account yet?{" "}
             </span>

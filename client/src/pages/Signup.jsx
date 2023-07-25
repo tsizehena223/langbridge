@@ -101,7 +101,7 @@ const Signup = () => {
           })}
           <button
             type="submit"
-            className="m-6 py-2 px-6 rounded-md
+            className="mt-6 mb-3 py-2 px-6 rounded-md
             text-light bg-purple hover:bg-green"
           >
             Create an account
@@ -110,7 +110,7 @@ const Signup = () => {
 
         <ErrorMessage message={requestError} />
 
-        <div className="w-full font-semibold text-sm text-center">
+        <div className="mt-4 w-full font-semibold text-sm text-center">
           <span className="text-gray-1">Already have an account? </span>
           <Link to="/login" className="text-purple">
             Sign in
