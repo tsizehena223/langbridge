@@ -1,5 +1,5 @@
 <?php
-/*
+
 namespace App\Controller;
 
 use App\Entity\Article;
@@ -9,7 +9,6 @@ use App\Repository\ArticleRepository;
 use App\Repository\UserRepository;
 use App\Service\DecodeJwt;
 use Doctrine\Persistence\ObjectManager;
-use PhpParser\Node\Expr\PostInc;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,7 +44,10 @@ class CreateCommentController extends AbstractController
             return new JsonResponse(["message" => "User not authentified"], 400);
         }
 
-        $postId = $data["postId"];
+        if (!isset($data["postId"]) || !isset($data["content"])) {
+            return new JsonResponse(["message" => "postId and content should not be null"], 404);
+        }
+        $postId = (int)$data["postId"];
         if ($postId === null) {
             return new JsonResponse(["message" => "Post not found"], 404);
         }
@@ -77,4 +79,3 @@ class CreateCommentController extends AbstractController
         return new JsonResponse(["message" => "Comment sent successfully"]);
     }
 }
-*/

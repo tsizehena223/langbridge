@@ -20,6 +20,10 @@ class SecurityController extends AbstractController
     public function index(Request $request, UserRepository $repo, GenerateToken $generateToken): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
+        if (!isset($data["email"]) || !isset($data["password"])) {
+            return new JsonResponse(["message" => "Email and password should be completed"], 400);
+        }
+
         $user = $repo->findOneBy(['email' => $data["email"]]);
 
         if (!$user) {
@@ -35,9 +39,9 @@ class SecurityController extends AbstractController
         $token = $generateToken->generateToken($user->getId());
 
         return new JsonResponse([
-            "token" => $token, 
-            "id" =>$user->getId(), 
-            "name" => $user->getUsername(), 
+            "token" => $token,
+            "id" => $user->getId(),
+            "name" => $user->getUsername(),
             "country" => $user->getNationality(),
             "language" => $user->getLanguage()
         ], 200);

@@ -39,28 +39,22 @@ class CommentRepository extends ServiceEntityRepository
         }
     }
 
-//    /**
-//     * @return Comment[] Returns an array of Comment objects
-//     */
-//    public function findByExampleField($value): array
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->orderBy('c.id', 'ASC')
-//            ->setMaxResults(10)
-//            ->getQuery()
-//            ->getResult()
-//        ;
-//    }
+    public function getComments(?int $article, $maxResult)
+    {
+        return $this->createQueryBuilder("comment")
+            ->select("comment.id", "comment.content", "comment.createdAt", "article.id as articleId", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry")
+            ->leftJoin("comment.article", "article")
+            ->leftJoin("comment.commentator", "user")
+            ->where($this->createQueryBuilder("comment")->expr()->eq("comment.article", $article))
+            ->setMaxResults($maxResult)
+            ->getQuery()->getResult();
+    }
 
-//    public function findOneBySomeField($value): ?Comment
-//    {
-//        return $this->createQueryBuilder('c')
-//            ->andWhere('c.exampleField = :val')
-//            ->setParameter('val', $value)
-//            ->getQuery()
-//            ->getOneOrNullResult()
-//        ;
-//    }
+    public function getNumberComments(?int $article)
+    {
+        return $this->createQueryBuilder("comment")
+            ->select("comment.id")
+            ->where($this->createQueryBuilder("comment")->expr()->eq("comment.article", $article))
+            ->getQuery()->getResult();
+    }
 }

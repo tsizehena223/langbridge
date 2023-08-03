@@ -2,12 +2,14 @@
 
 namespace App\Entity;
 
+use ApiPlatform\Metadata\Get;
 use ApiPlatform\Metadata\Post;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\CommentRepository;
 use App\Controller\CreateCommentController;
+use App\Controller\GetCommentsController;
 use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: CommentRepository::class)]
@@ -16,6 +18,10 @@ use Symfony\Component\Validator\Constraints as Assert;
         new Post(
             routeName: "create_comment",
             controller: CreateCommentController::class
+        ),
+        new Get(
+            routeName: "get_comments",
+            controller: GetCommentsController::class
         )
     ]
 )]

@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LikeArticleController extends AbstractController
 {
-    #[Route(path: "/api/post/like/{postId}", name: "like_post", methods: ["GET"])]
+    #[Route(path: "/api/articles/like/{postId}", name: "like_article", methods: ["GET"])]
     public function likePost(
         Request $request,
         ManagerRegistry $managerRegistry,
@@ -26,7 +26,6 @@ class LikeArticleController extends AbstractController
             return new JsonResponse(["message" => "No post found"], 404);
         }
 
-        // $jwtToken = json_decode($request->getContent(), true);
         $jwtToken = $request->headers->get("authorization");
         if (!$jwtToken) return new JsonResponse(["message" => "User not authentified"], 401);
 

@@ -7,17 +7,13 @@ use ApiPlatform\Metadata\Post;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
-use ApiPlatform\Metadata\Patch;
-use ApiPlatform\Metadata\Delete;
 use Doctrine\ORM\Mapping as ORM;
 use ApiPlatform\Metadata\ApiResource;
 use App\Repository\ArticleRepository;
 use ApiPlatform\Metadata\GetCollection;
 use App\Controller\ArticleCreateController;
-use App\Controller\GetArticleController;
 use App\Controller\GetArticlesController;
 use App\Controller\LikePostController;
-use App\Repository\CommentRepository;
 use Symfony\Component\Serializer\Annotation\Groups;
 use Symfony\Component\Validator\Constraints as Assert;
 
@@ -35,7 +31,7 @@ use Symfony\Component\Validator\Constraints as Assert;
             denormalizationContext: ["groups" => ["add:Article"]]
         ),
         new Get(
-            routeName: "like_post",
+            routeName: "like_article",
             controller: LikePostController::class
         )
     ]

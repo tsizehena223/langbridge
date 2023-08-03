@@ -39,20 +39,22 @@ class ArticleRepository extends ServiceEntityRepository
         }
     }
 
-    public function getArticles()
+    public function getArticles($maxResult)
     {
         return $this->createQueryBuilder("article")
-            ->select("article.id", "article.content", "article.createdAt", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry")
+            ->select("article.id", "article.content", "article.createdAt", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry", "article.likes")
             ->leftJoin("article.author", "user")
+            ->setMaxResults($maxResult)
             ->getQuery()->getResult();
     }
 
-    public function getArticlesByAuthor(int $author)
+    public function getArticlesByAuthor(int $author, $maxResult)
     {
         return $this->createQueryBuilder("article")
-            ->select("article.id", "article.content", "article.createdAt", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry")
+            ->select("article.id", "article.content", "article.createdAt", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry", "article.likes")
             ->leftJoin("article.author", "user")
             ->where($this->createQueryBuilder("article")->expr()->eq("article.author", $author))
+            ->setMaxResults($maxResult)
             ->getQuery()->getResult();
     }
 }

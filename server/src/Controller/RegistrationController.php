@@ -23,6 +23,10 @@ class RegistrationController extends AbstractController
         $data = json_decode($request->getContent(), true);
         $user = new User();
 
+        if (!isset($data["email"]) || !isset($data["username"]) || !isset($data["password"]) || !isset($data["passwordConfirm"]) || !isset($data["country"]) || !isset($data["language"])) {
+            return new JsonResponse(["message" => "All field should be completed"], 400);
+        }
+
         $user->setEmail($data["email"])
             ->setUsername($data["username"])
             ->setRoles(["ROLE_USER"])
