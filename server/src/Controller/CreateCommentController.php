@@ -17,7 +17,7 @@ use Symfony\Component\Validator\Validator\ValidatorInterface;
 
 class CreateCommentController extends AbstractController
 {
-    #[Route(path: "api/comments", name: "create_comment", methods: ["POST"])]
+    #[Route(path: "api/articles/comments", name: "create_comment", methods: ["POST"])]
     public function createComment(
         Request $request,
         ObjectManager $manager,
@@ -49,12 +49,12 @@ class CreateCommentController extends AbstractController
         }
         $postId = (int)$data["postId"];
         if ($postId === null) {
-            return new JsonResponse(["message" => "Post not found"], 404);
+            return new JsonResponse(["message" => "Article not found"], 404);
         }
         $article = $articleRepository->find($postId);
 
         if (!($article instanceof Article)) {
-            return new JsonResponse(["message" => "Post expected"], 400);
+            return new JsonResponse(["message" => "Article expected"], 400);
         }
 
         $comment = new Comment();

@@ -13,14 +13,17 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class LikeArticleController extends AbstractController
 {
-    #[Route(path: "/api/articles/like/{postId}", name: "like_article", methods: ["GET"])]
+    #[Route(path: "/api/articles/like", name: "like_article", methods: ["GET"])]
     public function likePost(
         Request $request,
         ManagerRegistry $managerRegistry,
         ObjectManager $objectManager,
-        DecodeJwt $decodeJwt,
-        int $postId
+        DecodeJwt $decodeJwt
     ): JsonResponse {
+        $postId = $request->query->get("id");
+        if (!$postId) {
+            return new JsonResponse(["message" => "ArticleId expected"], 400);
+        }
         $article = $managerRegistry->getRepository(persistentObject: Article::class)->find($postId);
         if ($article === null) {
             return new JsonResponse(["message" => "No post found"], 404);

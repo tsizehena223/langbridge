@@ -4,6 +4,7 @@ namespace App\Controller;
 
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
+use App\Service\DecodeJwt;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
@@ -12,10 +13,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class GetArticlesController extends AbstractController
 {
     #[Route(path: "/api/articles", name: "get_articles", methods: ["GET"])]
-    public function getArticle(Request $request, ArticleRepository $articleRepository, CommentRepository $commentRepository): JsonResponse
-    {
+    public function getArticle(
+        Request $request,
+        ArticleRepository $articleRepository,
+        CommentRepository $commentRepository,
+        DecodeJwt $decodeJwt
+    ): JsonResponse {
         $author = (int)$request->query->get("author");
         $num = $request->query->get("number");
+        $jwt = $request->headers->get("Authorization");
+        $isAuthenticated = $decodeJwt->getIdToken($jwt);
+
+        if ($isAuthenticated == null) {
+            return new JsonResponse(["message" => "User not authentified"], 401);
+        }
 
         $maxResult = ($num == null) ? "100" : $num;
 
