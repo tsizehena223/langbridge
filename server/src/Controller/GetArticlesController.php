@@ -28,7 +28,7 @@ class GetArticlesController extends AbstractController
             $data[] = [
                 'id' => $article["id"],
                 'content' => $article["content"],
-                'created' => $article["createdAt"]->format("d M Y H:i"),
+                'createdAt' => $article["createdAt"]->format("d M Y H:i"),
                 'author' => [
                     'id' => $article["authorId"],
                     'name' => $article["authorName"],
