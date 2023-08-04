@@ -1,27 +1,8 @@
-import { useState } from "react";
-import Avatar from "../../assets/avatar.svg";
 import { RiUserSearchFill } from "react-icons/ri";
+import Avatar from "../../assets/avatar.svg";
+import ProfilePic from "../common/ProfilePic";
 
-const UserSidebar = () => {
-  const [userList, setUserList] = useState([]);
-
-  // const fetchUsers = async () => {
-  //   try {
-  //     const res = await api.get(
-  //       config.baseUrl,
-  //       `/api/usersby?number=6&countries=${countrySpeaking.join(",")}`,
-  //       { headers: { Authorization: token } }
-  //     );
-  //     setUserList(res.data);
-  //   } catch (error) {
-  //     // TODO
-  //   }
-  // };
-  //
-  // useEffect(() => {
-  //   fetchUsers();
-  // }, []);
-
+const UserSidebar = ({ userList }) => {
   return (
     <div
       className="sticky top-20 
@@ -33,12 +14,14 @@ const UserSidebar = () => {
         <div>Meet people</div>
       </div>
       <div>
-        {/* {userList.map((user) => ( */}
-        {/*   <div key={user.id} className="mb-4 flex items-center"> */}
-        {/*     <ProfilePic key={user.id} img={Avatar} country={user.country} /> */}
-        {/*     <div className="ml-3 font-semibold">{user.name}</div> */}
-        {/*   </div> */}
-        {/* ))} */}
+        {userList.map((user) => {
+          return (
+            <div key={user.id} className="mb-4 flex items-center">
+              <ProfilePic key={user.id} img={Avatar} country={user.country} />
+              <div className="ml-3 font-semibold">{user.name}</div>
+            </div>
+          );
+        })}
       </div>
     </div>
   );

@@ -8,17 +8,29 @@ import {
 } from "../components";
 import { useAuth } from "../contexts/AuthContext";
 import postService from "../services/post";
-import postMock from "../mock/post";
+import userService from "../services/user";
+import { getCountrySpeaking } from "../utils/country-language";
+// import postMock from "../mock/post";
 
 const Newsfeed = () => {
-  const [postList, setPostList] = useState(postMock);
+  const [postList, setPostList] = useState([]);
+  const [userList, setUserList] = useState([]);
   const { userData } = useAuth();
 
-  // useEffect(() => {
-  //   postService.getPosts(userData.token).then((data) => {
-  //     setPostList(data);
-  //   });
-  // }, []);
+  const fetchData = async () => {
+    const post = await postService.getPosts(userData.token);
+    setPostList(post);
+    const countrySpeaking = getCountrySpeaking(userData.language);
+    const users = await userService.getUsers(
+      { countries: countrySpeaking.join(","), number: 6 },
+      userData.token
+    );
+    setUserList(users);
+  };
+
+  useEffect(() => {
+    fetchData();
+  }, []);
 
   return (
     <div
@@ -30,11 +42,11 @@ const Newsfeed = () => {
       <div className="w-full">
         <MainNavBar />
         <div className="p-4 flex">
-          <div>
+          <div className="w-full">
             <PostInput />
             <PostContainer postList={postList} />
           </div>
-          <UserSidebar />
+          <UserSidebar userList={userList} />
         </div>
       </div>
     </div>

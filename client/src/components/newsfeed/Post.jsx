@@ -8,28 +8,27 @@ import {
 } from "react-icons/ri";
 import { useAuth } from "../../contexts/AuthContext";
 import Avatar from "../../assets/avatar.svg";
-// import CommentPopup from "./CommentPopup";
+import CommentPopup from "./CommentPopup";
 import ProfilePic from "../common/ProfilePic";
 import postService from "../../services/post";
 
 const Post = ({ data }) => {
-  console.log(data);
   const { userData } = useAuth();
   const [isLiked, setIsLiked] = useState(data.likes.includes(userData.id));
   const [comments, setComments] = useState(data.comments);
 
   const handleLike = () => {
-    const index = data.likes.indexOf(userId);
+    const index = data.likes.indexOf(userData.id);
 
     if (index > -1) {
       data.likes.splice(index, 1);
     } else {
-      data.likes.push(userId);
+      data.likes.push(userData.id);
     }
 
     setIsLiked((prev) => !prev);
 
-    postService.likePost(userData.id, userData.token);
+    postService.likePost(data.id, userData.token);
   };
 
   const handleShare = () => {
@@ -72,18 +71,18 @@ const Post = ({ data }) => {
           trigger={
             <button className="flex items-center hover:text-purple">
               <RiMessage2Line />
-              <span className="ml-1">{comments.length}</span>
+              <span className="ml-1">{comments}</span>
             </button>
           }
         >
-          {/* {(close) => ( */}
-          {/*   <CommentPopup */}
-          {/*     close={close} */}
-          {/*     postId={data.id} */}
-          {/*     comments={comments} */}
-          {/*     setComments={setComments} */}
-          {/*   /> */}
-          {/* )} */}
+          {(close) => (
+            <CommentPopup
+              close={close}
+              postId={data.id}
+              comments={comments}
+              setComments={setComments}
+            />
+          )}
         </Popup>
 
         <button className="hover:text-purple" onClick={handleShare}>

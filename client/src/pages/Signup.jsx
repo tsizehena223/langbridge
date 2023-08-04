@@ -45,7 +45,7 @@ const Signup = () => {
 
     if (!Object.keys(errors).length) {
       try {
-        await userService.post(formData);
+        await userService.createUser(formData);
         navigate("/login");
       } catch (error) {
         setRequestError(error.response.data.message);
