@@ -27,7 +27,7 @@ const AuthProvider = ({ children }) => {
     localStorage.removeItem("userdata");
     setUserData(null);
     setIsAuthentified(false);
-    navigate("/");
+    navigate("/login");
   };
 
   const value = useMemo(
