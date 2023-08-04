@@ -68,7 +68,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUsersByCountry($countries, ?int $currentUserId, $number)
     {
         return $this->createQueryBuilder("user")
-            ->select("user.id", "user.username as name", "user.nationality as contry", "user.language")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language")
             ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
             ->setMaxResults($number)
