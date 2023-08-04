@@ -26,10 +26,14 @@ class LikeArticleController extends AbstractController
             return new JsonResponse(["message" => "No post found"], 404);
         }
 
-        $jwtToken = $request->headers->get("authorization");
+        $jwtToken = $request->headers->get("Authorization");
+
         if (!$jwtToken) return new JsonResponse(["message" => "User not authentified"], 401);
 
         $likerId = $decodeJwt->getIdToken($jwtToken);
+        if ($likerId == null) {
+            return new JsonResponse(["message" => "User not authentified"], 401);
+        }
 
         $articleLikes = $article->getLikes();
 

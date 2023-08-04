@@ -28,10 +28,14 @@ class GetUsersController extends AbstractController
         $currentUser = $request->headers->get("Authorization");
 
         if ($currentUser === null) {
-            return new JsonResponse(["message" => "User not authentified"], 403);
+            return new JsonResponse(["message" => "User not authentified"], 401);
         }
 
         $currentUserId = $decodeJwt->getIdToken($currentUser);
+
+        if ($currentUserId == null) {
+            return new JsonResponse(["message" => "User not authentified"], 401);
+        }
 
         $users = ($userName != null) ? $userRepository->getUserByName($userName, $number) : $userRepository->getUsersByCountry($array_countries, $currentUserId, $number);
 

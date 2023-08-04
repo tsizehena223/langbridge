@@ -7,12 +7,27 @@ use Lcobucci\JWT\Token\Parser;
 
 class DecodeJwt
 {
-    public function getIdToken($jwt): int
+    private function decodeIt($jwtToken)
     {
-        $parser = new Parser(new JoseEncoder());
-        $token = $parser->parse($jwt);
-        $id = $token->claims()->get("id");
+        $j = explode(" ", $jwtToken);
+        if ($j[0] == "Bearer") {
+            return $j[1];
+        } else {
+            return null;
+        }
+    }
 
-        return $id;
+    public function getIdToken($jwt): ?int
+    {
+        $jwtdecoded = $this->decodeIt($jwt);
+
+        if ($jwtdecoded != null) {
+            $parser = new Parser(new JoseEncoder());
+            $token = $parser->parse($jwtdecoded);
+            $id = $token->claims()->get("id");
+            return $id;
+        } else {
+            return null;
+        }
     }
 }

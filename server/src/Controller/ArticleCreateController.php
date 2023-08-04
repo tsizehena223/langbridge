@@ -31,6 +31,9 @@ class ArticleCreateController extends AbstractController
         }
 
         $userId = $decodeJwt->getIdToken($jwtToken);
+        if ($userId == null) {
+            return new JsonResponse(["message" => "User not authentified (token)"], 401);
+        }
         $author = $userRepository->findOneBy(["id" => $userId]);
 
         if (!$author) {
