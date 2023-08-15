@@ -6,6 +6,7 @@ import {
   RiShoppingBag2Line,
   RiUser3Line,
 } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 
 const sidebarLinks = [
   {

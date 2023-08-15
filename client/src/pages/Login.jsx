@@ -58,7 +58,7 @@ const Login = () => {
       </div>
 
       <div className="w-full sm:w-1/2 max-h-full flex justify-center items-center">
-        <div className="p-6 overflow-y-scroll">
+        <div className="p-6">
           <div className="mb-4 w-full flex flex-col items-center">
             <RiUserSharedLine size={40} className="mb-2 text-gray-1" />
             <h1 className="font-bold text-gray-1 text-2xl">Login</h1>

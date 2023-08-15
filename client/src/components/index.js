@@ -7,6 +7,8 @@ import ErrorMessage from "./form/ErrorMessage";
 import PostInput from "./newsfeed/PostInput";
 import PostContainer from "./newsfeed/PostContainer";
 import UserSidebar from "./newsfeed/UserSidebar";
+import RightProfile from "./profile/RightProfile";
+import ProfileNavBar from "./profile/ProfileNavBar";
 
 export {
   HomeNavBar,
@@ -18,4 +20,6 @@ export {
   PostInput,
   PostContainer,
   UserSidebar,
+  RightProfile,
+  ProfileNavBar,
 };
