@@ -166,7 +166,7 @@
         ]
     },
     "vich/uploader-bundle": {
-        "version": "2.1",
+        "version": "2.2",
         "recipe": {
             "repo": "github.com/symfony/recipes-contrib",
             "branch": "main",

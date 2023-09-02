@@ -22,7 +22,9 @@ class ArticleCreateController extends AbstractController
         UserRepository $userRepository,
         DecodeJwt $decodeJwt
     ): JsonResponse {
-        $data = json_decode($request->getContent(), true);
+        $content = $request->request->get("content");
+        $image = $request->files->get("image");
+
         $article = new Article();
 
         $jwtToken = $request->headers->get("Authorization");
@@ -40,11 +42,11 @@ class ArticleCreateController extends AbstractController
             return new JsonResponse(["message" => "User not authentified (author)"], 401);
         }
 
-        if (!isset($data["content"])) {
+        if (!isset($content)) {
             return new JsonResponse(["message" => "Content should not be null"], 400);
         }
 
-        $article->setContent($data["content"])
+        $article->setContent($content)
             ->setCreatedAt(new \DateTime("now", new \DateTimeZone("Indian/Antananarivo")))
             ->setAuthor($author);
 
@@ -56,6 +58,10 @@ class ArticleCreateController extends AbstractController
                 $error_Message[] = $error->getMessage();
             }
             return new JsonResponse(["message" => $error_Message], 400);
+        }
+
+        if ($image) {
+            $article->setImageFile($image);
         }
 
         $objectManager->persist($article);

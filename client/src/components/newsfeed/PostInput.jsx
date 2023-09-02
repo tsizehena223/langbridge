@@ -23,7 +23,16 @@ const PostInput = () => {
   const handlePost = () => {
     if (!inputValue) return;
 
-    postService.createPost({ content: inputValue }, userData.token);
+    const formData = new FormData();
+
+    formData.append("content", inputValue);
+    if (image instanceof File) {
+      formData.append("image", image);
+    }
+
+    postService.createPost(formData, userData.token).then(res => {
+      console.log(res.data);
+    });
 
     setInputValue("");
   };
@@ -31,7 +40,8 @@ const PostInput = () => {
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
       let img = event.target.files[0];
-      setImage(URL.createObjectURL(img));
+      const uploadedFile = new File([img], img.name, { type: img.type });
+      setImage(uploadedFile);
     }
   };
 

@@ -3,7 +3,7 @@ import api from "../config/api";
 const postService = {
   createPost(data, token) {
     return api.post("/articles", data, {
-      headers: { Authorization: `Bearer ${token}` },
+      headers: { Authorization: `Bearer ${token}` , },
     });
   },
 

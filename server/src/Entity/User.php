@@ -12,7 +12,6 @@ use App\Repository\UserRepository;
 use ApiPlatform\Metadata\ApiResource;
 use App\Controller\SecurityController;
 use App\Controller\GetUsersController;
-use App\Controller\UserPdpController;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\HttpFoundation\File\File;
 use Symfony\Component\Serializer\Annotation\Groups;
@@ -255,12 +254,12 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
      *
      * @return  self
      */
-    public function setPdpFile(?File $pdpFile): void
+    public function setPdpFile(?File $pdpFile = null): void
     {
         $this->pdpFile = $pdpFile;
 
         if ($pdpFile !== null) {
-            $this->updatedAt = new \DateTime("now", new \DateTimeZone("Indian/Antananarivo"));
+            $this->updatedAt = new \DateTimeImmutable();
         }
     }
 
