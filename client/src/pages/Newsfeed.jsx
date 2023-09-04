@@ -36,7 +36,7 @@ const Newsfeed = () => {
     <div
       className="w-screen h-full 
       flex sm:justify-between 
-      bg-silver"
+      bg-silver dark:bg-gray-1"
     >
       <Sidebar />
       <div className="w-full">

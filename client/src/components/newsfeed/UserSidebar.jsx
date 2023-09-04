@@ -7,7 +7,7 @@ const UserSidebar = ({ userList }) => {
     <div
       className="sticky top-20 
       w-1/3 h-full ml-4 p-4
-      rounded-md text-gray-1 bg-light"
+      rounded-md bg-light dark:bg-gray-2"
     >
       <div className="ml-1 mb-4 flex items-center font-semibold">
         <RiUserSearchFill size={20} className="mr-3" />

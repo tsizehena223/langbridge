@@ -16,14 +16,14 @@ const FormInput = (props) => {
         className={`mt-4 w-60 py-2 px-4 
         flex items-center
         border-2 ${isFocused && "!border-purple"} ${
-          props.value ? "border-gray-1" : "border-placeholder"
+          props.value ? "border-gray-1 dark:border-light" : "border-placeholder"
         } ${props.error && !isFocused && "!border-red"} rounded-md
-        font-semibold text-gray-1`}
+        font-semibold`}
       >
         <props.icon
           size={22}
           className={`${isFocused && "!text-purple"} ${
-            props.value ? "text-gray-1" : "text-placeholder"
+            props.value ? "text-gray-1 dark:text-light" : "text-placeholder"
           } ${props.error && "text-red"}`}
         />
         <input
@@ -31,6 +31,7 @@ const FormInput = (props) => {
           type={isPasswordVisible ? "text" : props.type}
           placeholder={props.placeholder}
           className={`ml-4 w-full
+          dark:bg-gray-2
           focus:outline-none focus:text-purple
           placeholder-placeholder placeholder:focus:text-purple ${
             props.error && "placeholder:text-red"
@@ -45,7 +46,7 @@ const FormInput = (props) => {
             type="button"
             onClick={togglePassword}
             className={`hover:text-purple ${
-              props.value ? "text-gray-1" : "text-placeholder"
+              props.value ? "text-gray-1 dark:text-light" : "text-placeholder"
             }`}
           >
             {isPasswordVisible ? <RiEyeOffLine /> : <RiEyeLine />}

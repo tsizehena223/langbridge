@@ -52,7 +52,7 @@ const CommentPopup = ({ postId, comments, setComments, close }) => {
     >
       <div
         className="relative w-full max-w-xl max-h-[350px] p-4 
-        flex flex-col rounded-xl text-gray-1 bg-light"
+        flex flex-col rounded-xl text-gray-1 dark:text-light bg-light dark:bg-gray-2"
       >
         <div className="mb-4 font-semibold">
           {comments.length} {comments.length > 1 ? "Comments" : "Comment"}
@@ -62,7 +62,7 @@ const CommentPopup = ({ postId, comments, setComments, close }) => {
           {commentValue.map((comment) => (
             <div
               key={comment.id}
-              className="mb-4 py-2 px-4 rounded-md bg-silver"
+              className="mb-4 py-2 px-4 rounded-md bg-silver dark:bg-gray-1"
             >
               <div className="mb-2 flex items-center">
                 <div className="relative mr-3">
@@ -86,6 +86,7 @@ const CommentPopup = ({ postId, comments, setComments, close }) => {
             value={inputValue}
             onChange={(e) => setInputValue(e.target.value)}
             className="w-full py-1 px-4 
+            dark:bg-gray-2
             border-[1px] border-gray-0 rounded-md 
             placeholder:font-semibold 
             focus:outline-none focus:border-purple focus:font-normal 

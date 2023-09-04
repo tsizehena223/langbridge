@@ -6,13 +6,15 @@ const App = () => {
   const { isAuthentified } = useAuth();
 
   return (
-    <Routes>
-      <Route path="/" element={isAuthentified ? <Newsfeed /> : <Home />} />
-      <Route path="/login" element={<Login />} />
-      <Route path="/signup" element={<Signup />} />
-      <Route path="/EditProfile" element={<EditProfile />} />
-      <Route path="*" element={<NotFound />} />
-    </Routes>
+    <div className="text-gray-2 dark:text-light">
+      <Routes>
+        <Route path="/" element={isAuthentified ? <Newsfeed /> : <Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/signup" element={<Signup />} />
+        <Route path="/EditProfile" element={<EditProfile />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+    </div>
   );
 };
 

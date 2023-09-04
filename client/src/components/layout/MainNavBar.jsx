@@ -10,14 +10,14 @@ const MainNavBar = () => {
   );
 
   const toggleTheme = () => {
-    // TODO
+    document.documentElement.classList.toggle("dark");
   };
 
   return (
     <div
       className="z-40 sticky top-0 w-full py-4 px-8 
       flex items-center justify-between 
-      shadow-sm bg-light"
+      shadow-sm bg-light dark:bg-gray-2"
     >
       <div
         className="flex items-center 
@@ -27,15 +27,12 @@ const MainNavBar = () => {
         <div>{link.label}</div>
       </div>
 
-      <div className="flex items-center">
+      <div className="flex items-center text-gray-1 dark:text-light">
         <button onClick={toggleTheme} className="ml-4 rounded-full w-9 h-9">
-          <RiSunLine size={20} className="text-gray-1 hover:text-purple" />
+          <RiSunLine size={20} className="hover:text-purple" />
         </button>
         <button className="ml-4 rounded-full w-9 h-9 ">
-          <RiSettings4Line
-            size={20}
-            className="text-gray-1 hover:text-purple"
-          />
+          <RiSettings4Line size={20} className="hover:text-purple" />
         </button>
       </div>
     </div>

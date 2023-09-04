@@ -20,7 +20,7 @@ const SearchBar = ({ onSearch }) => {
         onFocus={() => setIsInputFocused(true)}
         onBlur={() => setIsInputFocused(false)}
         onChange={(e) => setInputValue(e.target.value)}
-        className="text-gray-1 
+        className="dark:bg-gray-2
         focus:outline-none focus:border-purple focus:text-purple 
         focus:placeholder:text-purple"
       />

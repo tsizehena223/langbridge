@@ -57,11 +57,15 @@ const Login = () => {
         <img src={LoginIllustration} className="w-96" />
       </div>
 
-      <div className="w-full sm:w-1/2 max-h-full flex justify-center items-center">
+      <div
+        className="w-full sm:w-1/2 max-h-full flex 
+        justify-center items-center 
+        dark:bg-gray-2"
+      >
         <div className="p-6">
           <div className="mb-4 w-full flex flex-col items-center">
-            <RiUserSharedLine size={40} className="mb-2 text-gray-1" />
-            <h1 className="font-bold text-gray-1 text-2xl">Login</h1>
+            <RiUserSharedLine size={40} className="mb-2" />
+            <h1 className="font-bold text-2xl">Login</h1>
           </div>
 
           <form
@@ -93,9 +97,7 @@ const Login = () => {
           <ErrorMessage message={requestError} />
 
           <div className="mt-4 w-full font-semibold text-sm text-center">
-            <span className="text-gray-1">
-              Don't have have an account yet?{" "}
-            </span>
+            <span>Don't have have an account yet? </span>
             <Link to="/signup" className="text-purple">
               Sign up
             </Link>

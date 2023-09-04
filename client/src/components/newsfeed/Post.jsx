@@ -14,7 +14,7 @@ import postService from "../../services/post";
 
 const Post = ({ data }) => {
   const { userData } = useAuth();
-  const [isLiked, setIsLiked] = useState(data.likes.includes(userData.id));
+  const [isLiked, setIsLiked] = useState(false);
   const [comments, setComments] = useState(data.comments);
 
   const handleLike = () => {
@@ -38,7 +38,7 @@ const Post = ({ data }) => {
   return (
     <div
       className="w-full mb-4 py-6 px-8 
-      rounded-xl text-gray-1 bg-light"
+      rounded-xl bg-light dark:bg-gray-2"
     >
       <div className="mb-4">
         <div className="flex items-center">

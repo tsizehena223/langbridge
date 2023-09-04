@@ -18,7 +18,7 @@ const Sidebar = () => {
       className="z-50 sticky top-0 
       flex flex-col
       h-screen w-fit space-y-5 py-6 px-8 
-      bg-light"
+      bg-light dark:bg-gray-2"
     >
       <div className="flex space-x-2 items-center">
         <img src={Logo} alt="logo" className="w-10 h-10" />
@@ -36,7 +36,7 @@ const Sidebar = () => {
               key={key}
               to={item.path}
               className="mb-4 flex items-center 
-              font-semibold text-gray-1 hover:text-purple"
+              font-semibold hover:text-purple"
             >
               <item.icon size={20} />
               <span className="ml-3 text-md">{item.label}</span>
