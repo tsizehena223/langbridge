@@ -14,7 +14,7 @@ import postService from "../../services/post";
 
 const Post = ({ data }) => {
   const { userData } = useAuth();
-  const [isLiked, setIsLiked] = useState(false);
+  const [isLiked, setIsLiked] = useState(data.likes.includes(userData.id));
   const [comments, setComments] = useState(data.comments);
 
   const handleLike = () => {
