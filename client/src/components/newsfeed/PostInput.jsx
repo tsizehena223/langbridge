@@ -20,7 +20,7 @@ const PostInput = () => {
   const imageRef = useRef();
   const { userData } = useAuth();
 
-  const handlePost = () => {
+  const handlePost = async () => {
     if (!inputValue) return;
 
     const formData = new FormData();
@@ -30,18 +30,21 @@ const PostInput = () => {
       formData.append("image", image);
     }
 
-    postService.createPost(formData, userData.token).then(res => {
-      console.log(res.data);
-    });
+    try {
+      await postService.createPost(formData, userData.token);
+      // TODO: success notification
+    } catch (error) {
+      // TODO: error notification
+    }
 
     setInputValue("");
+    setImage(null);
   };
 
   const handleImageChange = (event) => {
     if (event.target.files && event.target.files[0]) {
-      let img = event.target.files[0];
-      const uploadedFile = new File([img], img.name, { type: img.type });
-      setImage(uploadedFile);
+      let file = event.target.files[0];
+      setImage(file);
     }
   };
 
@@ -106,7 +109,11 @@ const PostInput = () => {
           >
             <RiCloseCircleFill size={20} />
           </button>
-          <img src={image} alt="" className="w-full rounded-md" />
+          <img
+            src={URL.createObjectURL(image)}
+            alt=""
+            className="w-full rounded-md"
+          />
         </div>
       )}
     </div>
