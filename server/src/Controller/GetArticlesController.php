@@ -2,13 +2,13 @@
 
 namespace App\Controller;
 
+use App\Service\DecodeJwt;
 use App\Repository\ArticleRepository;
 use App\Repository\CommentRepository;
-use App\Service\DecodeJwt;
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 
 class GetArticlesController extends AbstractController
 {
@@ -17,7 +17,8 @@ class GetArticlesController extends AbstractController
         Request $request,
         ArticleRepository $articleRepository,
         CommentRepository $commentRepository,
-        DecodeJwt $decodeJwt
+        DecodeJwt $decodeJwt,
+        GetFileUrlController $getFileUrl
     ): JsonResponse {
         $author = (int)$request->query->get("author");
         $num = $request->query->get("number");
@@ -36,6 +37,8 @@ class GetArticlesController extends AbstractController
 
         foreach ($articles as $article) {
             $numberComments = count($commentRepository->getNumberComments($article["id"]));
+            // $linkImage = "http://localhost:8000/images/articles/" . $article["imageName"]; // Noob 
+            $linkImage = $article["imageName"] ? $getFileUrl->getFileUrl($article["imageName"]) : null;
             $data[] = [
                 'id' => $article["id"],
                 'content' => $article["content"],
@@ -46,7 +49,8 @@ class GetArticlesController extends AbstractController
                     'country' => $article["authorCountry"]
                 ],
                 'likes' => $article["likes"],
-                'comments' => $numberComments
+                'comments' => $numberComments,
+                'url' => $linkImage
             ];
         }
 
