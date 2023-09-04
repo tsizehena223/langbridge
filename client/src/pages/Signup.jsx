@@ -48,7 +48,6 @@ const Signup = () => {
         await userService.createUser(formData);
         navigate("/login");
       } catch (error) {
-        console.log(error.response)
         setRequestError(error.response.data.message);
       }
     }
@@ -61,7 +60,7 @@ const Signup = () => {
     >
       <div
         className="p-6 w-full sm:w-1/2 max-h-full
-        flex flex-col items-center"
+        flex flex-col items-center overflow-scroll"
       >
         <div className="mb-4 w-full flex flex-col items-center">
           <RiUserAddLine size={40} className="mb-2 text-gray-1" />
