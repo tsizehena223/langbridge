@@ -20,10 +20,14 @@ class LikeArticleController extends AbstractController
         ObjectManager $objectManager,
         DecodeJwt $decodeJwt
     ): JsonResponse {
-        $postId = $request->query->get("id");
+        $postId = (int)$request->query->get("id");
+        if ($postId == 0) {
+            return new JsonResponse(["message" => "The id should be an integer"], 400);
+        }
         if (!$postId) {
             return new JsonResponse(["message" => "ArticleId expected"], 400);
         }
+
         $article = $managerRegistry->getRepository(persistentObject: Article::class)->find($postId);
         if ($article === null) {
             return new JsonResponse(["message" => "No post found"], 404);
@@ -43,9 +47,8 @@ class LikeArticleController extends AbstractController
         $isLiked = in_array($likerId, $articleLikes);
 
         if ($isLiked) {
-            $articleLikes = array_filter($articleLikes, function ($id) use ($likerId) {
-                return $id != $likerId;
-            });
+            $index = array_search($likerId, $articleLikes);
+            array_splice($articleLikes, $index, 1);
             $message = "Disliked";
         } else {
             array_push($articleLikes, $likerId);
