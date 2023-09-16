@@ -5,12 +5,15 @@ import sidebarLinks from "../../static/sidebar-links";
 
 const MainNavBar = () => {
   const { pathname } = useLocation();
-  const link = useMemo(() =>
+  const Link = useMemo(() =>
     sidebarLinks.find(({ path }) => path === pathname)
   );
 
   const toggleTheme = () => {
+    const currentTheme = localStorage.getItem("theme");
+    const newTheme = currentTheme == "light" ? "dark" : "light";
     document.documentElement.classList.toggle("dark");
+    localStorage.setItem("theme", newTheme);
   };
 
   return (
@@ -23,8 +26,8 @@ const MainNavBar = () => {
         className="flex items-center 
         text-md text-purple font-semibold"
       >
-        <link.icon size={20} className="mr-3" />
-        <div>{link.label}</div>
+        <Link.icon size={20} className="mr-3" />
+        <div>{Link.label}</div>
       </div>
 
       <div className="flex items-center text-gray-1 dark:text-light">
