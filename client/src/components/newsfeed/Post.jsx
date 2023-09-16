@@ -51,6 +51,7 @@ const Post = ({ data }) => {
       </div>
 
       <div>{data.content}</div>
+      <img src={data.url} alt="" className="mt-4 rounded-md" />
 
       <div
         className="w-full mt-4 

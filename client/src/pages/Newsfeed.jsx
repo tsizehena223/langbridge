@@ -1,9 +1,8 @@
 import { useEffect, useState } from "react";
 import {
-  MainNavBar,
   PostInput,
   PostContainer,
-  Sidebar,
+  MainLayout,
   UserSidebar,
 } from "../components";
 import { useAuth } from "../contexts/AuthContext";
@@ -33,23 +32,13 @@ const Newsfeed = () => {
   }, []);
 
   return (
-    <div
-      className="w-screen h-full 
-      flex sm:justify-between 
-      bg-silver dark:bg-gray-1"
-    >
-      <Sidebar />
+    <MainLayout userList={userList}>
       <div className="w-full">
-        <MainNavBar />
-        <div className="p-4 flex">
-          <div className="w-full">
-            <PostInput />
-            <PostContainer postList={postList} />
-          </div>
-          <UserSidebar userList={userList} />
-        </div>
+        <PostInput />
+        <PostContainer postList={postList} />
       </div>
-    </div>
+      <UserSidebar userList={userList} />
+    </MainLayout>
   );
 };
 

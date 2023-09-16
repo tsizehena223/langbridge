@@ -9,6 +9,8 @@ import PostContainer from "./newsfeed/PostContainer";
 import UserSidebar from "./newsfeed/UserSidebar";
 import RightProfile from "./profile/RightProfile";
 import ProfileNavBar from "./profile/ProfileNavBar";
+import SearchResult from "./search/SearchResult";
+import MainLayout from "./layout/MainLayout"
 
 export {
   HomeNavBar,
@@ -22,4 +24,6 @@ export {
   UserSidebar,
   RightProfile,
   ProfileNavBar,
+  SearchResult,
+  MainLayout,
 };
