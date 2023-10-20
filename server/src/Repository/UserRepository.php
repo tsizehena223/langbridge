@@ -56,22 +56,54 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
         $this->save($user, true);
     }
 
-    public function getUserByName(?string $name, $number)
+    public function getUserByName(?string $name, $number, $currentUserId)
     {
         return $this->createQueryBuilder("user")
             ->select("user.id", "user.username as name", "user.nationality as country", "user.language")
             ->where($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
+            ->andWhere($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->setMaxResults($number)
             ->getQuery()->getResult();
     }
 
-    public function getUsersByCountry($countries, ?int $currentUserId, $number)
+    public function getUsersByCountries($countries, ?int $currentUserId, $number)
     {
         return $this->createQueryBuilder("user")
             ->select("user.id", "user.username as name", "user.nationality as country", "user.language")
             ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
             ->setMaxResults($number)
+            ->getQuery()->getResult();
+    }
+
+    public function getUsersByLanguageAndCountry($currentUserId, $language, $country, $name)
+    {
+        return $this->createQueryBuilder("user")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language")
+            ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->andWhere($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$country'"))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
+            ->getQuery()->getResult();
+    }
+
+    public function getUsersByCountry($currentUserId, $country, $name)
+    {
+        return $this->createQueryBuilder("user")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language")
+            ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->andWhere($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$country'"))
+            ->getQuery()->getResult();
+    }
+
+    public function getUsersByLanguage($currentUserId, $language, $name)
+    {
+        return $this->createQueryBuilder("user")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language")
+            ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->andWhere($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
             ->getQuery()->getResult();
     }
 }

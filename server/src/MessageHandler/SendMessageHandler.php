@@ -4,13 +4,14 @@ namespace App\MessageHandler;
 
 use App\Entity\Message;
 use App\Message\SendMessage;
+use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
 class SendMessageHandler
 {
     private $entityManager;
 
-    public function __construct(EntityManagerInterface $entityManager)
+    public function __construct(EntityManagerInterface $entityManager, private UserRepository $userRepository)
     {
         $this->entityManager = $entityManager;
     }
@@ -18,8 +19,10 @@ class SendMessageHandler
     public function __invoke(SendMessage $message)
     {
         $newMessage = new Message();
-        $newMessage->setSender($message->getSender());
-        $newMessage->setRecipient($message->getRecipient());
+        $sender = $this->userRepository->find($message->getSender());
+        $recipient = $this->userRepository->find($message->getRecipient());
+        $newMessage->setSender($sender);
+        $newMessage->setRecipient($recipient);
         $newMessage->setContent($message->getContent());
         $newMessage->setCreatedAt(new \DateTime());
 

@@ -16,6 +16,8 @@ class GetUsersController extends AbstractController
     {
         $userName = $request->query->get("name");
         $countries = $request->query->get("countries");
+        $country = $request->query->get("country");
+        $language = $request->query->get("language");
         $number = $request->query->get("number");
 
         $number = ($number != null) ? $number : "5";
@@ -35,7 +37,17 @@ class GetUsersController extends AbstractController
             return new JsonResponse(["message" => "User not authentified"], 401);
         }
 
-        $users = ($userName != null) ? $userRepository->getUserByName($userName, $number) : $userRepository->getUsersByCountry($array_countries, $currentUserId, $number);
+        if ($userName != null && isset($language) && isset($country)) {
+            $users = $userRepository->getUsersByLanguageAndCountry($currentUserId, $language, $country, $userName);
+        } elseif ($userName != null && isset($language) && !isset($country)) {
+            $users = $userRepository->getUsersByCountry($currentUserId, $country, $userName);
+        } elseif ($userName != null && isset($country) && !isset($language)) {
+            $users = $userRepository->getUsersByLanguage($currentUserId, $language, $userName);
+        } else {
+            $users = $userRepository->getUsersByCountries($array_countries, $currentUserId, $number);
+        }
+
+        // TODO : OPTIMISATION
 
         return new JsonResponse($users);
     }

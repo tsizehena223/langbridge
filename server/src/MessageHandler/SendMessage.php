@@ -6,23 +6,23 @@ use App\Entity\User;
 
 class SendMessage
 {
-    private User $sender;
-    private User $recipient;
+    private int $sender;
+    private int $recipient;
     private $content;
 
-    public function __construct(?User $sender, ?User $recipient, string $content)
+    public function __construct(?int $sender, ?int $recipient, string $content)
     {
         $this->sender = $sender;
         $this->recipient = $recipient;
         $this->content = $content;
     }
 
-    public function getSender(): ?User
+    public function getSender(): ?int
     {
         return $this->sender;
     }
 
-    public function getRecipient(): ?User
+    public function getRecipient(): ?int
     {
         return $this->recipient;
     }
