@@ -1,6 +1,7 @@
 import { RiUserSearchFill } from "react-icons/ri";
 import Avatar from "../../assets/avatar.svg";
 import ProfilePic from "../common/ProfilePic";
+import { Link } from "react-router-dom";
 
 const UserSidebar = ({ userList }) => {
   return (
@@ -18,7 +19,12 @@ const UserSidebar = ({ userList }) => {
           return (
             <div key={user.id} className="mb-4 flex items-center">
               <ProfilePic key={user.id} img={Avatar} country={user.country} />
-              <div className="ml-3 font-semibold">{user.name}</div>
+              <Link
+                to={`/profile?id=${user.id}`}
+                className="ml-3 font-semibold hover:text-purple"
+              >
+                {user.name}
+              </Link>
             </div>
           );
         })}

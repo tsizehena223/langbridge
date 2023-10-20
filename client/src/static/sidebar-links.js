@@ -2,11 +2,10 @@ import {
   RiHome2Line,
   RiInformationLine,
   RiMessage2Line,
-  RiNewspaperLine,
   RiShoppingBag2Line,
   RiUser3Line,
+  RiSearch2Line,
 } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
 
 const sidebarLinks = [
   {
@@ -33,6 +32,11 @@ const sidebarLinks = [
     path: "/shop",
     icon: RiShoppingBag2Line,
     label: "Shop",
+  },
+  {
+    path: "/search",
+    icon: RiSearch2Line,
+    label: "Search",
   },
 ];
 
