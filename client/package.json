@@ -9,10 +9,11 @@
     "preview": "vite preview --host"
   },
   "dependencies": {
-    "aos": "^2.3.4",
     "@ladjs/country-language": "^1.0.3",
+    "aos": "^2.3.4",
     "axios": "^1.4.0",
     "dateformat": "^5.0.3",
+    "emoji-picker-react": "^4.5.3",
     "jsonwebtoken": "^9.0.1",
     "jwt-decode": "^3.1.2",
     "react": "^18.2.0",

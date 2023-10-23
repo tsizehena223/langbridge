@@ -13,10 +13,12 @@ import {
 import MenuItem from "../common/MenuItem";
 import postService from "../../services/post";
 import { useAuth } from "../../contexts/AuthContext";
+import Picker from 'emoji-picker-react';
 
 const PostInput = () => {
-  const [inputValue, setInputValue] = useState("");
+  const [inputValue, setInputValue] = useState('');
   const [image, setImage] = useState(null);
+  const [ showPicker, setShowPicker ] = useState(false);
   const imageRef = useRef();
   const { userData } = useAuth();
 
@@ -48,6 +50,11 @@ const PostInput = () => {
       setImage(file);
     }
   };
+
+  const onEmijiClick = (event, emojiObject) => {
+    setInputValue(prevInput => prevInput + emojiObject.emoji);
+    setShowPicker(false);
+  }
 
   return (
     <div className="w-full mb-6 p-6 rounded-md bg-light dark:bg-gray-2">
@@ -81,10 +88,14 @@ const PostInput = () => {
             <div>
               <MenuItem icon={RiMapPin2Fill} />
             </div>
-            <div>
+            <div onClick={() => setShowPicker(val => !val)}>
               <MenuItem icon={RiEmojiStickerFill} />
             </div>
           </div>
+          {showPicker && <Picker
+            pickerStyle= {{ width: '100%'}}
+            onEmojiClick={onEmijiClick}
+          />}
           <div className="flex space-x-4">
             <MenuItem icon={RiPencilFill} label="Draft" />
             <MenuItem

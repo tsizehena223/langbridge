@@ -1,11 +1,11 @@
 import { useMemo } from "react";
 import { RiSettings4Line, RiSunLine } from "react-icons/ri";
-import { useLocation } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import sidebarLinks from "../../static/sidebar-links";
 
 const MainNavBar = () => {
   const { pathname } = useLocation();
-  const Link = useMemo(() =>
+  const SLink = useMemo(() =>
     sidebarLinks.find(({ path }) => path === pathname)
   );
 
@@ -26,8 +26,8 @@ const MainNavBar = () => {
         className="flex items-center 
         text-md text-purple font-semibold"
       >
-        <Link.icon size={20} className="mr-3" />
-        <div>{Link.label}</div>
+        <SLink.icon size={20} className="mr-3" />
+        <div>{SLink.label}</div>
       </div>
 
       <div className="flex items-center text-gray-1 dark:text-light">
@@ -35,7 +35,9 @@ const MainNavBar = () => {
           <RiSunLine size={20} className="hover:text-purple" />
         </button>
         <button className="ml-4 rounded-full w-9 h-9 ">
-          <RiSettings4Line size={20} className="hover:text-purple" />
+          <Link to="/settings" >
+            <RiSettings4Line size={20} className="hover:text-purple" />
+          </Link>
         </button>
       </div>
     </div>

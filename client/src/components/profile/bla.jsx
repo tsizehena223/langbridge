@@ -2,12 +2,12 @@ import React from "react";
 import Avatar from "../../assets/avatar.svg";
 import { useRef, useState } from "react";
 import { FaPencil } from "react-icons/fa6";
-import MenuItem from "./../common/MenuItem";
+import MenuItem from "../common/MenuItem";
 import Mail from "../../assets/e-mail.svg";
 import Info from "../../assets/info-pers.svg";
-import FormInput from "./../form/FormInput";
+import FormInput from "../form/FormInput";
 
-function RightProfile() {
+function EditProfile() {
   const inputRef = useRef(null);
   const [image, setImage] = useState("");
 
@@ -137,4 +137,4 @@ function RightProfile() {
   );
 }
 
-export default RightProfile;
+export default EditProfile;

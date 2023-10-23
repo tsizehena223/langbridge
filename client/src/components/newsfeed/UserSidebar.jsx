@@ -5,7 +5,7 @@ import ProfilePic from "../common/ProfilePic";
 const UserSidebar = ({ userList }) => {
   return (
     <div
-      className="sticky top-20 
+      className="sticky
       w-1/3 h-full ml-4 p-4
       rounded-md bg-light dark:bg-gray-2"
     >

@@ -63,4 +63,47 @@ const loginFields = [
   },
 ];
 
-export { signupFields, loginFields };
+const editFields = [
+  {
+    name: "username",
+    type: "text",
+    placeholder: "Username",
+    icon: RiUser3Line,
+    label: "your name"
+  },
+
+  {
+    label: "Your E-mail Address",
+    name: "email",
+    type: "email",
+    placeholder: "E-mail",
+    icon: RiMailOpenLine,
+  },
+
+  {
+    label: "Select new language",
+    select: true,
+    name: "language",
+    placeholder: "Learning",
+    options: getAllLanguages(),
+    icon: RiSpeakLine,
+  },
+
+  {
+    label: "New passwords",
+    name: "password",
+    type: "password",
+    placeholder: "Password",
+    icon: RiKeyLine,
+  },
+
+  {
+    label: "confirm password",
+    name: "passwordConfirm",
+    type: "password",
+    placeholder: "Confirm password",
+    icon: RiKeyLine,
+  },
+]
+
+export { signupFields, loginFields, editFields };

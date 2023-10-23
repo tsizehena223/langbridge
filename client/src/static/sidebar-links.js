@@ -4,6 +4,7 @@ import {
   RiMessage2Line,
   RiNewspaperLine,
   RiShoppingBag2Line,
+  RiSettingsLine,
   RiUser3Line,
 } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
@@ -34,6 +35,11 @@ const sidebarLinks = [
     icon: RiShoppingBag2Line,
     label: "Shop",
   },
+  {
+    path: "/settings",
+    icon: RiSettingsLine,
+    label: "Settings",
+  }
 ];
 
 export default sidebarLinks;

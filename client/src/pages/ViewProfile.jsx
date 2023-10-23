@@ -1,11 +1,11 @@
 import React from "react";
 import {
-  ProfileNavBar,
-  RightProfile,
+  MainNavBar,
+  Profile,
   Sidebar,
 } from "../components";
 
-const EditProfile = () => {
+const ViewProfile = () => {
   return (
     <div className="w-screen h-full flex bg-gray-0 dark:bg-dark sm:justify-between">
       {/* Sidebar */}
@@ -13,17 +13,11 @@ const EditProfile = () => {
 
       {/* Main */}
       <div className="w-full">
-        <ProfileNavBar />
+        <MainNavBar />
 
         <div className="flex flex-row">
-          {/* LeftProfile */}
-          {/* <div className="w-1/5 ml-10 mt-10 bg-light rounded-xl h-full p-8">
-            <LeftProfile />
-          </div> */}
-
-          {/* RightProfile  */}
           <div className="w-full rounded-xl m-10 bg-light h-full p-8">
-            <RightProfile />
+            <Profile />
           </div>
         </div>
       </div>
@@ -31,4 +25,4 @@ const EditProfile = () => {
   );
 };
 
-export default EditProfile;
+export default ViewProfile;

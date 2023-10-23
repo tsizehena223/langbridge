@@ -30,7 +30,7 @@ const FormInput = (props) => {
           name={props.name}
           type={isPasswordVisible ? "text" : props.type}
           placeholder={props.placeholder}
-          className={`ml-4 w-full
+          className={`ml-4 w-full                   
           dark:bg-gray-2
           focus:outline-none focus:text-purple
           placeholder-placeholder placeholder:focus:text-purple ${
@@ -54,6 +54,9 @@ const FormInput = (props) => {
         )}
       </div>
       <ErrorMessage message={props.error} />
+      {props.label && (
+        <label>{props.label}</label>
+      )}
     </div>
   );
 };

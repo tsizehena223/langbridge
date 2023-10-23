@@ -7,9 +7,9 @@ import ErrorMessage from "./form/ErrorMessage";
 import PostInput from "./newsfeed/PostInput";
 import PostContainer from "./newsfeed/PostContainer";
 import UserSidebar from "./newsfeed/UserSidebar";
-import RightProfile from "./profile/RightProfile";
-import ProfileNavBar from "./profile/ProfileNavBar";
-import SearchResult from "./search/SearchResult";
+import Profile from "./profile/Profile";
+import EditProfile from "./profile/EditProfile";
+// import SearchResult from "./search/SearchResult";
 import MainLayout from "./layout/MainLayout"
 
 export {
@@ -22,8 +22,7 @@ export {
   PostInput,
   PostContainer,
   UserSidebar,
-  RightProfile,
-  ProfileNavBar,
-  SearchResult,
+  Profile,
+  EditProfile,
   MainLayout,
 };
