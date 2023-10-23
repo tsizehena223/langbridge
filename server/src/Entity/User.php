@@ -92,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
     private ?string $confirmPassword = null;
 
-    #[Vich\UploadableField(mapping: "user_pdp", fileNameProperty: "pdpName")]
+    #[Vich\UploadableField(mapping: "users", fileNameProperty: "pdpName")]
     private ?File $pdpFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -238,7 +238,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
 
@@ -253,11 +253,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->pdpFile;
     }
 
-    /**
-     * Set the value of pdpFile
-     *
-     * @return  self
-     */
     public function setPdpFile(?File $pdpFile = null): void
     {
         $this->pdpFile = $pdpFile;

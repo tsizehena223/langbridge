@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GetUsersController extends AbstractController
 {
     #[Route(path: "/api/users", name: "search_users", methods: ["GET"])]
-    public function searchUserByNationality(Request $request, DecodeJwt $decodeJwt, UserRepository $userRepository): JsonResponse
+    public function searchUserByNationality(Request $request, DecodeJwt $decodeJwt, UserRepository $userRepository, GetFileUrlController $getFileUrl): JsonResponse
     {
         $userName = $request->query->get("name");
         $countries = $request->query->get("countries");
@@ -39,16 +39,29 @@ class GetUsersController extends AbstractController
 
         if ($userName != null && isset($language) && isset($country)) {
             $users = $userRepository->getUsersByLanguageAndCountry($currentUserId, $language, $country, $userName);
-        } elseif ($userName != null && isset($language) && !isset($country)) {
+        } elseif ($userName != null && !$language && isset($country)) {
             $users = $userRepository->getUsersByCountry($currentUserId, $country, $userName);
-        } elseif ($userName != null && isset($country) && !isset($language)) {
+        } elseif ($userName != null && !$country && isset($language)) {
             $users = $userRepository->getUsersByLanguage($currentUserId, $language, $userName);
+        } elseif ($userName != null && !$countries && !$language) {
+            $users = $userRepository->getUserByName($userName, $number, $currentUserId);
         } else {
             $users = $userRepository->getUsersByCountries($array_countries, $currentUserId, $number);
         }
 
-        // TODO : OPTIMISATION
+        $data = [];
 
-        return new JsonResponse($users);
+        foreach ($users as $user) {
+            $linkImage = $user["image"] ? $getFileUrl->getFileUrl($user["image"]) : null;
+            $data[] = [
+                'id' => $user["id"],
+                'name' => $user["name"],
+                'country' => $user["country"],
+                'language' => $user["language"],
+                'image' => $linkImage
+            ];
+        }
+
+        return new JsonResponse($data);
     }
 }
