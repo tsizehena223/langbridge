@@ -15,7 +15,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class UserUpdateController extends AbstractController
 {
-    #[Route('/api/users/update', name: 'app_user_update')]
+    #[Route('/api/users/update', name: 'app_user_update', methods: ["POST"])]
     public function index(Request $request, DecodeJwt $decodeJwt, UserRepository $userRepository, ObjectManager $em, UserPasswordHasherInterface $hash): JsonResponse
     {
         $jwtToken = $request->headers->get("Authorization");
@@ -36,10 +36,10 @@ class UserUpdateController extends AbstractController
 
         $data = json_decode($request->getContent(), true);
 
-        $userName = $data['userName'] ?? $user->getUsername();
-        $email = $data['email'] ?? $user->getEmail();
-        $newPassword = $data['newPassword'] ?? $user->getPassword();
-        $nationality = $data['country'] ?? $user->getNationality();
+        $userName = $data['username'] ?? $user->getUsername();
+        $email = $user->getEmail();
+        $newPassword = $data['password'] ?? $user->getPassword();
+        $nationality = $user->getNationality();
         $language = $data['language'] ?? $user->getLanguage();
 
         $pdp = $request->files->get("image");
