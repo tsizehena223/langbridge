@@ -21,6 +21,7 @@ export default {
       "gray-0": "#cccccc",
       "gray-1": "#3f3d56",
       "gray-2": "#2f2e41",
+      transparent: "#ffffff00",
     },
   },
   plugins: [],

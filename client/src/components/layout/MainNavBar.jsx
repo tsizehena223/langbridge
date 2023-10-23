@@ -34,9 +34,6 @@ const MainNavBar = () => {
         <button onClick={toggleTheme} className="ml-4 rounded-full w-9 h-9">
           <RiSunLine size={20} className="hover:text-purple" />
         </button>
-        <button className="ml-4 rounded-full w-9 h-9 ">
-          <RiSettings4Line size={20} className="hover:text-purple" />
-        </button>
       </div>
     </div>
   );

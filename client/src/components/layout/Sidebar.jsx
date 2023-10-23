@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 import { RiLogoutBoxLine } from "react-icons/ri";
-import Logo from "../../assets/logo.svg";
 import sidebarLinks from "../../static/sidebar-links";
 import MenuItem from "../common/MenuItem";
 import { useAuth } from "../../contexts/AuthContext";

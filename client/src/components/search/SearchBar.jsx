@@ -50,8 +50,8 @@ const SearchBar = ({ userData, onResult }) => {
           <FormSelect
             key={key}
             icon={filter.icon}
-            label={filter.placeholder}
             name={filter.name}
+            placeholder={filter.placeholder}
             options={filter.options}
             value={filters[filter.name]}
             width={"full"}

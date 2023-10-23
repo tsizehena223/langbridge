@@ -1,7 +1,15 @@
 import { useEffect } from "react";
 import { SearchPage } from "./components";
 import { useAuth } from "./contexts/AuthContext";
-import { Home, Login, Signup, NotFound, Newsfeed, EditProfile } from "./pages";
+import {
+  Home,
+  Login,
+  Signup,
+  NotFound,
+  Newsfeed,
+  Profile,
+  Settings,
+} from "./pages";
 import { Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -22,7 +30,8 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/search" element={<SearchPage />} />
-        <Route path="/profile" element={<EditProfile />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

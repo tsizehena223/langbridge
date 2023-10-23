@@ -81,7 +81,7 @@ const Signup = () => {
                 key={key}
                 icon={field.icon}
                 name={field.name}
-                label={field.placeholder}
+                placeholder={field.placeholder}
                 options={field.options}
                 value={value}
                 error={error}

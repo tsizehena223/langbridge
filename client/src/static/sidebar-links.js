@@ -4,6 +4,7 @@ import {
   RiMessage2Line,
   RiShoppingBag2Line,
   RiUser3Line,
+  RiSettings2Line,
   RiSearch2Line,
 } from "react-icons/ri";
 
@@ -37,6 +38,11 @@ const sidebarLinks = [
     path: "/search",
     icon: RiSearch2Line,
     label: "Search",
+  },
+  {
+    path: "/settings",
+    icon: RiSettings2Line,
+    label: "Settings",
   },
 ];
 

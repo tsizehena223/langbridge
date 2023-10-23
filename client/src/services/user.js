@@ -5,6 +5,10 @@ const userService = {
     return api.post("/users", data);
   },
 
+  updateUser(data) {
+    return api.post("/users/update", data);
+  },
+
   async getUsers(filter, token) {
     const keys = ["countries", "name", "number"];
     for (const key of keys) {
