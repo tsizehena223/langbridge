@@ -7,7 +7,7 @@ const SearchInput = ({ onSearch }) => {
 
   return (
     <div
-      className={`flex items-center py-2 px-4 
+      className={`flex items-center py-2 px-4
         font-semibold border-2 ${
           isInputFocused ? "border-purple" : "border-gray-0"
         } rounded-md`}

@@ -11,9 +11,9 @@ const FormInput = (props) => {
   };
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="flex items-center">
       <div
-        className={`mt-4 w-60 py-2 px-4 
+        className={`w-60 py-2 px-4
         flex items-center
         border-2 ${isFocused && "!border-purple"} ${
           props.value ? "border-gray-1 dark:border-light" : "border-placeholder"

@@ -2,7 +2,7 @@ import { useState } from "react";
 import searchFilters from "../../static/search-filters";
 import FormSelect from "../form/FormSelect";
 import SearchInput from "./SearchInput";
-import { RiFilterOffLine } from "react-icons/ri";
+import { RiFilterLine, RiFilterOffLine } from "react-icons/ri";
 
 import userService from "../../services/user";
 const SearchBar = ({ userData, onResult }) => {
@@ -41,24 +41,31 @@ const SearchBar = ({ userData, onResult }) => {
   return (
     <div className="w-full p-6 bg-light dark:bg-gray-2 rounded-md">
       <SearchInput onSearch={handleSearch} />
-      <div className="mt-2 flex space-x-6 items-center">
+      <div className="mt-6 flex space-x-6 items-center">
+        <div className="flex items-center font-semibold">
+          <RiFilterLine className="mr-2" size={20} />
+          <span>Filters:</span>
+        </div>
         {searchFilters.map((filter, key) => (
           <FormSelect
             key={key}
             icon={filter.icon}
-            name={filter.name}
             label={filter.placeholder}
+            name={filter.name}
             options={filter.options}
             value={filters[filter.name]}
             width={"full"}
             onChange={handleChange}
           />
         ))}
-        <RiFilterOffLine
+        <button
+          className="p-2 rounded-md
+          border-2 border-gray-2 dark:border-light hover:border-purple
+          text-xl hover:!text-purple"
           onClick={clearFilters}
-          className="pt-2 min-w-[10px]
-          text-3xl text-gray-1 dark:text-light hover:!text-purple"
-        />
+        >
+          <RiFilterOffLine />
+        </button>
       </div>
     </div>
   );
