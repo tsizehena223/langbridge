@@ -13,7 +13,7 @@ import userService from "../services/user";
 
 const Setting = () => {
   const inputRef = useRef(null);
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState(null);
   const { userData } = useAuth();
   const navigate = useNavigate();
 
@@ -60,8 +60,12 @@ const Setting = () => {
         data.append("image", image);
       }
 
-      userService.updateUser(data);
-      navigate("/");
+      try {
+        await userService.updateUser(data, userData.token);
+        navigate("/");
+      } catch (error) {
+        // TODO: error handling
+      }
     }
   };
 

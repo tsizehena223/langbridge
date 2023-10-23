@@ -42,7 +42,7 @@ const Post = ({ data }) => {
     >
       <div className="mb-4">
         <div className="flex items-center">
-          <ProfilePic img={Avatar} country={data.author.country} />
+          <ProfilePic img={data.author.image} country={data.author.country} />
           <div className="ml-4 font-semibold">
             <div>{data.author.name}</div>
             <div className="text-sm text-placeholder">{data.createdAt}</div>
@@ -51,7 +51,7 @@ const Post = ({ data }) => {
       </div>
 
       <div>{data.content}</div>
-      <img src={data.url} alt="" className="mt-4 rounded-md" />
+      <img src={data.image} alt="" className="mt-4 rounded-md" />
 
       <div
         className="w-full mt-4 

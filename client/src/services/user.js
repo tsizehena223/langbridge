@@ -5,8 +5,10 @@ const userService = {
     return api.post("/users", data);
   },
 
-  updateUser(data) {
-    return api.post("/users/update", data);
+  updateUser(data, token) {
+    return api.post("/users/update", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
   },
 
   async getUsers(filter, token) {
