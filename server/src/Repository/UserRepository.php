@@ -106,4 +106,32 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
             ->getQuery()->getResult();
     }
+
+    public function getUserByContryAndLanguage($currentUserId, $language, $countries)
+    {
+        return $this->createQueryBuilder("user")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+            ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
+            ->getQuery()->getResult();
+    }
+
+    public function getUserByContryOnly($currentUserId, $countries)
+    {
+        return $this->createQueryBuilder("user")
+        ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+        ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
+            ->getQuery()->getResult();
+    }
+
+    public function getUserByLanguageOnly($currentUserId, $language)
+    {
+        return $this->createQueryBuilder("user")
+        ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+        ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
+            ->getQuery()->getResult();
+    }
 }

@@ -16,14 +16,22 @@ class GetUsersController extends AbstractController
     {
         $userName = $request->query->get("name");
         $countries = $request->query->get("countries");
-        $country = $request->query->get("country");
         $language = $request->query->get("language");
         $number = $request->query->get("number");
 
-        $number = ($number != null) ? $number : "5";
+        $number = ($number != null || $number != "") ? $number : "5";
 
         $array_countries = explode(",", $countries);
-        $array_countries = implode("' OR user.nationality = '", $array_countries);
+        if (count($array_countries) > 1) {
+            $array_countries = implode("' OR user.nationality = '", $array_countries);
+        } else {
+            $array_countries = $countries;
+            if ($array_countries == "") {
+                $array_countries = null;
+            }
+        }
+
+        if ($language == "") $language = null;
 
         $currentUser = $request->headers->get("Authorization");
 
@@ -37,14 +45,20 @@ class GetUsersController extends AbstractController
             return new JsonResponse(["message" => "User not authentified"], 401);
         }
 
-        if ($userName != null && isset($language) && isset($country)) {
-            $users = $userRepository->getUsersByLanguageAndCountry($currentUserId, $language, $country, $userName);
-        } elseif ($userName != null && !$language && isset($country)) {
-            $users = $userRepository->getUsersByCountry($currentUserId, $country, $userName);
-        } elseif ($userName != null && !$country && isset($language)) {
+        if ($userName != null && isset($language) && isset($array_countries)) {
+            $users = $userRepository->getUsersByLanguageAndCountry($currentUserId, $language, $array_countries, $userName);
+        } elseif ($userName != null && !$language && isset($array_countries)) {
+            $users = $userRepository->getUsersByCountry($currentUserId, $array_countries, $userName);
+        } elseif ($userName != null && !$array_countries && isset($language)) {
             $users = $userRepository->getUsersByLanguage($currentUserId, $language, $userName);
-        } elseif ($userName != null && !$countries && !$language) {
+        } elseif ($userName != null && !$array_countries && !$language) {
             $users = $userRepository->getUserByName($userName, $number, $currentUserId);
+        } elseif ($userName == "" && isset($array_countries) && isset($language)) {
+            $users = $userRepository->getUserByContryAndLanguage($currentUserId, $language, $array_countries);
+        } elseif ($userName == "" && isset($array_countries) && !$language) {
+            $users = $userRepository->getUserByContryOnly($currentUserId, $array_countries);
+        } elseif ($userName == "" && !$array_countries && isset($language)) {
+            $users = $userRepository->getUserByLanguageOnly($currentUserId, $language);
         } else {
             $users = $userRepository->getUsersByCountries($array_countries, $currentUserId, $number);
         }
