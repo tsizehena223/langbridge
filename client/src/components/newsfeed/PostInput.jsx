@@ -54,7 +54,7 @@ const PostInput = () => {
       <div className="space-y-4">
         <div className="flex justify-around space-x-2">
           {/* FIXME */}
-          <img src={Avatar} className="w-[40px] mr-2" />
+          <img src={Avatar} className="w-[40px] mr-2 rounded-full" />
           <textarea
             cols="30"
             rows="1"

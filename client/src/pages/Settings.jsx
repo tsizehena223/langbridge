@@ -85,7 +85,7 @@ const Setting = () => {
               alt=""
             />
           ) : (
-            <img className="w-44 h-44" src={Avatar} alt="YouProfile" />
+            <img className="w-44 h-44 rounded-full" src={Avatar} alt="YouProfile" />
           )}
           <button
             className="absolute bottom-2 right-6"

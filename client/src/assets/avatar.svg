@@ -16,8 +16,8 @@
   <sodipodi:namedview
      id="namedview46"
      pagecolor="#ffffff"
-     bordercolor="#000000"
-     borderopacity="0.25"
+     bordercolor=""
+     borderopacity="0"
      inkscape:showpageshadow="2"
      inkscape:pageopacity="0.0"
      inkscape:pagecheckerboard="0"
@@ -32,6 +32,7 @@
      inkscape:window-y="0"
      inkscape:window-maximized="1"
      inkscape:current-layer="svg44" />
+   <rect width="100%" height="100%" fill="#ffffff" />
   <circle
      cx="270.75986"
      cy="260.93427"
@@ -51,7 +52,7 @@
      fill="#6c63ff"
      id="path40" />
   <ellipse
-     style="fill:none;fill-opacity:1;stroke:#3f3d56;stroke-width:4.01075;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;paint-order:markers stroke fill"
+     style="fill:none;fill-opacity:1;stroke-width:4.01075;stroke-linecap:round;stroke-linejoin:bevel;stroke-dasharray:none;paint-order:markers stroke fill"
      id="path968"
      cx="265.9603"
      cy="266.11581"
