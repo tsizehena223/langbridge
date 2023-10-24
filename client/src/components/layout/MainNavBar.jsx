@@ -5,10 +5,12 @@ import sidebarLinks from "../../static/sidebar-links";
 
 const MainNavBar = () => {
   const { pathname } = useLocation();
-  const Link = useMemo(() =>
-    sidebarLinks.find(({ path }) => path === pathname)
+  const Link = useMemo(
+    () =>
+      sidebarLinks.find(
+        ({ path }) => path !== "/" && pathname.startsWith(path)
+      ) || sidebarLinks[0]
   );
-
   const toggleTheme = () => {
     const currentTheme = localStorage.getItem("theme");
     const newTheme = currentTheme == "light" ? "dark" : "light";

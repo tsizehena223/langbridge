@@ -3,12 +3,19 @@ import api from "../config/api";
 const postService = {
   createPost(data, token) {
     return api.post("/articles", data, {
-      headers: { Authorization: `Bearer ${token}` , },
+      headers: { Authorization: `Bearer ${token}` },
     });
   },
 
   async getPosts(token) {
     const res = await api.get("/articles", {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  },
+
+  async getUserPosts(id, token) {
+    const res = await api.get(`/articles?author=${id}`, {
       headers: { Authorization: `Bearer ${token}` },
     });
     return res.data;
