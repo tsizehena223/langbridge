@@ -1,13 +1,15 @@
-import SearchBar from "./SearchBar";
-import MainLayout from "../layout/MainLayout";
-import UserSidebar from "../newsfeed/UserSidebar";
-import userService from "../../services/user";
-import { useAuth } from "../../contexts/AuthContext";
-import { getCountrySpeaking } from "../../utils/country-language";
 import { useState, useEffect } from "react";
-import SearchResult from "./SearchResult";
+import userService from "../services/user";
+import { useAuth } from "../contexts/AuthContext";
+import {
+  MainLayout,
+  SearchBar,
+  SearchResult,
+  UserSidebar,
+} from "../components";
+import { getCountrySpeaking } from "../utils/country-language";
 
-const SearchPage = () => {
+const Search = () => {
   const [userList, setUserList] = useState([]);
   const [resultList, setResultList] = useState([]);
   const { userData } = useAuth();
@@ -36,4 +38,4 @@ const SearchPage = () => {
   );
 };
 
-export default SearchPage;
+export default Search;

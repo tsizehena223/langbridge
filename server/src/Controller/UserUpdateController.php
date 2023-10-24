@@ -38,7 +38,9 @@ class UserUpdateController extends AbstractController
 
         $userName = $data['username'] ?? $user->getUsername();
         $email = $user->getEmail();
-        $newPassword = $data['password'] ?? $user->getPassword();
+        if (isset($data["password"]) && (strlen($data["password"])) > 4) {
+            $newPassword = $data["password"];
+        }
         $nationality = $user->getNationality();
         $language = $data['language'] ?? $user->getLanguage();
 
@@ -46,9 +48,11 @@ class UserUpdateController extends AbstractController
 
         $user->setUsername($userName);
         $user->setEmail($email);
-        $user->setPassword($hash->hashPassword($user, $newPassword));
         $user->setNationality($nationality);
         $user->setLanguage($language);
+        if (isset($newPassword)) {
+            $user->setPassword($hash->hashPassword($user, $newPassword));
+        }
 
         if ($pdp instanceof File) {
             $user->setPdpFile($pdp);
@@ -59,7 +63,7 @@ class UserUpdateController extends AbstractController
 
         $res = $userRepository->find($userId);
 
-        $linkImage = $res->getPdpName() ? $getFileUrl->getFileUrl($res->getPdpName()) : null;
+        $linkImage = $res->getPdpName() ? $getFileUrl->getFileUrl($res->getPdpName(), 'users') : null;
 
         $data = [
             'id' => $res->getId(),

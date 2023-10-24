@@ -38,7 +38,7 @@ class SecurityController extends AbstractController
 
         $token = $generateToken->generateToken($user->getId());
 
-        $linkImage = $user->getPdpName() ? $getFileUrl->getFileUrl($user->getPdpName()) : null;
+        $linkImage = $user->getPdpName() ? $getFileUrl->getFileUrl($user->getPdpName(), 'users') : null;
 
         return new JsonResponse([
             "token" => $token,

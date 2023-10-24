@@ -22,13 +22,16 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
-    public function findBySender(?User $user)
+    public function findBySenderOrRecipient(?User $user)
     {
         return $this->createQueryBuilder("m")
-            ->select("m.id", "m.content")
-            ->where("m.sender = :sender")
+            ->select("m.id", "m.content", "m.createdAt", "sender.id as senderId", "recipient.id as recipientId")
+            ->leftJoin("m.sender", "sender")
+            ->leftJoin("m.recipient", "recipient")
+            ->where("sender.id = :sender OR recipient.id = :sender")
             ->setParameter('sender', $user)
             ->orderBy("m.createdAt", "DESC")
-            ->getQuery()->getResult();
+            ->getQuery()
+            ->getResult();
     }
 }

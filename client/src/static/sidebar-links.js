@@ -25,7 +25,7 @@ const sidebarLinks = [
     label: "Notifications",
   },
   {
-    path: "/chat",
+    path: "/message",
     icon: RiMessage2Line,
     label: "Message",
   },

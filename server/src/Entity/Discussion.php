@@ -21,6 +21,17 @@ class Discussion
     #[ORM\Column(nullable: true)]
     private ?array $users = null;
 
+    #[ORM\ManyToOne(inversedBy: 'discussions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $sender = null;
+
+    #[ORM\ManyToOne(inversedBy: 'discussions')]
+    #[ORM\JoinColumn(nullable: false)]
+    private ?User $recipient = null;
+
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $lastMessage = null;
+
     public function __construct()
     {
         $this->message = new ArrayCollection();
@@ -69,6 +80,42 @@ class Discussion
     public function setUsers(?array $users): static
     {
         $this->users = $users;
+
+        return $this;
+    }
+
+    public function getSender(): ?User
+    {
+        return $this->sender;
+    }
+
+    public function setSender(?User $sender): static
+    {
+        $this->sender = $sender;
+
+        return $this;
+    }
+
+    public function getRecipient(): ?User
+    {
+        return $this->recipient;
+    }
+
+    public function setRecipient(?User $recipient): static
+    {
+        $this->recipient = $recipient;
+
+        return $this;
+    }
+
+    public function getLastMessage(): ?string
+    {
+        return $this->lastMessage;
+    }
+
+    public function setLastMessage(?string $lastMessage): static
+    {
+        $this->lastMessage = $lastMessage;
 
         return $this;
     }
