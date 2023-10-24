@@ -56,11 +56,11 @@ const Signup = () => {
   return (
     <div
       className="w-screen h-screen 
-      flex items-center sm:justify-between"
+      flex items-center sm:justify-between
+      dark:bg-gray-2"
     >
       <div
         className="p-6 w-full sm:w-1/2 max-h-full
-        dark:bg-gray-2
         flex flex-col items-center overflow-scroll"
       >
         <div className="mb-4 w-full flex flex-col items-center">
@@ -71,7 +71,7 @@ const Signup = () => {
         <form
           onSubmit={handleSignup}
           noValidate
-          className="flex flex-col items-center"
+          className="flex flex-col items-center space-y-4"
         >
           {signupFields.map((field, key) => {
             const value = formData[field.name];
@@ -81,7 +81,7 @@ const Signup = () => {
                 key={key}
                 icon={field.icon}
                 name={field.name}
-                label={field.placeholder}
+                placeholder={field.placeholder}
                 options={field.options}
                 value={value}
                 error={error}

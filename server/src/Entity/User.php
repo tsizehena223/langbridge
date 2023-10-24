@@ -92,7 +92,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[Assert\EqualTo(propertyPath: "password", message: 'Password should be equal to confirmPassword')]
     private ?string $confirmPassword = null;
 
-    #[Vich\UploadableField(mapping: "user_pdp", fileNameProperty: "pdpName")]
+    #[Vich\UploadableField(mapping: "users", fileNameProperty: "pdpName")]
     private ?File $pdpFile = null;
 
     #[ORM\Column(length: 255, nullable: true)]
@@ -117,10 +117,14 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\OneToMany(mappedBy: 'commentator', targetEntity: Comment::class)]
     private Collection $comments;
 
+    #[ORM\OneToMany(mappedBy: 'sender', targetEntity: Message::class, orphanRemoval: true)]
+    private Collection $messages;
+
     public function __construct()
     {
         $this->articles = new ArrayCollection();
         $this->comments = new ArrayCollection();
+        $this->messages = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -234,7 +238,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->updatedAt;
     }
 
-    public function setUpdatedAt(?\DateTimeInterface $updatedAt): static
+    public function setUpdatedAt($updatedAt)
     {
         $this->updatedAt = $updatedAt;
 
@@ -249,11 +253,6 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
         return $this->pdpFile;
     }
 
-    /**
-     * Set the value of pdpFile
-     *
-     * @return  self
-     */
     public function setPdpFile(?File $pdpFile = null): void
     {
         $this->pdpFile = $pdpFile;
@@ -341,6 +340,36 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
             // set the owning side to null (unless already changed)
             if ($comment->getCommentator() === $this) {
                 $comment->setCommentator(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Message>
+     */
+    public function getMessages(): Collection
+    {
+        return $this->messages;
+    }
+
+    public function addMessage(Message $message): static
+    {
+        if (!$this->messages->contains($message)) {
+            $this->messages->add($message);
+            $message->setSender($this);
+        }
+
+        return $this;
+    }
+
+    public function removeMessage(Message $message): static
+    {
+        if ($this->messages->removeElement($message)) {
+            // set the owning side to null (unless already changed)
+            if ($message->getSender() === $this) {
+                $message->setSender(null);
             }
         }
 

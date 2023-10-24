@@ -5,6 +5,12 @@ const userService = {
     return api.post("/users", data);
   },
 
+  updateUser(data, token) {
+    return api.post("/users/update", data, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+  },
+
   async getUsers(filter, token) {
     const keys = ["countries", "name", "number"];
     for (const key of keys) {

@@ -65,45 +65,34 @@ const loginFields = [
 
 const editFields = [
   {
+    label: "Username",
     name: "username",
     type: "text",
     placeholder: "Username",
     icon: RiUser3Line,
-    label: "your name"
   },
-
   {
-    label: "Your E-mail Address",
-    name: "email",
-    type: "email",
-    placeholder: "E-mail",
-    icon: RiMailOpenLine,
-  },
-
-  {
-    label: "Select new language",
+    label: "Learning",
     select: true,
     name: "language",
     placeholder: "Learning",
     options: getAllLanguages(),
     icon: RiSpeakLine,
   },
-
   {
-    label: "New passwords",
+    label: "New password",
     name: "password",
     type: "password",
-    placeholder: "Password",
+    placeholder: "",
     icon: RiKeyLine,
   },
-
   {
-    label: "confirm password",
+    label: "Confirm password",
     name: "passwordConfirm",
     type: "password",
-    placeholder: "Confirm password",
+    placeholder: "",
     icon: RiKeyLine,
   },
-]
+];
 
 export { signupFields, loginFields, editFields };

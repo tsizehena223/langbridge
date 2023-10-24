@@ -7,10 +7,10 @@ import ErrorMessage from "./form/ErrorMessage";
 import PostInput from "./newsfeed/PostInput";
 import PostContainer from "./newsfeed/PostContainer";
 import UserSidebar from "./newsfeed/UserSidebar";
-import Profile from "./profile/Profile";
-import EditProfile from "./profile/EditProfile";
-// import SearchResult from "./search/SearchResult";
-import MainLayout from "./layout/MainLayout"
+import RightProfile from "./profile/RightProfile";
+import ProfileNavBar from "./profile/ProfileNavBar";
+import SearchPage from "./search/SearchPage";
+import MainLayout from "./layout/MainLayout";
 
 export {
   HomeNavBar,
@@ -22,7 +22,8 @@ export {
   PostInput,
   PostContainer,
   UserSidebar,
-  Profile,
-  EditProfile,
+  RightProfile,
+  ProfileNavBar,
+  SearchPage,
   MainLayout,
 };

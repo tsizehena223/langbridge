@@ -2,12 +2,12 @@ import {
   RiHome2Line,
   RiInformationLine,
   RiMessage2Line,
-  RiNewspaperLine,
   RiShoppingBag2Line,
   RiSettingsLine,
   RiUser3Line,
+  RiSettings2Line,
+  RiSearch2Line,
 } from "react-icons/ri";
-import { useNavigate } from "react-router-dom";
 
 const sidebarLinks = [
   {
@@ -36,10 +36,15 @@ const sidebarLinks = [
     label: "Shop",
   },
   {
+    path: "/search",
+    icon: RiSearch2Line,
+    label: "Search",
+  },
+  {
     path: "/settings",
-    icon: RiSettingsLine,
+    icon: RiSettings2Line,
     label: "Settings",
-  }
+  },
 ];
 
 export default sidebarLinks;

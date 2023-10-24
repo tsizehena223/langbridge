@@ -60,16 +60,17 @@ const PostInput = () => {
     <div className="w-full mb-6 p-6 rounded-md bg-light dark:bg-gray-2">
       <div className="space-y-4">
         <div className="flex justify-around space-x-2">
-          <img src={Avatar} className="w-9 h-9 mr-2" />
+          {/* FIXME */}
+          <img src={Avatar} className="w-[40px] mr-2" />
           <textarea
             cols="30"
             rows="1"
             placeholder="what's on your mind..."
             onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}
-            className="w-full py-1 px-4 
+            className="w-full py-2 px-4
             dark:bg-gray-2
-            border-[1px] border-gray-0 rounded-md 
+            border-2 border-gray-0 rounded-md
             focus:outline-none focus:border-purple focus:font-normal
             placeholder:font-semibold"
           />

@@ -21,5 +21,16 @@ services:
             - "../src/Entity/"
             - "../src/Kernel.php"
 
-    # add more service definitions when explicit configuration is needed
-    # please note that last definitions always *replace* previous ones
+    App\Command\WebSocketServerCommand:
+        tags:
+            - { name: 'symfony.command' }
+
+    App\Service\SendMessageService:
+        arguments:
+            $messageBus: '@message_bus'
+
+    App\MessageHandler\SendMessageHandler:
+        arguments:
+            $entityManager: '@doctrine.orm.entity_manager'
+        tags:
+            - { name: 'messenger.message_handler' }

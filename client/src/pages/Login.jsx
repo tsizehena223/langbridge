@@ -47,7 +47,7 @@ const Login = () => {
   return (
     <div
       className="w-screen h-screen 
-      flex justify-center sm:justify-between"
+      flex justify-center sm:justify-between dark:bg-gray-2"
     >
       <div
         className="w-1/2 h-full 
@@ -59,8 +59,7 @@ const Login = () => {
 
       <div
         className="w-full sm:w-1/2 max-h-full flex 
-        justify-center items-center 
-        dark:bg-gray-2"
+        justify-center items-center"
       >
         <div className="p-6">
           <div className="mb-4 w-full flex flex-col items-center">
@@ -71,7 +70,7 @@ const Login = () => {
           <form
             onSubmit={handleLogin}
             noValidate
-            className="flex flex-col items-center"
+            className="flex flex-col items-center space-y-4"
           >
             {loginFields.map((field, key) => (
               <FormInput

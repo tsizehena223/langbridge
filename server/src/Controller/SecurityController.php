@@ -17,7 +17,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/api/users/login', name: 'app_login', methods: ["POST"])]
-    public function index(Request $request, UserRepository $repo, GenerateToken $generateToken): JsonResponse
+    public function index(Request $request, UserRepository $repo, GenerateToken $generateToken, GetFileUrlController $getFileUrl): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         if (!isset($data["email"]) || !isset($data["password"])) {
@@ -38,12 +38,15 @@ class SecurityController extends AbstractController
 
         $token = $generateToken->generateToken($user->getId());
 
+        $linkImage = $user->getPdpName() ? $getFileUrl->getFileUrl($user->getPdpName()) : null;
+
         return new JsonResponse([
             "token" => $token,
             "id" => $user->getId(),
             "name" => $user->getUsername(),
             "country" => $user->getNationality(),
-            "language" => $user->getLanguage()
+            "language" => $user->getLanguage(),
+            "image" => $linkImage
         ], 200);
     }
 }

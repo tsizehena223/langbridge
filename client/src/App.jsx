@@ -1,7 +1,15 @@
 import { useEffect } from "react";
-// import { SearchResult } from "./components";
+import { SearchPage } from "./components";
 import { useAuth } from "./contexts/AuthContext";
-import { Home, Login, Signup, NotFound, Newsfeed, ViewProfile, Setting } from "./pages";
+import {
+  Home,
+  Login,
+  Signup,
+  NotFound,
+  Newsfeed,
+  Profile,
+  Settings,
+} from "./pages";
 import { Routes, Route } from "react-router-dom";
 
 const App = () => {
@@ -21,9 +29,9 @@ const App = () => {
         <Route path="/" element={isAuthentified ? <Newsfeed /> : <Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
-        {/* <Route path="/search" element={<SearchResult />} /> */}
-        <Route path="/profile" element={<ViewProfile />} />
-        <Route path="/settings" element={<Setting />} />
+        <Route path="/search" element={<SearchPage />} />
+        <Route path="/profile" element={<Profile />} />
+        <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </div>

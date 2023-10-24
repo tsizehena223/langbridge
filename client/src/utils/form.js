@@ -34,26 +34,50 @@ const signupRules = {
   },
 };
 
+const editRules = {
+  username: {
+    minLength: 4,
+    message: "Invalid username",
+  },
+  language: {
+    message: "No language selected",
+  },
+  password: {
+    optional: true,
+    minLength: 6,
+    message: "Password must contain at least 6 characters",
+  },
+  passwordConfirm: {
+    optional: true,
+    match: "password",
+    message: "Mismatched password",
+  },
+};
+
 const validateForm = (formData, validationRules) => {
   const errors = {};
 
   for (const field in validationRules) {
-    const fieldvValue = formData[field];
+    const fieldValue = formData[field];
     const rules = validationRules[field];
 
-    if (!fieldvValue) {
+    if (!rules.optional && !fieldValue) {
       errors[field] = rules.message;
     }
 
-    if (rules.minLength && fieldvValue.length < rules.minLength) {
+    if (
+      (fieldValue || !rules.optional) &&
+      rules.minLength &&
+      fieldValue.length < rules.minLength
+    ) {
       errors[field] = rules.message;
     }
 
-    if (rules.match && fieldvValue != formData[rules.match]) {
+    if (rules.match && fieldValue != formData[rules.match]) {
       errors[field] = rules.message;
     }
 
-    if (rules.pattern && !rules.pattern.test(fieldvValue)) {
+    if (rules.pattern && !rules.pattern.test(fieldValue)) {
       errors[field] = rules.message;
     }
   }
@@ -61,4 +85,4 @@ const validateForm = (formData, validationRules) => {
   return errors;
 };
 
-export { loginRules, signupRules, validateForm };
+export { loginRules, signupRules, editRules, validateForm };

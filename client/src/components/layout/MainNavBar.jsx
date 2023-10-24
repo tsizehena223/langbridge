@@ -34,11 +34,14 @@ const MainNavBar = () => {
         <button onClick={toggleTheme} className="ml-4 rounded-full w-9 h-9">
           <RiSunLine size={20} className="hover:text-purple" />
         </button>
+<<<<<<< HEAD
         <button className="ml-4 rounded-full w-9 h-9 ">
           <Link to="/settings" >
             <RiSettings4Line size={20} className="hover:text-purple" />
           </Link>
         </button>
+=======
+>>>>>>> a6b0e4d45349d010cc612beb47866be2fb8433ff
       </div>
     </div>
   );
