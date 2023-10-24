@@ -60,10 +60,10 @@ const Signup = () => {
       dark:bg-gray-2"
     >
       <div
-        className="p-6 w-full sm:w-1/2 max-h-full
+        className="space-y-4 p-6 w-full sm:w-1/2 max-h-full
         flex flex-col items-center overflow-scroll"
       >
-        <div className="mb-4 w-full flex flex-col items-center">
+        <div className="w-full flex flex-col items-center">
           <RiUserAddLine size={40} className="mb-2" />
           <h1 className="font-bold text-2xl">Sign up</h1>
         </div>
@@ -71,7 +71,7 @@ const Signup = () => {
         <form
           onSubmit={handleSignup}
           noValidate
-          className="flex flex-col items-center space-y-4"
+          className="flex flex-col items-center space-y-5"
         >
           {signupFields.map((field, key) => {
             const value = formData[field.name];
@@ -102,7 +102,7 @@ const Signup = () => {
           })}
           <button
             type="submit"
-            className="mt-6 mb-3 py-2 px-6 rounded-md
+            className="mb-3 py-2 px-6 rounded-md
             text-light bg-purple hover:bg-green"
           >
             Create an account
@@ -111,7 +111,7 @@ const Signup = () => {
 
         <ErrorMessage message={requestError} />
 
-        <div className="mt-4 w-full font-semibold text-sm text-center">
+        <div className="w-full font-semibold text-sm text-center">
           <span>Already have an account? </span>
           <Link to="/login" className="text-purple">
             Sign in

@@ -24,9 +24,7 @@ const Sidebar = () => {
             <Link
               key={key}
               to={
-                item.path == "/profile"
-                  ? `/profile?id=${userData.id}`
-                  : item.path
+                item.path == "/profile" ? `/profile/${userData.id}` : item.path
               }
               className="mb-4 flex items-center 
               font-semibold hover:text-purple"

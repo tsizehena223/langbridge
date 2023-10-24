@@ -5,10 +5,12 @@ import sidebarLinks from "../../static/sidebar-links";
 
 const MainNavBar = () => {
   const { pathname } = useLocation();
-  const SLink = useMemo(() =>
-    sidebarLinks.find(({ path }) => path === pathname)
+  const Link = useMemo(
+    () =>
+      sidebarLinks.find(
+        ({ path }) => path !== "/" && pathname.startsWith(path)
+      ) || sidebarLinks[0]
   );
-
   const toggleTheme = () => {
     const currentTheme = localStorage.getItem("theme");
     const newTheme = currentTheme == "light" ? "dark" : "light";
@@ -34,14 +36,6 @@ const MainNavBar = () => {
         <button onClick={toggleTheme} className="ml-4 rounded-full w-9 h-9">
           <RiSunLine size={20} className="hover:text-purple" />
         </button>
-<<<<<<< HEAD
-        <button className="ml-4 rounded-full w-9 h-9 ">
-          <Link to="/settings" >
-            <RiSettings4Line size={20} className="hover:text-purple" />
-          </Link>
-        </button>
-=======
->>>>>>> a6b0e4d45349d010cc612beb47866be2fb8433ff
       </div>
     </div>
   );
