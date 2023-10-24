@@ -61,8 +61,8 @@ const Login = () => {
         className="w-full sm:w-1/2 max-h-full flex 
         justify-center items-center"
       >
-        <div className="p-6">
-          <div className="mb-4 w-full flex flex-col items-center">
+        <div className="space-y-4 p-6">
+          <div className="w-full flex flex-col items-center">
             <RiUserSharedLine size={40} className="mb-2" />
             <h1 className="font-bold text-2xl">Login</h1>
           </div>
@@ -70,7 +70,7 @@ const Login = () => {
           <form
             onSubmit={handleLogin}
             noValidate
-            className="flex flex-col items-center space-y-4"
+            className="space-y-5 flex flex-col items-center"
           >
             {loginFields.map((field, key) => (
               <FormInput
@@ -95,7 +95,7 @@ const Login = () => {
 
           <ErrorMessage message={requestError} />
 
-          <div className="mt-4 w-full font-semibold text-sm text-center">
+          <div className="w-full font-semibold text-sm text-center">
             <span>Don't have have an account yet? </span>
             <Link to="/signup" className="text-purple">
               Sign up

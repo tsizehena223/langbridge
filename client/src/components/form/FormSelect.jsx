@@ -5,7 +5,7 @@ const FormSelect = (props) => {
   const [isFocused, setIsFocused] = useState(false);
 
   return (
-    <div className="flex flex-col items-center">
+    <div className="space-y-2 flex flex-col items-center">
       <div className="flex flex-col w-fit">
         {props.label && (
           <label
