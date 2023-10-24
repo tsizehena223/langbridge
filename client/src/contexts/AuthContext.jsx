@@ -1,6 +1,5 @@
 import { createContext, useContext, useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
-
 import api from "../config/api";
 
 const AuthContext = createContext();
@@ -30,8 +29,15 @@ const AuthProvider = ({ children }) => {
     navigate("/login");
   };
 
+  const updateUserData = (data) => {
+    data.token = userData.token;
+    const json = JSON.stringify(data);
+    localStorage.setItem("userdata", json);
+    setUserData(data);
+  };
+
   const value = useMemo(
-    () => ({ userData, isAuthentified, login, logout }),
+    () => ({ userData, updateUserData, isAuthentified, login, logout }),
     [userData]
   );
 

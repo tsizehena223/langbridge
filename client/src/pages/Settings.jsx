@@ -14,7 +14,7 @@ import userService from "../services/user";
 const Setting = () => {
   const inputRef = useRef(null);
   const [image, setImage] = useState(null);
-  const { userData } = useAuth();
+  const { userData, updateUserData } = useAuth();
   const navigate = useNavigate();
 
   const [errors, setErrors] = useState({});
@@ -61,7 +61,8 @@ const Setting = () => {
       }
 
       try {
-        await userService.updateUser(data, userData.token);
+        const newData = await userService.updateUser(data, userData.token);
+        updateUserData(newData.data);
         navigate("/");
       } catch (error) {
         // TODO: error handling
@@ -76,17 +77,14 @@ const Setting = () => {
         rounded-md bg-light dark:bg-gray-2"
       >
         <div className="relative p-4">
-          {image ? (
+          <div className="w-44 h-44 rounded-full overflow-clip">
             <img
-              className="w-44 h-44 
-              flex justify-center items-center 
-              rounded-full border-solid shadow border-dark"
-              src={URL.createObjectURL(image)}
-              alt=""
+              src={
+                image ? URL.createObjectURL(image) : userData.image || Avatar
+              }
+              className="w-full h-full object-cover"
             />
-          ) : (
-            <img className="w-44 h-44" src={Avatar} alt="YouProfile" />
-          )}
+          </div>
           <button
             className="absolute bottom-2 right-6"
             onClick={handleImageClick}
