@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Service\CalculDate;
 use App\Service\DecodeJwt;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -12,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GetUsersController extends AbstractController
 {
     #[Route(path: "/api/users", name: "search_users", methods: ["GET"])]
-    public function searchUserByNationality(Request $request, DecodeJwt $decodeJwt, UserRepository $userRepository, GetFileUrlController $getFileUrl): JsonResponse
+    public function searchUserByNationality(Request $request, DecodeJwt $decodeJwt, UserRepository $userRepository, GetFileUrlController $getFileUrl, CalculDate $calculDate): JsonResponse
     {
         $userName = $request->query->get("name");
         $countries = $request->query->get("countries");
@@ -67,12 +68,14 @@ class GetUsersController extends AbstractController
 
         foreach ($users as $user) {
             $linkImage = $user["image"] ? $getFileUrl->getFileUrl($user["image"], 'users') : null;
+            $formatedDate = $calculDate->formatDate($user["createdAt"]->format("Y-m-d H:i:s"));
             $data[] = [
                 'id' => $user["id"],
                 'name' => $user["name"],
                 'country' => $user["country"],
                 'language' => $user["language"],
-                'image' => $linkImage
+                'image' => $linkImage,
+                'createdAt' => $formatedDate
             ];
         }
 

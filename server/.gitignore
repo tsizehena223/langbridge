@@ -9,4 +9,5 @@ public/bundles/
 public/images/
 var/
 vendor/
+migrations/
 ###< symfony/framework-bundle ###

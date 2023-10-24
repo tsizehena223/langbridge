@@ -59,7 +59,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUserByName(?string $name, $number, $currentUserId)
     {
         return $this->createQueryBuilder("user")
-            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
             ->where($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
             ->andWhere($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->setMaxResults($number)
@@ -69,7 +69,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUsersByCountries($countries, ?int $currentUserId, $number)
     {
         return $this->createQueryBuilder("user")
-            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
             ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
             ->setMaxResults($number)
@@ -79,7 +79,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUsersByLanguageAndCountry($currentUserId, $language, $country, $name)
     {
         return $this->createQueryBuilder("user")
-            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
             ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$country'"))
@@ -90,7 +90,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUsersByCountry($currentUserId, $country, $name)
     {
         return $this->createQueryBuilder("user")
-            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
             ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$country'"))
@@ -100,7 +100,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUsersByLanguage($currentUserId, $language, $name)
     {
         return $this->createQueryBuilder("user")
-            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
             ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->like("user.username", "'%$name%'"))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
@@ -110,7 +110,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUserByContryAndLanguage($currentUserId, $language, $countries)
     {
         return $this->createQueryBuilder("user")
-            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
             ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
@@ -120,7 +120,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUserByContryOnly($currentUserId, $countries)
     {
         return $this->createQueryBuilder("user")
-        ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+        ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
         ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
             ->getQuery()->getResult();
@@ -129,7 +129,7 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUserByLanguageOnly($currentUserId, $language)
     {
         return $this->createQueryBuilder("user")
-        ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image")
+        ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
         ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
             ->getQuery()->getResult();
