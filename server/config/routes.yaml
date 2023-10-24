@@ -7,3 +7,7 @@ controllers:
 articles:
     path: /images/articles
     controller: App\Controller\GetFileUrlController::getFileUrl
+
+users:
+    path: /images/users
+    controller: App\Controller\GetFileUrlController::getFileUrl

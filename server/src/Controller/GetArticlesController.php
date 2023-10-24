@@ -37,9 +37,9 @@ class GetArticlesController extends AbstractController
 
         foreach ($articles as $article) {
             $numberComments = count($commentRepository->getNumberComments($article["id"]));
-            $linkImagePdp = ($article["imagePdp"]) ? $getFileUrl->getFileUrl($article["imagePdp"]) : null;
-            // $linkImage = "http://localhost:8000/images/articles/" . $article["imageName"]; // Noob 
-            $linkImage = $article["imageName"] ? $getFileUrl->getFileUrl($article["imageName"]) : null;
+            $linkImagePdp = ($article["imagePdp"]) ? $getFileUrl->getFileUrl($article["imagePdp"], 'users') : null;
+            // $linkImagePdp = "http://localhost:8000/images/users/" . $article["imagePdp"]; // Noob 
+            $linkImage = $article["imageName"] ? $getFileUrl->getFileUrl($article["imageName"], 'articles') : null;
             $data[] = [
                 'id' => $article["id"],
                 'content' => $article["content"],

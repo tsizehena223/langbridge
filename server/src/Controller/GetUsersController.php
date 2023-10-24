@@ -52,7 +52,7 @@ class GetUsersController extends AbstractController
         $data = [];
 
         foreach ($users as $user) {
-            $linkImage = $user["image"] ? $getFileUrl->getFileUrl($user["image"]) : null;
+            $linkImage = $user["image"] ? $getFileUrl->getFileUrl($user["image"], 'users') : null;
             $data[] = [
                 'id' => $user["id"],
                 'name' => $user["name"],
