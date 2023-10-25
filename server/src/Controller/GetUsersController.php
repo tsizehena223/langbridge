@@ -109,7 +109,7 @@ class GetUsersController extends AbstractController
     }
 
     #[Route("/api/users/discussions", name: "users.in.discussions", methods: ["GET"])]
-    public function getUsersByDiscussions(Request $request, DecodeJwt $decodeJwt, DiscussionRepository $discussionRepository, UserRepository $userRepository): JsonResponse
+    public function getUsersByDiscussions(Request $request, CalculDate $calculDate, GetFileUrlController $getFileUrl, DecodeJwt $decodeJwt, DiscussionRepository $discussionRepository, UserRepository $userRepository): JsonResponse
     {
         $jwt = $request->headers->get("Authorization");
         $userId = $decodeJwt->getIdToken($jwt);
@@ -124,12 +124,41 @@ class GetUsersController extends AbstractController
             return new JsonResponse(["message" => "User not authentified"], 401);
         }
 
-        $users = [];
         $discussions = $discussionRepository->findBySenderOrRecipient($currentUser);
+
+        $userIds = [];
+        $lastMessages = [];
+        $dates = [];
         foreach ($discussions as $discussion) {
-            $users[] = $userRepository->getUsersHavingDiscussions($currentUser->getId(), $discussion["recipientId"], $discussion["senderId"]);
+            $userIds = array_merge($userIds, $discussion['users']);
+            $lastMessages[] = $discussion["lastMessage"];
+            $dates[] = $discussion["createdAt"]->format("d M Y H:i");
         }
 
-        return new JsonResponse($users);
+        $userIds = array_unique($userIds);
+        $users = $userRepository->findById($userIds);
+
+        $data = [];
+        $counter = 0;
+        foreach ($users as $user) {
+            if ($user->getId() == $userId) continue;
+            $linkImage = $user->getPdpName() ? $getFileUrl->getFileUrl($user->getPdpName(), 'users') : null;
+            $formatedDate = $calculDate->formatDate($user->getCreatedAt()->format("Y-m-d H:i:s"));
+            $data[] = [
+                'id' => $user->getId(),
+                'name' => $user->getUsername(),
+                'country' => $user->getNationality(),
+                'language' => $user->getLanguage(),
+                'image' => $linkImage,
+                'createdAt' => $formatedDate,
+                'discussion' => [
+                    'lastMessage' => $lastMessages[$counter],
+                    'createdAt' => $dates[$counter]
+                ]
+            ];
+            $counter++;
+        }
+
+        return new JsonResponse($data);
     }
 }
