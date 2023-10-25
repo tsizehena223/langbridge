@@ -1,9 +1,10 @@
 import { useMemo } from "react";
-import { RiSettings4Line, RiSunLine } from "react-icons/ri";
+import { RiMoonLine, RiSunLine } from "react-icons/ri";
 import { useLocation } from "react-router-dom";
 import sidebarLinks from "../../static/sidebar-links";
 
 const MainNavBar = () => {
+  const [ theme, setTheme ] = useState('light');
   const { pathname } = useLocation();
   const Link = useMemo(
     () =>
@@ -11,12 +12,16 @@ const MainNavBar = () => {
         ({ path }) => path !== "/" && pathname.startsWith(path)
       ) || sidebarLinks[0]
   );
-  const toggleTheme = () => {
-    const currentTheme = localStorage.getItem("theme");
-    const newTheme = currentTheme == "light" ? "dark" : "light";
-    document.documentElement.classList.toggle("dark");
-    localStorage.setItem("theme", newTheme);
-  };
+  const handleThemeSwitch = () => {
+    const body = document.querySelector('body');
+    if (theme === 'light') {
+      setTheme('dark');
+      body.classList.add('dark')
+    } else {
+      body.classList.remove('dark');
+      setTheme('light');
+    }
+  }
 
   return (
     <div
@@ -33,8 +38,10 @@ const MainNavBar = () => {
       </div>
 
       <div className="flex items-center text-gray-1 dark:text-light">
-        <button onClick={toggleTheme} className="ml-4 rounded-full w-9 h-9">
-          <RiSunLine size={20} className="hover:text-purple" />
+        <button onClick={handleThemeSwitch} className="ml-4 rounded-full w-9 h-9">
+          {
+            theme ===  'light' ? <RiSunLine /> : <RiMoonLine />
+          }
         </button>
       </div>
     </div>

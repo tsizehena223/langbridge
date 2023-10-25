@@ -16,6 +16,9 @@ import SearchResult from "./search/SearchResult";
 import MainLayout from "./layout/MainLayout";
 import Landing from "./home/Landing";
 import Section1 from "./home/Section1"
+import Section2 from "./home/Section2"
+import Section3 from "./home/Section3"
+import Section4 from "./home/Section4"
 
 export {
   HomeNavBar,
@@ -36,4 +39,7 @@ export {
   MainLayout,
   Landing,
   Section1,
+  Section2,
+  Section3,
+  Section4,
 };

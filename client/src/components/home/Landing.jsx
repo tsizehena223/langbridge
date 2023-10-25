@@ -3,16 +3,13 @@ import WorldIllustration from '../../assets/world.svg'
 
 const Landing = () => {
   return (
-  <div 
-    className="
-        w-screen h-screen px-4 relative flex items-center justify-center
-        max-w-6xl flex-col-reverse sm:flex-row"
-    >
-    <div className='flex flex-col items-center sm:items-start space-y-6'>
-        <h2 className='font-extrabold text-5xl sm:justify-start'>Welcome to 
-            <span className='text-purple'> LangBridge</span>
+  <div className="w-screen h-screen px-4 relative flex xl:flex-col items-center justify-center">
+    <div className="max-w-6xl flex flex-col-reverse items-center sm:flex-row">
+      <div className="flex flex-col items-center sm:items-start">
+        <h2 className="mb-4 font-extrabold text-5xl dark:text-light">Welcome to 
+          <span className='text-purple'> LangBridge</span>
         </h2>
-        <p className='leading-7 text-center sm:text-start font-medium'>
+        <p className="leading-7 text-center font-normal text-lg sm:text-start dark:text-light">
           Let language be the bridge that connects you to endless possibilities
           and lifelong connections. Welcome to LangBridge, where the world
           becomes your classroom.
@@ -23,9 +20,8 @@ const Landing = () => {
         >
           Get started
         </a>
-    </div>
-    <div>
-        <img src={WorldIllustration} alt="Illustration" className='w-auto' />
+      </div>
+        <img src={WorldIllustration} alt="World illustration" className="w-96" />
     </div>
   </div>
   )
