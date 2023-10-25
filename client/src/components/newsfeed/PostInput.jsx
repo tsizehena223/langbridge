@@ -50,44 +50,40 @@ const PostInput = () => {
   };
 
   return (
-    <div className="w-full mb-6 p-6 rounded-md bg-light dark:bg-gray-2">
+    <div className="w-full p-6 rounded-md bg-light dark:bg-gray-2">
       <div className="space-y-4">
-        <div className="flex justify-around space-x-2">
-          {/* FIXME */}
-          <img src={Avatar} className="w-[40px] mr-2" />
+        <div className="flex items-center space-x-3">
+          <div className="flex-shrink-0 w-11 h-11 rounded-full overflow-clip">
+            <img
+              src={userData.image || Avatar}
+              className="w-full h-full object-cover"
+            />
+          </div>
           <textarea
             cols="30"
             rows="1"
-            placeholder="what's on your mind..."
+            placeholder="What's on your mind..."
             onChange={(e) => setInputValue(e.target.value)}
             value={inputValue}
             className="w-full py-2 px-4
             dark:bg-gray-2
-            border-2 border-gray-0 rounded-md
+            border-2 border-gray-0 rounded-md resize-none
             focus:outline-none focus:border-purple focus:font-normal
             placeholder:font-semibold"
           />
         </div>
         <div className="flex justify-between">
           <div className="flex space-x-4 items-center">
-            <div>
-              <MenuItem icon={RiCameraFill} />
-            </div>
-            <div onClick={() => imageRef.current.click()}>
-              <MenuItem icon={RiImageFill} />
-            </div>
-            <div>
-              <MenuItem icon={RiLink} />
-            </div>
-            <div>
-              <MenuItem icon={RiMapPin2Fill} />
-            </div>
-            <div>
-              <MenuItem icon={RiEmojiStickerFill} />
-            </div>
+            <MenuItem icon={RiCameraFill} />
+            <MenuItem
+              icon={RiImageFill}
+              onSelect={() => imageRef.current.click()}
+            />
+            <MenuItem icon={RiLink} />
+            <MenuItem icon={RiMapPin2Fill} />
+            <MenuItem icon={RiEmojiStickerFill} />
           </div>
           <div className="flex space-x-4">
-            <MenuItem icon={RiPencilFill} label="Draft" />
             <MenuItem
               icon={RiSendPlaneFill}
               label="Post"
