@@ -47,6 +47,7 @@ class RegistrationController extends AbstractController
 
         $hashedPassword = $this->hasher->hashPassword($user, $data["password"]);
         $user->setPassword($hashedPassword);
+        $user->setCreatedAt(new \DateTime());
 
         $objectManager->persist($user);
         $objectManager->flush();
