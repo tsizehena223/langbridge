@@ -15,6 +15,9 @@ const HomeNavBar = () => (
     </div>
 
     <div>
+      <button onClick={toggleTheme} className="ml-4 rounded-full w-9 h-9">
+        <RiSunLine size={20} className="hover:text-purple" />
+      </button>
       <Link
         to="/signup"
         children="Sign up"

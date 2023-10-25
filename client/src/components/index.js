@@ -12,6 +12,8 @@ import ProfileNavBar from "./profile/ProfileNavBar";
 import SearchBar from "./search/SearchBar";
 import SearchResult from "./search/SearchResult";
 import MainLayout from "./layout/MainLayout";
+import Landing from "./home/Landing";
+import Section1 from "./home/Section1"
 
 export {
   HomeNavBar,
@@ -28,4 +30,6 @@ export {
   SearchBar,
   SearchResult,
   MainLayout,
+  Landing,
+  Section1,
 };
