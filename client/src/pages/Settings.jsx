@@ -100,7 +100,11 @@ const Setting = () => {
           className="hidden"
         />
 
-        <div className="flex items-center justify-center p-4">
+        <div className="flex items-center justify-evenly p-4">
+          <div className="hidden md:block w-1/2">
+            <img className="" src={Info} alt="" />
+          </div>
+
           <div className="z-10 space-x-4">
             <form
               className="w-fit flex flex-col items-center"
@@ -144,10 +148,6 @@ const Setting = () => {
                 Save Changes
               </button>
             </form>
-          </div>
-
-          <div className="absolute hidden md:block w-1/2 dark:brightness-50">
-            <img className="" src={Info} alt="" />
           </div>
         </div>
       </div>

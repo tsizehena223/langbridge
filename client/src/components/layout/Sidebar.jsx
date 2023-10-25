@@ -10,7 +10,7 @@ const Sidebar = () => {
   return (
     <div
       className="z-50 sticky top-0 
-      flex flex-col
+      hidden md:flex flex-col
       h-screen w-fit space-y-8 py-6 px-8
       bg-light dark:bg-gray-2"
     >

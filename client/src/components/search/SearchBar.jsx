@@ -41,8 +41,8 @@ const SearchBar = ({ userData, onResult }) => {
   return (
     <div className="w-full p-6 bg-light dark:bg-gray-2 rounded-md">
       <SearchInput onSearch={handleSearch} />
-      <div className="mt-6 flex space-x-6 items-center">
-        <div className="flex items-center font-semibold">
+      <div className="mt-6 flex justify-between items-center gap-4">
+        <div className="hidden sm:flex items-center font-semibold">
           <RiFilterLine className="mr-2" size={20} />
           <span>Filters:</span>
         </div>

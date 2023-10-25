@@ -2,6 +2,7 @@
 
 namespace App\Repository;
 
+use App\Entity\Discussion;
 use App\Entity\Message;
 use App\Entity\User;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
@@ -22,15 +23,16 @@ class MessageRepository extends ServiceEntityRepository
         parent::__construct($registry, Message::class);
     }
 
-    public function findBySenderOrRecipient(?User $user)
+    public function findBySenderOrRecipientOnDiscussion(?User $user, ?Discussion $discussion)
     {
         return $this->createQueryBuilder("m")
             ->select("m.id", "m.content", "m.createdAt", "sender.id as senderId", "recipient.id as recipientId")
             ->leftJoin("m.sender", "sender")
             ->leftJoin("m.recipient", "recipient")
             ->where("sender.id = :sender OR recipient.id = :sender")
-            ->setParameter('sender', $user)
-            ->orderBy("m.createdAt", "DESC")
+            ->andWhere("m.discussion = :discussionId")
+            ->setParameters(["sender" => $user, "discussionId" => $discussion->getId()])
+            ->orderBy("m.createdAt", "ASC")
             ->getQuery()
             ->getResult();
     }

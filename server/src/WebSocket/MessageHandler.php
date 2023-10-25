@@ -33,6 +33,7 @@ class MessageHandler implements MessageComponentInterface
                 echo $data["id"] . " connected! \n";
                 break;
             case 'message':
+                echo $data["senderId"] . " et " . $data["recipientId"] . "\n";
                 $this->storeToDB($data["senderId"], $data["recipientId"], $data["content"]);
                 $this->sendManually($data["recipientId"], $data["senderId"], $msg);
                 break;
@@ -56,7 +57,6 @@ class MessageHandler implements MessageComponentInterface
         foreach ($this->connections as $connection) {
             if ($connection->resourceId == $recipient || $connection->resourceId == $sender) {
                 $connection->send($msg);
-                break;
             }
         }
     }

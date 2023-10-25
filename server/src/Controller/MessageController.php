@@ -58,6 +58,7 @@ class MessageController extends AbstractController
             $discussion->setSender($currentUser);
             $discussion->setRecipient($recipientUser);
             $discussion->setUsers([$currentUser->getId(), $recipientId]);
+            $discussion->setCreatedAt(new \DateTime());
         }
 
         $discussion->setLastMessage($message->getContent());
@@ -87,7 +88,7 @@ class MessageController extends AbstractController
     }
 
     #[Route('/api/messages', name: 'message.get', methods: ['GET'])]
-    public function getMessages(Request $request, MessageRepository $messageRepository, UserRepository $userRepository, DecodeJwt $decodeJwt): JsonResponse
+    public function getMessages(Request $request, MessageRepository $messageRepository, UserRepository $userRepository, DecodeJwt $decodeJwt, DiscussionRepository $discussionRepository): JsonResponse
     {
         $jwt = $request->headers->get("Authorization");
         $userId = $decodeJwt->getIdToken($jwt);
@@ -102,7 +103,30 @@ class MessageController extends AbstractController
             return new JsonResponse(["message" => "User not authentified"], 401);
         }
 
-        $messages = $messageRepository->findBySenderOrRecipient($currentUser);
+        $recipientId = (int)$request->query->get("recipientId");
+        $recipientUser = $userRepository->find($recipientId);
+
+        if (!$recipientUser instanceof User) {
+            return new JsonResponse(["message" => "Recipient not found"], 400);
+        }
+
+        $discussion = $discussionRepository->findOneBy(["sender" => $currentUser, "recipient" => $recipientUser]);
+        if ($discussion == null) {
+            $discussion = $discussionRepository->findOneBy(["sender" => $recipientUser, "recipient" => $currentUser]);
+            if ($discussion == null) {
+                $discussion = new Discussion();
+                $discussion->setSender($currentUser);
+                $discussion->setRecipient($recipientUser);
+                $discussion->setUsers([$currentUser->getId(), $recipientUser->getId()]);
+                $discussion->setCreatedAt(new \DateTime());
+            } else {
+                $discussion->setUpdatedAt(new \DateTime());
+            }
+        } else {
+            $discussion->setUpdatedAt(new \DateTime());
+        }
+
+        $messages = $messageRepository->findBySenderOrRecipientOnDiscussion($currentUser, $discussion);
 
         $data = [];
         foreach ($messages as $message) {
