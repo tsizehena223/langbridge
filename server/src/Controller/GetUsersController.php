@@ -50,23 +50,25 @@ class GetUsersController extends AbstractController
 
         $userName = ($userName == "") ? null : $userName;
 
-        if (isset($id) && $userRepository->find($id) instanceof User) {
-            $user = $userRepository->find($id);
+        if ($id > 0) {
+            if ($userRepository->find($id) instanceof User) {
+                $user = $userRepository->find($id);
 
-            $linkImage = $user->getPdpName() ? $getFileUrl->getFileUrl($user->getPdpName(), 'users') : null;
-            $formatedDate = $calculDate->formatDate($user->getCreatedAt()->format("Y-m-d H:i:s"));
+                $linkImage = $user->getPdpName() ? $getFileUrl->getFileUrl($user->getPdpName(), 'users') : null;
+                $formatedDate = $calculDate->formatDate($user->getCreatedAt()->format("Y-m-d H:i:s"));
 
-            $data = [
-                'id' => $user->getId(),
-                'name' => $user->getUsername(),
-                'country' => $user->getNationality(),
-                'language' => $user->getLanguage(),
-                'image' => $linkImage,
-                'createdAt' => $formatedDate
-            ];
-            return new JsonResponse($data);
-        } else {
-            return new JsonResponse(["message" => "User not found"], 404);
+                $data = [
+                    'id' => $user->getId(),
+                    'name' => $user->getUsername(),
+                    'country' => $user->getNationality(),
+                    'language' => $user->getLanguage(),
+                    'image' => $linkImage,
+                    'createdAt' => $formatedDate
+                ];
+                return new JsonResponse($data);
+            } else {
+                return new JsonResponse(["message" => "User not found"], 404);
+            }
         }
 
         if ($userName != null && isset($language) && isset($array_countries)) {
