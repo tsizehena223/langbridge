@@ -35,10 +35,10 @@ class DiscussionController extends AbstractController
         foreach ($discussions as $discussion) {
             $data[] = [
                 "id" => $discussion["id"],
-                "createdAt" => $discussion["createdAt"]->format("d M Y H:i"),
                 "sender" => $discussion["senderId"],
                 "recipient" => $discussion["recipientId"],
-                "lastMessage" => $discussion["lastMessage"]
+                "lastMessage" => $discussion["lastMessage"],
+                "createdAt" => $discussion["createdAt"]->format("d M Y H:i"),
             ];
         }
 
