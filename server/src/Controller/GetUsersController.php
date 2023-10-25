@@ -2,6 +2,7 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
 use App\Repository\UserRepository;
 use App\Service\CalculDate;
 use App\Service\DecodeJwt;
@@ -19,6 +20,7 @@ class GetUsersController extends AbstractController
         $countries = $request->query->get("countries");
         $language = $request->query->get("language");
         $number = $request->query->get("number");
+        $id = (int)$request->query->get("id");
 
         $number = ($number != null || $number != "") ? $number : "5";
 
@@ -47,6 +49,25 @@ class GetUsersController extends AbstractController
         }
 
         $userName = ($userName == "") ? null : $userName;
+
+        if (isset($id) && $userRepository->find($id) instanceof User) {
+            $user = $userRepository->find($id);
+
+            $linkImage = $user->getPdpName() ? $getFileUrl->getFileUrl($user->getPdpName(), 'users') : null;
+            $formatedDate = $calculDate->formatDate($user->getCreatedAt()->format("Y-m-d H:i:s"));
+
+            $data = [
+                'id' => $user->getId(),
+                'name' => $user->getUsername(),
+                'country' => $user->getNationality(),
+                'language' => $user->getLanguage(),
+                'image' => $linkImage,
+                'createdAt' => $formatedDate
+            ];
+            return new JsonResponse($data);
+        } else {
+            return new JsonResponse(["message" => "User not found"], 404);
+        }
 
         if ($userName != null && isset($language) && isset($array_countries)) {
             $users = $userRepository->getUsersByLanguageAndCountry($currentUserId, $language, $array_countries, $userName);
