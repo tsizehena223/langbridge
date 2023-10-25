@@ -47,10 +47,11 @@ const MessageBox = ({ user, partner }) => {
           <MessageInput onSend={handleSend} />
         </div>
       ) : (
-        <div className="flex flex-col items-center">
+        <div className="flex flex-col items-center space-y-6">
           <img src={ChatIllustration} className="h-80" />
           <div className="font-semibold text-xl">
-            Select a partner to begin a conversation
+            Select a <span className="text-purple">partner</span> to begin a{" "}
+            <span className="text-purple">conversation</span>
           </div>
         </div>
       )}

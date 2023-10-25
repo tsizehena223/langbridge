@@ -50,7 +50,9 @@ const Search = () => {
               !resultList.length ? (
                 <div className="flex flex-col items-center space-y-6">
                   <img src={NoMatchIllustration} className="h-56" />
-                  <div className="font-semibold text-xl">No match found</div>
+                  <div className="font-semibold text-xl">
+                    <span className="text-purple">No</span> match found
+                  </div>
                 </div>
               ) : (
                 <div className="flex space-x-2 items-center font-semibold text-md">
