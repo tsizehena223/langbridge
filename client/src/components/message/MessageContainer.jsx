@@ -6,7 +6,7 @@ const MessageContainer = ({ messages }) => {
   const { userData } = useAuth();
 
   return (
-    <div className="p-6 space-y-2 flex flex-col overflow-y-scroll">
+    <div className="h-full p-6 space-y-2 flex flex-col overflow-y-scroll">
       {messages.map((message) => (
         <div key={message.id} className="flex flex-col space-y-2">
           <div

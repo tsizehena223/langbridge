@@ -15,17 +15,22 @@ const SearchResult = ({ results }) => {
             <ProfilePic key={user.id} img={Avatar} country={user.country} />
           </div>
           <div
-            className="w-full flex flex-col sm:flex-row pt-2 ml-4 space-y-2
-            font-semibold justify-between"
+            className="w-full flex flex-col sm:flex-row ml-4 space-y-2
+            font-semibold justify-between items-center"
           >
             <Link to={`/profile/${user.id}`} className="hover:text-purple">
-              {user.name}
+              <div>{user.name}</div>
+              <div className="text-placeholder">Joined {user.createdAt}</div>
             </Link>
-            <div>
-              <span>Country: </span>
-              <span className="text-purple">{user.country}</span>
-              <span>, Learning: </span>
-              <span className="text-pink">{user.language}</span>
+            <div className="space-y-2 text-end">
+              <div>
+                <span>Country: </span>
+                <span className="text-purple">{user.country}</span>
+              </div>
+              <div>
+                <span>Learning: </span>
+                <span className="text-pink">{user.language}</span>
+              </div>
             </div>
           </div>
         </div>

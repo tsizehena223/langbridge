@@ -26,7 +26,7 @@ const Message = () => {
     <MainLayout>
       <div className="h-[490px] w-full flex space-x-4">
         <ContactList users={contacts} onSelect={setPartner} />
-        <MessageBox partner={partner} />
+        <MessageBox user={userData} partner={partner} />
       </div>
     </MainLayout>
   );

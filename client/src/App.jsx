@@ -9,6 +9,7 @@ import {
   Profile,
   Search,
   Settings,
+  Message,
 } from "./pages";
 import { Routes, Route } from "react-router-dom";
 
@@ -30,7 +31,7 @@ const App = () => {
         <Route path="/login" element={<Login />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile/:id" element={<Profile />} />
-        {/* <Route path="/message" element={<Message />} /> */}
+        <Route path="/message" element={<Message />} />
         <Route path="/search" element={<Search />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />

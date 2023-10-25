@@ -5,7 +5,7 @@ const MessageInput = ({ onSend }) => {
   const [inputValue, setInputValue] = useState("");
 
   const handleSend = () => {
-    // TODO
+    onSend(inputValue);
   };
 
   return (

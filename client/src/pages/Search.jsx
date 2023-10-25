@@ -10,6 +10,7 @@ import {
 import { getCountrySpeaking } from "../utils/country-language";
 import MeetIllustration from "../assets/meet.svg";
 import NoMatchIllustration from "../assets/no_match.svg";
+import { RiUserFill } from "react-icons/ri";
 
 const Search = () => {
   const [userList, setUserList] = useState([]);
@@ -52,8 +53,12 @@ const Search = () => {
                   <div className="font-semibold text-xl">No match found</div>
                 </div>
               ) : (
-                <div className="font-semibold text-md">
-                  {resultList.length} results found
+                <div className="flex space-x-2 items-center font-semibold text-md">
+                  <RiUserFill />{" "}
+                  <span>
+                    {resultList.length} result
+                    {resultList.length > 1 && "s"} found
+                  </span>
                 </div>
               )
             ) : (
