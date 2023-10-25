@@ -1,13 +1,15 @@
-import { useLocation, Link } from "react-router-dom";
+import { useLocation, Link, useNavigate } from "react-router-dom";
 import { MainLayout, PostContainer } from "../components";
 import { useEffect, useState } from "react";
 import postService from "../services/post";
 import { useAuth } from "../contexts/AuthContext";
 import Avatar from "../assets/avatar.svg";
+import userService from "../services/user";
 
 const Profile = () => {
   const { userData } = useAuth();
-  const { state: user } = useLocation();
+  const { state, pathname } = useLocation();
+  const [user, setUser] = useState(state || {});
   const [postList, setPostList] = useState([]);
 
   const fetchData = async () => {
@@ -15,9 +17,19 @@ const Profile = () => {
     setPostList(post);
   };
 
+  const fetchUser = async () => {
+    const id = pathname.match(/\d+/)[0];
+    const data = await userService.getUserById(id, userData.token);
+    setUser(data);
+  };
+
   useEffect(() => {
-    fetchData();
-  }, []);
+    if (!Object.keys(user).length) {
+      fetchUser();
+    } else {
+      fetchData();
+    }
+  }, [user]);
 
   return (
     <MainLayout>

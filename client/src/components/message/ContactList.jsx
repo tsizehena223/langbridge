@@ -2,6 +2,7 @@ import { RiContactsLine, RiMoreFill } from "react-icons/ri";
 import ProfilePic from "../common/ProfilePic";
 import SearchInput from "../search/SearchInput";
 import { useState } from "react";
+import { Link } from "react-router-dom";
 
 const ContactList = ({ users, onSelect }) => {
   const [filter, setFilter] = useState(null);
@@ -35,7 +36,9 @@ const ContactList = ({ users, onSelect }) => {
                   />
                   <span className="ml-3 font-semibold">{user.name}</span>
                 </div>
-                <RiMoreFill />
+                <Link to={`/profile/${user.id}`} state={user}>
+                  <RiMoreFill />
+                </Link>
               </button>
             );
           }

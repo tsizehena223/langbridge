@@ -40,7 +40,7 @@ const MainNavBar = () => {
       <div className="flex items-center text-gray-1 dark:text-light">
         <button
           onClick={handleThemeSwitch}
-          className="ml-4 rounded-full w-9 h-9"
+          className="p-3 mr-3 bg-purple rounded-full text-light hover:rotate-180 duration-500"
         >
           {theme === "light" ? <RiSunLine /> : <RiMoonLine />}
         </button>

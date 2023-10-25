@@ -5,7 +5,11 @@ import { Link } from "react-router-dom";
 const UserSidebar = ({ userList, right }) => {
   return (
     <div
-      className={`${right ? "sticky top-20 w-1/3 hidden md:block" : "md:hidden"}
+      className={`${
+        right
+          ? "sticky top-[90px] w-1/3 max-w-[250px] hidden md:block"
+          : "md:hidden"
+      }
         h-fit p-4
         rounded-md bg-light dark:bg-gray-2`}
     >

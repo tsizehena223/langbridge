@@ -11,6 +11,7 @@ import Avatar from "../../assets/avatar.svg";
 import CommentPopup from "./CommentPopup";
 import ProfilePic from "../common/ProfilePic";
 import postService from "../../services/post";
+import { Link } from "react-router-dom";
 
 const Post = ({ data }) => {
   const { userData } = useAuth();
@@ -44,7 +45,12 @@ const Post = ({ data }) => {
         <div className="flex items-center">
           <ProfilePic img={data.author.image} country={data.author.country} />
           <div className="ml-4 font-semibold">
-            <div>{data.author.name}</div>
+            <Link
+              to={`/profile/${data.author.id}`}
+              className="hover:text-purple"
+            >
+              {data.author.name}
+            </Link>
             <div className="text-sm text-placeholder">{data.createdAt}</div>
           </div>
         </div>
