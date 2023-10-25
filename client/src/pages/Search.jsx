@@ -8,10 +8,13 @@ import {
   UserSidebar,
 } from "../components";
 import { getCountrySpeaking } from "../utils/country-language";
+import MeetIllustration from "../assets/meet.svg";
+import NoMatchIllustration from "../assets/no_match.svg";
 
 const Search = () => {
   const [userList, setUserList] = useState([]);
   const [resultList, setResultList] = useState([]);
+  const [hasSearched, setHasSearched] = useState(false);
   const { userData } = useAuth();
 
   const fetchData = async () => {
@@ -27,13 +30,46 @@ const Search = () => {
     fetchData();
   }, []);
 
+  const handleResult = (result) => {
+    setHasSearched(true);
+    setResultList(result);
+  };
+
   return (
     <MainLayout>
-      <div className="w-full">
-        <SearchBar userData={userData} onResult={setResultList} />
-        <SearchResult results={resultList} />
+      <div className="h-full flex space-x-4">
+        <div className="min-h-full w-full space-y-6">
+          <SearchBar userData={userData} onResult={handleResult} />
+          <UserSidebar userList={userList} />
+          <div
+            className="p-4 space-y-6 flex flex-col items-center rounded-md 
+            bg-light dark:bg-gray-2"
+          >
+            {hasSearched ? (
+              !resultList.length ? (
+                <div className="flex flex-col items-center space-y-6">
+                  <img src={NoMatchIllustration} className="h-56" />
+                  <div className="font-semibold text-xl">No match found</div>
+                </div>
+              ) : (
+                <div className="font-semibold text-md">
+                  {resultList.length} results found
+                </div>
+              )
+            ) : (
+              <div className="flex flex-col items-center space-y-6">
+                <img src={MeetIllustration} className="h-56" />
+                <div className="font-semibold text-xl">
+                  Search <span className="text-purple">partners</span> around
+                  the <span className="text-purple">world</span>
+                </div>
+              </div>
+            )}
+          </div>
+          <SearchResult results={resultList} />
+        </div>
+        <UserSidebar userList={userList} right={true} />
       </div>
-      <UserSidebar userList={userList} />
     </MainLayout>
   );
 };

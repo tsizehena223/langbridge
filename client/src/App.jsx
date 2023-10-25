@@ -25,7 +25,7 @@ const App = () => {
   });
 
   return (
-    <div className="text-gray-2 dark:text-light">
+    <div className="flex text-gray-2 dark:text-light">
       <Routes>
         <Route path="/" element={isAuthentified ? <Newsfeed /> : <Home />} />
         <Route path="/login" element={<Login />} />

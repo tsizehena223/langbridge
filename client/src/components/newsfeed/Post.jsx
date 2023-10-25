@@ -37,7 +37,7 @@ const Post = ({ data }) => {
 
   return (
     <div
-      className="w-full mb-4 py-6 px-8 
+      className="w-full py-6 px-8 
       rounded-md bg-light dark:bg-gray-2"
     >
       <div className="mb-4">

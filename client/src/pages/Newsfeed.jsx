@@ -33,11 +33,14 @@ const Newsfeed = () => {
 
   return (
     <MainLayout userList={userList}>
-      <div className="w-full">
-        <PostInput />
-        <PostContainer postList={postList} />
+      <div className="w-full flex space-x-4">
+        <div className="space-y-6 w-full">
+          <PostInput />
+          <UserSidebar userList={userList} />
+          <PostContainer postList={postList} />
+        </div>
+        <UserSidebar userList={userList} right={true} />
       </div>
-      <UserSidebar userList={userList} />
     </MainLayout>
   );
 };

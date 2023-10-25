@@ -8,12 +8,17 @@ const SearchResult = ({ results }) => {
       {results.map((user) => (
         <div
           key={user.id}
-          className="flex w-full mt-6 p-6 rounded-md
+          className="flex items-center w-full mt-6 p-6 rounded-md
           bg-light dark:bg-gray-2"
         >
-          <ProfilePic key={user.id} img={Avatar} country={user.country} />
-          <div className="w-full flex pt-2 ml-4 font-semibold justify-between">
-            <Link to={`/profile?id=${user.id}`} className="hover:text-purple">
+          <div>
+            <ProfilePic key={user.id} img={Avatar} country={user.country} />
+          </div>
+          <div
+            className="w-full flex flex-col sm:flex-row pt-2 ml-4 space-y-2
+            font-semibold justify-between"
+          >
+            <Link to={`/profile/${user.id}`} className="hover:text-purple">
               {user.name}
             </Link>
             <div>
