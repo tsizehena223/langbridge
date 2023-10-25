@@ -33,7 +33,7 @@ class MessageHandler implements MessageComponentInterface
                 echo $data["id"] . " connected! \n";
                 break;
             case 'message':
-                echo $data["sender"] . " et " . $data["recipient"] . "\n";
+                echo $data["sender"] . " and " . $data["recipient"] . "\n";
                 $this->storeToDB($data["sender"], $data["recipient"], $data["content"]);
                 $this->sendManually($data["recipient"], $data["sender"], $msg);
                 break;
@@ -54,9 +54,14 @@ class MessageHandler implements MessageComponentInterface
 
     private function sendManually($recipient, $sender, $msg)
     {
+        $arrayMsg = json_decode($msg, true);
+        $date = new \DateTime();
+        $arrayMsg["createdAt"] = $date->format("d M Y H:i");
+        $msgWithDate = json_encode($arrayMsg);
+
         foreach ($this->connections as $connection) {
             if ($connection->resourceId == $recipient || $connection->resourceId == $sender) {
-                $connection->send($msg);
+                $connection->send($msgWithDate);
             }
         }
     }
