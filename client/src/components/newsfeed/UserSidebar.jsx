@@ -23,6 +23,7 @@ const UserSidebar = ({ userList, right }) => {
             <ProfilePic key={user.id} img={user.image} country={user.country} />
             <Link
               to={`/profile/${user.id}`}
+              state={user}
               className="ml-3 font-semibold hover:text-purple"
             >
               {user.name}

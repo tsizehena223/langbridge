@@ -1,18 +1,17 @@
 import { useLocation, Link } from "react-router-dom";
 import { MainLayout, PostContainer } from "../components";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import postService from "../services/post";
 import { useAuth } from "../contexts/AuthContext";
 import Avatar from "../assets/avatar.svg";
 
 const Profile = () => {
   const { userData } = useAuth();
-  const { pathname } = useLocation();
+  const { state: user } = useLocation();
   const [postList, setPostList] = useState([]);
-  const id = useMemo(() => pathname.match(/\d+/));
 
   const fetchData = async () => {
-    const post = await postService.getUserPosts(id, userData.token);
+    const post = await postService.getUserPosts(user.id, userData.token);
     setPostList(post);
   };
 
@@ -32,7 +31,7 @@ const Profile = () => {
               <img
                 className="w-40 h-40 relative top-0 z-10 border-8 
                 dark:border-gray-1 border-silver rounded-full"
-                src={userData.image || Avatar}
+                src={user.image || Avatar}
                 alt="pfp"
               />
             </div>
@@ -43,20 +42,21 @@ const Profile = () => {
             >
               <div className="mt-20 space-y-4">
                 <div className="font-semibold text-center text-xl">
-                  {userData.name}
+                  {user.name}
                 </div>
                 <div className="font-semibold">
                   <span className="text-purple">Country: </span>
-                  <span>{userData.country}</span>
+                  <span>{user.country}</span>
                 </div>
                 <div className="font-semibold">
                   <span className="text-purple">Learning: </span>
-                  <span>{userData.language}</span>
+                  <span>{user.language}</span>
                 </div>
               </div>
-              {id != userData.id && (
+              {user.id != userData.id && (
                 <Link
-                  to={`/message?id=${id}`}
+                  to="/message"
+                  state={user}
                   className="mt-6 py-2 px-4 rounded-md 
                   hover:bg-green bg-purple text-light"
                 >

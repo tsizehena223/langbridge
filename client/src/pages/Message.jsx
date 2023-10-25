@@ -3,9 +3,11 @@ import { useEffect, useState } from "react";
 import { getCountrySpeaking } from "../utils/country-language";
 import { useAuth } from "../contexts/AuthContext";
 import userService from "../services/user";
+import { useLocation } from "react-router-dom";
 
 const Message = () => {
   const { userData } = useAuth();
+  const { state } = useLocation();
   const [contacts, setContacts] = useState([]);
   const [partner, setPartner] = useState(null);
 
@@ -20,6 +22,10 @@ const Message = () => {
 
   useEffect(() => {
     fetchData();
+
+    if (state && state.id != userData.id) {
+      setPartner(state);
+    }
   }, []);
 
   return (

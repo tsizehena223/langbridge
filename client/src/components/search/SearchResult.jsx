@@ -18,7 +18,11 @@ const SearchResult = ({ results }) => {
             className="w-full flex flex-col sm:flex-row ml-4 space-y-2
             font-semibold justify-between items-center"
           >
-            <Link to={`/profile/${user.id}`} className="hover:text-purple">
+            <Link
+              to={`/profile/${user.id}`}
+              state={user}
+              className="hover:text-purple"
+            >
               <div>{user.name}</div>
               <div className="text-placeholder">Joined {user.createdAt}</div>
             </Link>

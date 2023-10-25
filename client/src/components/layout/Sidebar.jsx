@@ -26,6 +26,7 @@ const Sidebar = () => {
               to={
                 item.path == "/profile" ? `/profile/${userData.id}` : item.path
               }
+              state={userData}
               className="mb-4 flex items-center 
               font-semibold hover:text-purple"
             >
