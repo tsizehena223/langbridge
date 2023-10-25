@@ -1,4 +1,4 @@
-import { useLocation, Link, useNavigate } from "react-router-dom";
+import { useLocation, Link } from "react-router-dom";
 import { MainLayout, PostContainer } from "../components";
 import { useEffect, useState } from "react";
 import postService from "../services/post";

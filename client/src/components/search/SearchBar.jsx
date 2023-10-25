@@ -3,8 +3,9 @@ import searchFilters from "../../static/search-filters";
 import FormSelect from "../form/FormSelect";
 import SearchInput from "./SearchInput";
 import { RiFilterLine, RiFilterOffLine } from "react-icons/ri";
-
 import userService from "../../services/user";
+import { toast } from "react-toastify";
+
 const SearchBar = ({ userData, onResult }) => {
   const [filters, setFilters] = useState({
     country: "",
@@ -23,6 +24,7 @@ const SearchBar = ({ userData, onResult }) => {
 
   const clearFilters = () => {
     setFilters({ country: null, language: null });
+    toast.info("Filters cleared");
   };
 
   const handleSearch = async (input) => {

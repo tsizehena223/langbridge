@@ -7,12 +7,12 @@ import {
   RiImageFill,
   RiLink,
   RiMapPin2Fill,
-  RiPencilFill,
   RiSendPlaneFill,
 } from "react-icons/ri";
 import MenuItem from "../common/MenuItem";
 import postService from "../../services/post";
 import { useAuth } from "../../contexts/AuthContext";
+import { ToastContainer, toast } from "react-toastify";
 
 const PostInput = () => {
   const [inputValue, setInputValue] = useState("");
@@ -21,7 +21,10 @@ const PostInput = () => {
   const { userData } = useAuth();
 
   const handlePost = async () => {
-    if (!inputValue) return;
+    if (!inputValue) {
+      toast.info("Empty post");
+      return;
+    }
 
     const formData = new FormData();
 
@@ -33,9 +36,9 @@ const PostInput = () => {
 
     try {
       await postService.createPost(formData, userData.token);
-      // TODO: success notification
+      toast.success("Post published");
     } catch (error) {
-      // TODO: error notification
+      toast.error("An error occured");
     }
 
     setInputValue("");

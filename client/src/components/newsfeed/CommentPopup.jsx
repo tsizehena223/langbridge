@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { RiCloseCircleFill } from "react-icons/ri";
 import { IoSendSharp } from "react-icons/io5";
 import dateFormat from "dateformat";
-
+import { toast } from "react-toastify";
 import Avatar from "../../assets/avatar.svg";
 import ProfilePic from "../common/ProfilePic";
 import { useAuth } from "../../contexts/AuthContext";
@@ -14,7 +14,10 @@ const CommentPopup = ({ postId, comments, setComments, close }) => {
   const [commentValue, setCommentValue] = useState([]);
 
   const handleComment = () => {
-    if (!inputValue) return;
+    if (!inputValue) {
+      toast.info("Empty comment");
+      return;
+    }
 
     setCommentValue((prev) => [
       ...prev,

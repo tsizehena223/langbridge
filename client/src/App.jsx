@@ -12,6 +12,7 @@ import {
   Message,
 } from "./pages";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
 
 const App = () => {
   const { isAuthentified } = useAuth();
@@ -26,6 +27,11 @@ const App = () => {
 
   return (
     <div className="flex text-gray-2 dark:text-light">
+      <ToastContainer
+        hideProgressBar={true}
+        autoClose={2000}
+        className="rounded-md"
+      />
       <Routes>
         <Route path="/" element={isAuthentified ? <Newsfeed /> : <Home />} />
         <Route path="/login" element={<Login />} />

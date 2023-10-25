@@ -10,6 +10,7 @@ import FormSelect from "../components/form/FormSelect";
 import { useAuth } from "../contexts/AuthContext";
 import { editRules, validateForm } from "../utils/form";
 import userService from "../services/user";
+import { toast } from "react-toastify";
 
 const Setting = () => {
   const inputRef = useRef(null);
@@ -63,9 +64,10 @@ const Setting = () => {
       try {
         const newData = await userService.updateUser(data, userData.token);
         updateUserData(newData.data);
+        toast.success("Informations updated");
         navigate("/");
       } catch (error) {
-        // TODO: error handling
+        toast.error("An error occured");
       }
     }
   };

@@ -3,9 +3,15 @@ import { RiLogoutBoxLine } from "react-icons/ri";
 import sidebarLinks from "../../static/sidebar-links";
 import MenuItem from "../common/MenuItem";
 import { useAuth } from "../../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const Sidebar = () => {
   const { userData, logout } = useAuth();
+
+  const handleLogout = () => {
+    logout();
+    toast.info("Logged out");
+  };
 
   return (
     <div
@@ -35,7 +41,11 @@ const Sidebar = () => {
             </Link>
           ))}
         </div>
-        <MenuItem icon={RiLogoutBoxLine} label="Log out" onSelect={logout} />
+        <MenuItem
+          icon={RiLogoutBoxLine}
+          label="Log out"
+          onSelect={handleLogout}
+        />
       </div>
     </div>
   );

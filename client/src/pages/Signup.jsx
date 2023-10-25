@@ -3,10 +3,11 @@ import { RiUserAddLine } from "react-icons/ri";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
 import SignupIllustration from "../assets/signup.svg";
-import { FormInput, FormSelect, ErrorMessage } from "../components";
+import { FormInput, FormSelect } from "../components";
 import { signupRules, validateForm } from "../utils/form";
 import { signupFields } from "../static/form-fields";
 import userService from "../services/user";
+import { toast } from "react-toastify";
 
 const Signup = () => {
   const [formData, setFormData] = useState({
@@ -18,7 +19,6 @@ const Signup = () => {
     passwordConfirm: "",
   });
   const [errors, setErrors] = useState({});
-  const [requestError, setRequestError] = useState();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,9 +46,10 @@ const Signup = () => {
     if (!Object.keys(errors).length) {
       try {
         await userService.createUser(formData);
+        toast.success("Account created");
         navigate("/login");
       } catch (error) {
-        setRequestError(error.response.data.message);
+        toast.error(error.response.data.message);
       }
     }
   };
@@ -108,8 +109,6 @@ const Signup = () => {
             Create an account
           </button>
         </form>
-
-        <ErrorMessage message={requestError} />
 
         <div className="w-full font-semibold text-sm text-center">
           <span>Already have an account? </span>

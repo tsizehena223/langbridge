@@ -1,16 +1,16 @@
 import { useState, useEffect } from "react";
 import { RiUserSharedLine } from "react-icons/ri";
 import LoginIllustration from "../assets/login.svg";
-import { FormInput, ErrorMessage } from "../components";
+import { FormInput } from "../components";
 import { Link } from "react-router-dom";
 import { loginRules, validateForm } from "../utils/form";
 import { loginFields } from "../static/form-fields";
 import { useAuth } from "../contexts/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
   const [errors, setErrors] = useState({});
-  const [requestError, setRequestError] = useState();
   const { login } = useAuth();
 
   useEffect(() => {
@@ -39,7 +39,7 @@ const Login = () => {
       try {
         await login(formData);
       } catch (error) {
-        setRequestError(error.response.data.message);
+        toast.error(error.response.data.message);
       }
     }
   };
@@ -92,8 +92,6 @@ const Login = () => {
               continue
             </button>
           </form>
-
-          <ErrorMessage message={requestError} />
 
           <div className="w-full font-semibold text-sm text-center">
             <span>Don't have have an account yet? </span>
