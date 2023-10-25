@@ -9,7 +9,7 @@ const user = {};
 ws.onopen = (data) => {
     ws.send(JSON.stringify({
         kind: "connection",
-        id: 5,
+        id: 2,
     }))
 }
 
@@ -27,8 +27,8 @@ const send = () => {
     ws.send(JSON.stringify({
         kind: "message",
         content: input.value,
-        recipientId: 6,
-        senderId: 5
+        recipientId: 3,
+        senderId: 2
     }))
 }
 

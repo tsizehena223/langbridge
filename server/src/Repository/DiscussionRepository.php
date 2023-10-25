@@ -22,35 +22,16 @@ class DiscussionRepository extends ServiceEntityRepository
         parent::__construct($registry, Discussion::class);
     }
 
-    // public function findByUser(?User $user)
-    // {
-    //     return $this->createQueryBuilder("d")
-    //         ->select("d.id")
-    //         ->where()
-    // }
-
-    //    /**
-    //     * @return Discussion[] Returns an array of Discussion objects
-    //     */
-    //    public function findByExampleField($value): array
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->orderBy('d.id', 'ASC')
-    //            ->setMaxResults(10)
-    //            ->getQuery()
-    //            ->getResult()
-    //        ;
-    //    }
-
-    //    public function findOneBySomeField($value): ?Discussion
-    //    {
-    //        return $this->createQueryBuilder('d')
-    //            ->andWhere('d.exampleField = :val')
-    //            ->setParameter('val', $value)
-    //            ->getQuery()
-    //            ->getOneOrNullResult()
-    //        ;
-    //    }
+    public function findBySenderOrRecipient(?User $user): array
+    {
+        return $this->createQueryBuilder("d")
+            ->select("d.id", "d.createdAt", "sender.id as senderId", "recipient.id as recipientId", "d.lastMessage", "d.users")
+            ->leftJoin("d.sender", "sender")
+            ->leftJoin("d.recipient", "recipient")
+            ->where("sender.id = :sender OR recipient.id = :sender")
+            ->setParameter('sender', $user)
+            ->orderBy("d.createdAt", "DESC")
+            ->getQuery()
+            ->getResult();
+    }
 }

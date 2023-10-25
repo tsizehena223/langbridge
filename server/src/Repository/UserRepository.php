@@ -120,8 +120,8 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUserByContryOnly($currentUserId, $countries)
     {
         return $this->createQueryBuilder("user")
-        ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
-        ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
+            ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.nationality", "'$countries'"))
             ->getQuery()->getResult();
     }
@@ -129,9 +129,20 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
     public function getUserByLanguageOnly($currentUserId, $language)
     {
         return $this->createQueryBuilder("user")
-        ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
-        ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt")
+            ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
             ->andWhere($this->createQueryBuilder("user")->expr()->eq("user.language", "'$language'"))
+            ->getQuery()->getResult();
+    }
+
+    public function getUsersHavingDiscussions(int $currentUserId, ?array $usersInDi)
+    {
+        return $this->createQueryBuilder("user")
+            ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt", "discussion.lastMessage", "discussion.createdAt")
+            ->join("user.discussions", "discussion")
+            ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
+            ->andWhere('user.id IN (:user_ids)')
+            ->setParameter('user_ids', $usersInDi)
             ->getQuery()->getResult();
     }
 }

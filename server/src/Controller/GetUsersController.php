@@ -13,7 +13,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GetUsersController extends AbstractController
 {
     #[Route(path: "/api/users", name: "search_users", methods: ["GET"])]
-    public function searchUserByNationality(Request $request, DecodeJwt $decodeJwt, UserRepository $userRepository, GetFileUrlController $getFileUrl, CalculDate $calculDate): JsonResponse
+    public function index(Request $request, DecodeJwt $decodeJwt, UserRepository $userRepository, GetFileUrlController $getFileUrl, CalculDate $calculDate): JsonResponse
     {
         $userName = $request->query->get("name");
         $countries = $request->query->get("countries");
