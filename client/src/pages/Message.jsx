@@ -12,11 +12,7 @@ const Message = () => {
   const [partner, setPartner] = useState(null);
 
   const fetchData = async () => {
-    const countrySpeaking = getCountrySpeaking(userData.language);
-    const users = await userService.getUsers(
-      { countries: countrySpeaking.join(",") },
-      userData.token
-    );
+    const users = await userService.getUsersByDiscussion(userData.token);
     setContacts(users);
   };
 

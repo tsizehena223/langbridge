@@ -15,7 +15,7 @@ const MessageContainer = ({ messages }) => {
                 ? "self-end bg-purple text-light"
                 : "self-start bg-green text-gray-2"
             }`}
-            onMouseOver={() => setShowDate(message.id)}
+            onMouseOver={() => setShowDate(id)}
             onMouseOut={() => setShowDate(null)}
           >
             {message.content}
@@ -23,7 +23,7 @@ const MessageContainer = ({ messages }) => {
           <div
             className={`text-placeholder text-sm ${
               message.sender == userData.id ? "self-end" : "self-strat"
-            } ${showDate == message.id ? "visible" : "invisible"}`}
+            } ${showDate == id ? "visible" : "invisible"}`}
           >
             {message.createdAt}
           </div>

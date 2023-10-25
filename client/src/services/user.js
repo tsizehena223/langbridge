@@ -18,6 +18,13 @@ const userService = {
     return res.data;
   },
 
+  async getUsersByDiscussion(token) {
+    const res = await api.get(`/users/discussions`, {
+      headers: { Authorization: `Bearer ${token}` },
+    });
+    return res.data;
+  },
+
   async getUsers(filter, token) {
     const keys = ["countries", "name", "number", "language"];
     for (const key of keys) {
