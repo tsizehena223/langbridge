@@ -1,41 +1,31 @@
 import ChatIllustration from "../../assets/message.svg";
 import MessageContainer from "./MessageContainer";
 import MessageInput from "./MessageInput";
-import messages from "../../mock/messages";
 import ProfilePic from "../common/ProfilePic";
-import { useEffect, useState } from "react";
-import messageService from "../../services/message";
-import config from "../../config/socket";
+import { useEffect, useMemo, useState } from "react";
+import messageService, { socket } from "../../services/message";
 
 const MessageBox = ({ user, partner }) => {
   const [messages, setMessages] = useState([]);
-  const ws = new WebSocket(config.baseURL);
+  const ws = useMemo(() => socket);
 
-  ws.onmessage = (res) => {
-    const parsed = JSON.parse(res.data);
-    setMessages((prev) => [...prev, parsed]);
-  };
-
-  const send = (data) => ws.send(JSON.stringify(data));
-
-  const connect = (id) => {
-    send({ kind: "connection", id });
-  };
-
-  const sendMessage = (senderId, recipientId, content) => {
-    send({ kind: "message", senderId, recipientId, content });
-  };
+  useEffect(() => {
+    ws.onmessage = (res) => {
+      const message = JSON.parse(res.data);
+      setMessages((prev) => [...prev, message]);
+    };
+  }, []);
 
   const fetchMessages = async () => {
     if (partner) {
       const res = await messageService.getMessages(partner.id, user.token);
       setMessages(res.data);
-      connect();
+      messageService.connect(user.id);
     }
   };
 
   const handleSend = (content) => {
-    sendMessage(user.id, partner.id, content);
+    messageService.sendMessage(user.id, partner.id, content);
   };
 
   useEffect(() => {
@@ -49,7 +39,7 @@ const MessageBox = ({ user, partner }) => {
     >
       {partner ? (
         <div className="h-full w-full flex flex-col space-y-4">
-          <div className="flex space-x-2">
+          <div className="flex space-x-2 items-center">
             <ProfilePic img={partner.image} country={partner.country} />
             <span className="font-semibold">{partner.name}</span>
           </div>

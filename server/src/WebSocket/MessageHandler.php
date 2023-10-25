@@ -33,9 +33,9 @@ class MessageHandler implements MessageComponentInterface
                 echo $data["id"] . " connected! \n";
                 break;
             case 'message':
-                echo $data["senderId"] . " et " . $data["recipientId"] . "\n";
-                $this->storeToDB($data["senderId"], $data["recipientId"], $data["content"]);
-                $this->sendManually($data["recipientId"], $data["senderId"], $msg);
+                echo $data["sender"] . " et " . $data["recipient"] . "\n";
+                $this->storeToDB($data["sender"], $data["recipient"], $data["content"]);
+                $this->sendManually($data["recipient"], $data["sender"], $msg);
                 break;
         }
     }

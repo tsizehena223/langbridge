@@ -26,7 +26,7 @@ class WebSocketServerCommand extends Command
         $server = IoServer::factory(
             new HttpServer(
                 new WsServer(
-                    new MessageHandler($this->messageBus) 
+                    new MessageHandler($this->messageBus)
                 )
             ),
             8080 // Port on which the WebSocket server will run

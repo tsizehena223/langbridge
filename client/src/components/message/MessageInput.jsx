@@ -6,6 +6,7 @@ const MessageInput = ({ onSend }) => {
 
   const handleSend = () => {
     onSend(inputValue);
+    setInputValue("");
   };
 
   return (
