@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Entity\User;
+use App\Repository\DiscussionRepository;
 use App\Repository\UserRepository;
 use App\Service\CalculDate;
 use App\Service\DecodeJwt;
@@ -105,5 +106,30 @@ class GetUsersController extends AbstractController
         }
 
         return new JsonResponse($data);
+    }
+
+    #[Route("/api/users/discussions", name: "users.in.discussions", methods: ["GET"])]
+    public function getUsersByDiscussions(Request $request, DecodeJwt $decodeJwt, DiscussionRepository $discussionRepository, UserRepository $userRepository): JsonResponse
+    {
+        $jwt = $request->headers->get("Authorization");
+        $userId = $decodeJwt->getIdToken($jwt);
+
+        if ($userId == null) {
+            return new JsonResponse(["message" => "User not authentified"], 401);
+        }
+
+        $currentUser = $userRepository->find($userId);
+
+        if (!$currentUser instanceof User) {
+            return new JsonResponse(["message" => "User not authentified"], 401);
+        }
+
+        $users = [];
+        $discussions = $discussionRepository->findBySenderOrRecipient($currentUser);
+        foreach ($discussions as $discussion) {
+            $users[] = $userRepository->getUsersHavingDiscussions($currentUser->getId(), $discussion["recipientId"], $discussion["senderId"]);
+        }
+
+        return new JsonResponse($users);
     }
 }

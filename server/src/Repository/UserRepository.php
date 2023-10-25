@@ -135,14 +135,14 @@ class UserRepository extends ServiceEntityRepository implements PasswordUpgrader
             ->getQuery()->getResult();
     }
 
-    public function getUsersHavingDiscussions(int $currentUserId, ?array $usersInDi)
+    public function getUsersHavingDiscussions(int $currentUserId, int $recipientId, int $senderId)
     {
         return $this->createQueryBuilder("user")
             ->select("user.id", "user.username as name", "user.nationality as country", "user.language", "user.pdpName as image", "user.createdAt", "discussion.lastMessage", "discussion.createdAt")
             ->join("user.discussions", "discussion")
             ->where($this->createQueryBuilder("user")->expr()->not($this->createQueryBuilder("user")->expr()->eq("user.id", $currentUserId)))
-            ->andWhere('user.id IN (:user_ids)')
-            ->setParameter('user_ids', $usersInDi)
+            ->andWhere('user.id = :recipientId OR user.id = :senderId')
+            ->setParameters(["recipientId" => $recipientId, "senderId" => $senderId])
             ->getQuery()->getResult();
     }
 }
