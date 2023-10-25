@@ -3,7 +3,7 @@ import { RiCloseCircleFill } from "react-icons/ri";
 import { IoSendSharp } from "react-icons/io5";
 import dateFormat from "dateformat";
 import { toast } from "react-toastify";
-import Avatar from "../../assets/avatar.svg";
+import { Link } from "react-router-dom";
 import ProfilePic from "../common/ProfilePic";
 import { useAuth } from "../../contexts/AuthContext";
 import postService from "../../services/post";
@@ -69,10 +69,18 @@ const CommentPopup = ({ postId, comments, setComments, close }) => {
             >
               <div className="mb-2 flex items-center">
                 <div className="relative mr-3">
-                  <ProfilePic img={Avatar} country={comment.author.country} />
+                  <ProfilePic
+                    img={comment.author.image}
+                    country={comment.author.country}
+                  />
                 </div>
                 <div>
-                  <div className="font-semibold">{comment.author.name}</div>
+                  <Link
+                    to={`/profile/${comment.author.id}`}
+                    className="font-semibold hover:text-purple"
+                  >
+                    {comment.author.name}
+                  </Link>
                   <div className="text-sm">{comment.createdAt}</div>
                 </div>
               </div>

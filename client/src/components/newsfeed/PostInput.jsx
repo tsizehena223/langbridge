@@ -12,7 +12,7 @@ import {
 import MenuItem from "../common/MenuItem";
 import postService from "../../services/post";
 import { useAuth } from "../../contexts/AuthContext";
-import { ToastContainer, toast } from "react-toastify";
+import { toast } from "react-toastify";
 
 const PostInput = () => {
   const [inputValue, setInputValue] = useState("");

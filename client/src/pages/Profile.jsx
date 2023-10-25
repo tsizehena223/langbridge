@@ -5,6 +5,9 @@ import postService from "../services/post";
 import { useAuth } from "../contexts/AuthContext";
 import Avatar from "../assets/avatar.svg";
 import userService from "../services/user";
+import { getCountryCode } from "../utils/country-language";
+import ReactCountryFlag from "react-country-flag";
+import { RiMessage2Fill, RiMessageFill } from "react-icons/ri";
 
 const Profile = () => {
   const { userData } = useAuth();
@@ -38,11 +41,17 @@ const Profile = () => {
           <PostContainer postList={postList} />
         </div>
         <div>
-          <div className="md:w-1/3 min-w-[300px] md:sticky top-20">
-            <div className="flex justify-center">
+          <div
+            className="md:w-1/3 min-w-[300px] md:sticky top-20
+          flex flex-col items-center"
+          >
+            <div
+              className="z-10 w-40 h-40 flex justify-center overflow-clip 
+              rounded-full border-8 border-silver dark:border-gray-1"
+            >
               <img
-                className="w-40 h-40 relative top-0 z-10 border-8 
-                dark:border-gray-1 border-silver rounded-full"
+                className="z-10 w-full h-full relative top-0 
+                object-cover"
                 src={user.image || Avatar}
                 alt="pfp"
               />
@@ -52,27 +61,39 @@ const Profile = () => {
               flex flex-col items-center  space-x-4 p-6
               text-center bg-light dark:bg-gray-2 rounded-md"
             >
-              <div className="mt-20 space-y-4">
+              <div className="mt-20 space-y-2">
                 <div className="font-semibold text-center text-xl">
                   {user.name}
                 </div>
-                <div className="font-semibold">
-                  <span className="text-purple">Country: </span>
-                  <span>{user.country}</span>
+                <div className="font-semibold text-placeholder">
+                  Joined {user.createdAt}
                 </div>
-                <div className="font-semibold">
-                  <span className="text-purple">Learning: </span>
-                  <span>{user.language}</span>
+                <div className="flex items-center space-x-2 font-semibold justify-center">
+                  <span>From</span>
+                  <span className="text-purple">{user.country}</span>
+                  {user.country && (
+                    <ReactCountryFlag
+                      countryCode={getCountryCode(user.country)}
+                      svg={true}
+                      className="text-xl shadow shadow-grayrounded full"
+                    />
+                  )}
+                </div>
+                <div className="flex space-x-2 font-semibold">
+                  <span>Leatning</span>
+                  <span className="text-purple">{user.language}</span>
                 </div>
               </div>
               {user.id != userData.id && (
                 <Link
                   to="/message"
                   state={user}
-                  className="mt-6 py-2 px-4 rounded-md 
+                  className="mt-6 py-2 px-4 flex items-center space-x-2 
+                  rounded-md font-semibold
                   hover:bg-green bg-purple text-light"
                 >
-                  Message
+                  <RiMessage2Fill />
+                  <span>Message</span>
                 </Link>
               )}
             </div>

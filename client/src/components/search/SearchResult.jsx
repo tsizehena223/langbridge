@@ -1,5 +1,4 @@
 import ProfilePic from "../common/ProfilePic";
-import Avatar from "../../assets/avatar.svg";
 import { Link } from "react-router-dom";
 
 const SearchResult = ({ results }) => {
@@ -12,7 +11,7 @@ const SearchResult = ({ results }) => {
           bg-light dark:bg-gray-2"
         >
           <div>
-            <ProfilePic key={user.id} img={Avatar} country={user.country} />
+            <ProfilePic key={user.id} img={user.image} country={user.country} />
           </div>
           <div
             className="w-full flex flex-col sm:flex-row ml-4 space-y-2

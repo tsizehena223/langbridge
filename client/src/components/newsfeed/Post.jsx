@@ -7,7 +7,6 @@ import {
   RiMessage2Line,
 } from "react-icons/ri";
 import { useAuth } from "../../contexts/AuthContext";
-import Avatar from "../../assets/avatar.svg";
 import CommentPopup from "./CommentPopup";
 import ProfilePic from "../common/ProfilePic";
 import postService from "../../services/post";
