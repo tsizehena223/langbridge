@@ -2,6 +2,7 @@ import { useState, useRef } from "react";
 import Avatar from "../../assets/avatar.svg";
 import {
   RiCameraFill,
+  RiClipboardFill,
   RiCloseCircleFill,
   RiEmojiStickerFill,
   RiImageFill,
@@ -13,12 +14,14 @@ import MenuItem from "../common/MenuItem";
 import postService from "../../services/post";
 import { useAuth } from "../../contexts/AuthContext";
 import { toast } from "react-toastify";
+import EmojiPicker from "emoji-picker-react";
 
 const PostInput = () => {
   const [inputValue, setInputValue] = useState("");
   const [image, setImage] = useState(null);
   const imageRef = useRef();
   const { userData } = useAuth();
+  const [showPicker, setShowPicker] = useState(false);
 
   const handlePost = async () => {
     if (!inputValue) {
@@ -52,6 +55,11 @@ const PostInput = () => {
     }
   };
 
+  const onEmijiClick = (event) => {
+    setInputValue((prev) => prev + event.emoji);
+    setShowPicker(false);
+  };
+
   return (
     <div className="w-full p-6 rounded-md bg-light dark:bg-gray-2">
       <div className="space-y-4">
@@ -82,9 +90,25 @@ const PostInput = () => {
               icon={RiImageFill}
               onSelect={() => imageRef.current.click()}
             />
-            <MenuItem icon={RiLink} />
-            <MenuItem icon={RiMapPin2Fill} />
-            <MenuItem icon={RiEmojiStickerFill} />
+            <MenuItem
+              icon={RiClipboardFill}
+              onSelect={() => {
+                navigator.clipboard.writeText(inputValue);
+                toast.info("Text copied to clipboard");
+              }}
+            />
+            <MenuItem
+              icon={RiEmojiStickerFill}
+              onSelect={() => setShowPicker(true)}
+            />
+            {showPicker && (
+              <div className="z-30 absolute top-20">
+                <EmojiPicker
+                  pickerStyle={{ width: "100%" }}
+                  onEmojiClick={onEmijiClick}
+                />
+              </div>
+            )}
           </div>
           <div className="flex space-x-4">
             <MenuItem
