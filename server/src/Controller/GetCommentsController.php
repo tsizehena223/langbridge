@@ -12,7 +12,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class GetCommentsController extends AbstractController
 {
   #[Route(path: "/api/articles/comments", name: "get_comments", methods: ["GET"])]
-  public function getComments(Request $request, CommentRepository $commentRepository, DecodeJwt $decodeJwt): JsonResponse
+  public function getComments(Request $request, GetFileUrlController $getFileUrl, CommentRepository $commentRepository, DecodeJwt $decodeJwt): JsonResponse
   {
     $article = (int)$request->query->get("article");
     $number = $request->query->get("number");
@@ -33,6 +33,7 @@ class GetCommentsController extends AbstractController
     $data = [];
 
     foreach ($comments as $comment) {
+      $imageAuthor = ($comment["image"]) ? $getFileUrl->getFileUrl($comment["image"], "users") : null;
       $data[] = [
         "id" => $comment["id"],
         "content" => $comment["content"],
@@ -40,7 +41,8 @@ class GetCommentsController extends AbstractController
         "author" => [
           "id" => $comment["authorId"],
           "name" => $comment["authorName"],
-          "country" => $comment["authorCountry"]
+          "country" => $comment["authorCountry"],
+          "image" => $imageAuthor
         ]
       ];
     }

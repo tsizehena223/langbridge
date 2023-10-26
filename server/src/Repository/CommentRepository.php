@@ -42,7 +42,7 @@ class CommentRepository extends ServiceEntityRepository
     public function getComments(?int $article, $maxResult)
     {
         return $this->createQueryBuilder("comment")
-            ->select("comment.id", "comment.content", "comment.createdAt", "article.id as articleId", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry")
+            ->select("comment.id", "comment.content", "comment.createdAt", "article.id as articleId", "user.id as authorId", "user.username as authorName", "user.nationality as authorCountry", "user.pdpName as image")
             ->leftJoin("comment.article", "article")
             ->leftJoin("comment.commentator", "user")
             ->where($this->createQueryBuilder("comment")->expr()->eq("comment.article", $article))

@@ -46,7 +46,8 @@ class SecurityController extends AbstractController
             "name" => $user->getUsername(),
             "country" => $user->getNationality(),
             "language" => $user->getLanguage(),
-            "image" => $linkImage
+            "image" => $linkImage,
+            "createdAt" => $user->getCreatedAt()->format("d M Y H:i")
         ], 200);
     }
 }
