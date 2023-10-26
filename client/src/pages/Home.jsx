@@ -1,4 +1,4 @@
-import { HomeNavBar, Landing, Section1, Section2 } from "../components";
+import { HomeNavBar, Landing, Section1, Section2, Section3, Section4 } from "../components";
 const Home = () => {
   return (
     <div className="bg-light dark:bg-gray-2">
@@ -7,6 +7,8 @@ const Home = () => {
         <Landing />
         <Section1 />
         <Section2 />
+        <Section3 />
+        <Section4 />
       </div>
     </div>
   );

@@ -1,17 +1,21 @@
 import React from 'react'
-import FlagIllustration from '../../assets/countries_flags.png';
+import MeetIllustration from '../../assets/meet.svg';
 
 const Section2 = () => {
   return (
-    <div id="section-a" className="max-w-3xl flex flex-col items-center">
-      <img src={FlagIllustration} />
-      <h2 className="mt-6 mb-2 font-bold text-3xl">Learn any language</h2>
-      <p className="leading-7 text-center">
-        Join our vibrant community of language enthusiasts, where you can easily
-        search for language partners based on their country of origin or the
-        language they speak. Make exchanges with people from all around the
-        world.
-      </p>
+    <div className="max-w-5xl mt-32 flex flex-col-reverse items-center sm:flex-row">
+      <img
+        src={MeetIllustration}
+        className="w-3/4 sm:mr-10"
+      />
+      <div className="flex flex-col items-center sm:items-start dark:text-light">
+        <h2 className="mb-2 font-bold text-3xl ">Meet people</h2>
+        <p className="mb-4 leading-7 text-center sm:text-start">
+          Meet people from all around the world and make new friends, find
+          partners and teachers. Find native speakers and learn together by
+          joining our community.
+        </p>
+      </div>
     </div>
   )
 }
