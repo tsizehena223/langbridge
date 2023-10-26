@@ -75,9 +75,11 @@ const Profile = () => {
                 <div className="font-semibold text-center text-xl">
                   {user.name}
                 </div>
-                <div className="font-semibold text-placeholder">
-                  Joined {user.createdAt}
-                </div>
+                {user.createdAt && (
+                  <div className="font-semibold text-placeholder">
+                    Joined {user.createdAt}
+                  </div>
+                )}
                 <div className="flex items-center space-x-2 font-semibold justify-center">
                   <span>From</span>
                   <span className="text-purple">{user.country}</span>

@@ -1,10 +1,11 @@
-import React from 'react'
-import MeetIllustration from '../../assets/meet.svg';
+import React from "react";
+import MeetIllustration from "../../assets/meet.svg";
 
 const Section2 = () => {
   return (
     <div className="max-w-5xl mt-32 flex flex-col-reverse items-center sm:flex-row">
       <img
+        data-aos="fade-right"
         src={MeetIllustration}
         className="w-3/4 sm:mr-10"
       />
@@ -17,7 +18,7 @@ const Section2 = () => {
         </p>
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Section2
+export default Section2;

@@ -3,7 +3,7 @@ import FlagIllustration from "../../assets/countries_flags.png";
 function Section1() {
   return (
     <div id="section-a" className="max-w-3xl flex flex-col items-center">
-      <img src={FlagIllustration} />
+      <img data-aos="zoom-in-up" src={FlagIllustration} />
       <h2 className="mt-6 mb-2 font-bold text-3xl">Learn any language</h2>
       <p className="leading-7 text-center">
         Join our vibrant community of language enthusiasts, where you can easily
