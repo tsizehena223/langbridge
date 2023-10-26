@@ -20,24 +20,19 @@ const sidebarLinks = [
     label: "Profile",
   },
   {
-    path: "/notifications",
-    icon: RiInformationLine,
-    label: "Notifications",
-  },
-  {
     path: "/message",
     icon: RiMessage2Line,
     label: "Message",
   },
   {
-    path: "/shop",
-    icon: RiShoppingBag2Line,
-    label: "Shop",
-  },
-  {
     path: "/search",
     icon: RiSearch2Line,
     label: "Search",
+  },
+  {
+    path: "/about",
+    icon: RiInformationLine,
+    label: "About",
   },
   {
     path: "/settings",

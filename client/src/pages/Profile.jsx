@@ -7,7 +7,8 @@ import Avatar from "../assets/avatar.svg";
 import userService from "../services/user";
 import { getCountryCode } from "../utils/country-language";
 import ReactCountryFlag from "react-country-flag";
-import { RiMessage2Fill, RiMessageFill } from "react-icons/ri";
+import { RiMessage2Fill } from "react-icons/ri";
+import NoPostIllustration from "../assets/no_post.svg";
 
 const Profile = () => {
   const { userData } = useAuth();
@@ -37,8 +38,17 @@ const Profile = () => {
   return (
     <MainLayout>
       <div className="w-full flex flex-col-reverse md:flex-row md:space-x-4">
-        <div className="w-full">
-          <PostContainer postList={postList} />
+        <div className="w-full h-full flex justify-center items-center">
+          {postList.length ? (
+            <PostContainer postList={postList} />
+          ) : (
+            <div className="flex flex-col items-center space-y-6">
+              <img src={NoPostIllustration} className="h-72" />
+              <div className="text-xl font-semibold">
+                No <span className="text-purple">posts</span> yet
+              </div>
+            </div>
+          )}
         </div>
         <div>
           <div
@@ -80,7 +90,7 @@ const Profile = () => {
                   )}
                 </div>
                 <div className="flex space-x-2 font-semibold">
-                  <span>Leatning</span>
+                  <span>Learning</span>
                   <span className="text-purple">{user.language}</span>
                 </div>
               </div>

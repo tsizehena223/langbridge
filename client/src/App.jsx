@@ -13,6 +13,7 @@ import {
 } from "./pages";
 import { Routes, Route } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
+import About from "./pages/About";
 
 const App = () => {
   const { isAuthentified } = useAuth();
@@ -26,7 +27,7 @@ const App = () => {
   });
 
   return (
-    <div className="flex text-gray-2 dark:text-light">
+    <div className="flex text-gray-2 dark:text-light overflow-clip">
       <ToastContainer
         hideProgressBar={true}
         autoClose={2000}
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/signup" element={<Signup />} />
         <Route path="/profile/:id" element={<Profile />} />
         <Route path="/message" element={<Message />} />
+        <Route path="/about" element={<About />} />
         <Route path="/search" element={<Search />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="*" element={<NotFound />} />

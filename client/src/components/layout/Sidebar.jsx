@@ -17,7 +17,7 @@ const Sidebar = () => {
     <div
       className="z-50 sticky top-0 
       hidden md:flex flex-col
-      h-screen w-fit space-y-8 py-6 px-8
+      h-screen w-fit min-w-[200px] space-y-8 py-6 px-8
       bg-light dark:bg-gray-2"
     >
       <div className="flex space-x-2 items-center">

@@ -17,6 +17,7 @@ import Section1 from "./home/Section1";
 import Section2 from "./home/Section2";
 import Section3 from "./home/Section3";
 import Section4 from "./home/Section4";
+import Footer from "./layout/Footer";
 
 export {
   HomeNavBar,
@@ -38,4 +39,5 @@ export {
   Section2,
   Section3,
   Section4,
+  Footer,
 };
