@@ -24,8 +24,7 @@ const HomeNavBar = () => {
       shadow-md bg-light dark:bg-gray-2"
     >
       <div className="flex items-center space-x-2">
-        <img className="w-10 h-w-10" src={Logo} alt="" />
-        <h1 className="font-semibold text-purple text-xl">LangBridge</h1>
+        <h1 className="ml-2 font-semibold text-purple text-xl">LangBridge</h1>
       </div>
 
       <div>

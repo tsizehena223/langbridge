@@ -20,7 +20,7 @@ const Home = () => {
       <HomeNavBar />
       <div className="px-4 flex flex-col items-center text-gray-1">
         <div className="h-screen w-screen flex items-center justify-center">
-          <img src={IspmLogo} />
+          <img src={IspmLogo} className="h-[400px]" />
         </div>
         <Landing />
         <Section1 />

@@ -43,19 +43,71 @@ const Landing = () => {
         />
       </div>
       <div className="mt-14 flex space-x-10 items-center justify-center">
-        <img className="w-10 h-10 rounded-full" src={image1} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image2} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image3} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image4} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image5} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image6} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image7} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image8} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image9} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image10} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image11} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image12} alt="" />
-        <img className="w-10 h-10 rounded-full" src={image13} alt="" />
+        <img
+          className="animate-[bounce_1s_infinite] w-10 h-10 rounded-full"
+          src={image1}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.1s_infinite] w-10 h-10 rounded-full"
+          src={image2}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.1s_infinite] w-10 h-10 rounded-full"
+          src={image3}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.2s_infinite] w-10 h-10 rounded-full"
+          src={image4}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.3s_infinite] w-10 h-10 rounded-full"
+          src={image5}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.4s_infinite] w-10 h-10 rounded-full"
+          src={image6}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.5s_infinite] w-10 h-10 rounded-full"
+          src={image7}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.6s_infinite] w-10 h-10 rounded-full"
+          src={image8}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.7s_infinite] w-10 h-10 rounded-full"
+          src={image9}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.8s_infinite] w-10 h-10 rounded-full"
+          src={image10}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_1.9s_infinite] w-10 h-10 rounded-full"
+          src={image11}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_2.0s_infinite] w-10 h-10 rounded-full"
+          src={image12}
+          alt=""
+        />
+        <img
+          className="animate-[bounce_2.1s_infinite] w-10 h-10 rounded-full"
+          src={image13}
+          alt=""
+        />
       </div>
     </div>
   );
