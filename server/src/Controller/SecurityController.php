@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Repository\UserRepository;
+use App\Service\CalculDate;
 use App\Service\GenerateToken;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -17,7 +18,7 @@ class SecurityController extends AbstractController
     }
 
     #[Route('/api/users/login', name: 'app_login', methods: ["POST"])]
-    public function index(Request $request, UserRepository $repo, GenerateToken $generateToken, GetFileUrlController $getFileUrl): JsonResponse
+    public function index(Request $request, CalculDate $calculDate, UserRepository $repo, GenerateToken $generateToken, GetFileUrlController $getFileUrl): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
         if (!isset($data["email"]) || !isset($data["password"])) {
@@ -40,6 +41,7 @@ class SecurityController extends AbstractController
 
         $linkImage = $user->getPdpName() ? $getFileUrl->getFileUrl($user->getPdpName(), 'users') : null;
 
+        $formatedDate = $calculDate->formatDate($user->getCreatedAt()->format("Y-m-d H:i:s"));
         return new JsonResponse([
             "token" => $token,
             "id" => $user->getId(),
@@ -47,7 +49,7 @@ class SecurityController extends AbstractController
             "country" => $user->getNationality(),
             "language" => $user->getLanguage(),
             "image" => $linkImage,
-            "createdAt" => $user->getCreatedAt()->format("d M Y H:i")
+            "createdAt" => $formatedDate
         ], 200);
     }
 }
